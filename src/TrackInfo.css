@@ -1,0 +1,20 @@
+.info {
+    font-size: 32px;
+    font-family: 'Droid Serif';
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0px -1px 0 #000, 0px 1px 0 #000, -1px 0px 0 #000, 1px 0px 0 #000;
+    bottom: 0em;
+    position: absolute;
+    padding: 1em;
+    margin: 1em;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.track-artist {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.track-title {
+
+}
