@@ -3,11 +3,14 @@ import './App.css';
 import TrackInfo from './components/TrackInfo';
 import { Overlay } from "./components/Overlay";
 import NextShow from "./components/NextShow";
+import TwitchInfo from "./components/TwitchInfo";
 
 function App() {
     return (
         <div className="App">
-            <div style={{display: "grid-item"}}></div>
+            <div style={{display: "grid-item"}}>
+                <TwitchInfo/>
+            </div>
             <div style={{display: "grid-item"}}>
                 <Overlay>
                     <TrackInfo/>

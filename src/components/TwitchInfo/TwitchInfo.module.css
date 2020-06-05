@@ -1,0 +1,17 @@
+.twitchViewerCount {
+    float: right;
+    padding: 1em;
+    font-size: 250%;
+    vertical-align: baseline;
+}
+
+.icon {
+    display: inline;
+    position: relative;
+    top: 0.2em;
+    padding-right: 0.2em;
+}
+
+.count {
+    display: inline;
+}
