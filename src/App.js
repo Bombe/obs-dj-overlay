@@ -6,9 +6,12 @@ import Overlay from "./Overlay";
 function App() {
     return (
         <div className="App">
-            <Overlay>
-                <TrackInfo/>
-            </Overlay>
+            <div style={{display: "grid-item"}}></div>
+            <div style={{display: "grid-item"}}>
+                <Overlay>
+                    <TrackInfo/>
+                </Overlay>
+            </div>
         </div>
     );
 }

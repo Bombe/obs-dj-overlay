@@ -1,7 +1,7 @@
 .info {
+    display: inline-block;
     font-size: 220%;
     bottom: 0em;
-    position: absolute;
     padding: 1em;
     margin: 1em;
     background: rgba(0, 0, 0, 0.5);
