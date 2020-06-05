@@ -5,10 +5,12 @@ import Overlay from "./Overlay";
 
 function App() {
     return (
-    <Overlay>
-        <TrackInfo/>
-    </Overlay>
-  );
+        <div className="App">
+            <Overlay>
+                <TrackInfo/>
+            </Overlay>
+        </div>
+    );
 }
 
 export default App;
