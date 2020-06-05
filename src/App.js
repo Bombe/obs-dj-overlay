@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import TrackInfo from './TrackInfo';
 import Overlay from "./Overlay";
+import NextShow from "./NextShow";
 
 function App() {
     return (
@@ -10,6 +11,7 @@ function App() {
             <div style={{display: "grid-item"}}>
                 <Overlay>
                     <TrackInfo/>
+                    <NextShow/>
                 </Overlay>
             </div>
         </div>

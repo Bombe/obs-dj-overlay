@@ -7,14 +7,15 @@ const Overlay = (props) => {
     const [ timer, setTimer ] = useState({});
     const [ overlayInfo, setOverlayInfo ] = useState({
         artist: "Artist",
-        title: "Title"
+        title: "Title",
+        nextShow: "",
     });
 
     const updateInfo = () => {
         fetch("./overlay.json")
             .then(response => response.json())
             .then(json => {
-                setOverlayInfo({ artist: json.artist, title: json.title });
+                setOverlayInfo({ artist: json.artist, title: json.title, nextShow: json.nextShow });
             })
             .then(() => {
                 setTimer(setTimeout(updateInfo, 1000));
@@ -24,7 +25,7 @@ const Overlay = (props) => {
     useEffect(() => {
         updateInfo();
         return () => clearTimeout(timer);
-    }, [overlayInfo.artist, overlayInfo.title]);
+    }, [overlayInfo.artist, overlayInfo.title, overlayInfo.nextShow]);
 
     return (
         <OverlayContext.Provider value={overlayInfo}>
