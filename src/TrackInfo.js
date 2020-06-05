@@ -7,12 +7,8 @@ const TrackInfo = () => {
 
     return (
         <div className={styles.info}>
-            <OverlayContext.Consumer>{ (artist, title) => (
-                <>
-                    <div className={styles.artist}>{overlayInfo.artist}</div>
-                    <div className={styles.title}>{overlayInfo.title}</div>
-                </>
-            )}</OverlayContext.Consumer>
+            <div className={styles.artist}>{overlayInfo.artist}</div>
+            <div className={styles.title}>{overlayInfo.title}</div>
         </div>
     );
 }
