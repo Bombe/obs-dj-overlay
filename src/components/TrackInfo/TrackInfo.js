@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { OverlayContext } from "./Overlay";
+import OverlayContext from "../Overlay";
 import styles from "./TrackInfo.module.css";
 
 const TrackInfo = () => {

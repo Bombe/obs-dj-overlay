@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import TrackInfo from './TrackInfo';
-import Overlay from "./Overlay";
-import NextShow from "./NextShow";
+import TrackInfo from './components/TrackInfo';
+import { Overlay } from "./components/Overlay";
+import NextShow from "./components/NextShow";
 
 function App() {
     return (
