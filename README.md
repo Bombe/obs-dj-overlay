@@ -1,8 +1,8 @@
 # obs-overlay
 
 *obs-overlay* is a collection of small components that I use in
-combination with OBS’ Browser source to render an overlay
-with various information.
+combination with [OBS’s](https://obsproject.com/) Browser
+source to render an overlay with various information.
 
 ## Using it
 
