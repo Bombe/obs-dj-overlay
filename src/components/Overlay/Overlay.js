@@ -21,8 +21,8 @@ const Overlay = (props) => {
     };
 
     useEffect(() => {
-        updateInfo();
         const timerHandler = setInterval(updateInfo, 1000);
+        updateInfo();
         return () => clearTimeout(timerHandler);
     }, []);
 
