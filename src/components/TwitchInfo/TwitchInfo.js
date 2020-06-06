@@ -5,7 +5,8 @@ import {TwitchGlitchPurple} from "../Logo/";
 import OverlayContext from "../Overlay";
 import "./TwitchInfo.css";
 
-const twitchClient = TwitchClient.withClientCredentials(config.twitch.clientId, config.twitch.clientSecret);
+const hasTwitchConfig = (config && config.twitch && config.twitch.clientId && config.twitch.clientSecret);
+const twitchClient = hasTwitchConfig ? TwitchClient.withClientCredentials(config.twitch.clientId, config.twitch.clientSecret) : null;
 
 const TwitchInfo = () => {
 
@@ -34,4 +35,6 @@ const TwitchInfo = () => {
     </div> : <></>;
 }
 
-export default TwitchInfo;
+const NoTwitchInfo = () => <></>
+
+export default hasTwitchConfig ? TwitchInfo : NoTwitchInfo;
