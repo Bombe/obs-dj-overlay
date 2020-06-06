@@ -1,7 +1,11 @@
 .App {
     font-family: "Droid Serif";
     color: white;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0px -1px 0 #000, 0px 1px 0 #000, -1px 0px 0 #000, 1px 0px 0 #000;
+    text-shadow:
+            -1px -1px 0 grey,
+            1px -1px 0 grey,
+            -1px 1px 0 grey,
+            1px 1px 0 grey;
     display: grid;
     grid-template-rows: 1fr max-content;
     width: 100%;
