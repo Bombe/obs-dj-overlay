@@ -13,15 +13,14 @@ const TwitchInfo = () => {
     const [ viewers, setViewers ] = useState(null);
 
     useEffect(() => {
-        async function getUserInfo() {
-            let viewerCount = null;
+        const getUserInfo = () => {
             if (overlayInfo.twitchUserName) {
-                const stream = await twitchClient.helix.streams.getStreamByUserName(overlayInfo.twitchUserName);
-                if (stream) {
-                    viewerCount = stream.viewers;
-                }
+                twitchClient.helix.streams.getStreamByUserName(overlayInfo.twitchUserName)
+                    .then(stream => setViewers(stream.viewers))
+                    .catch(() => setViewers(null));
+            } else {
+                setViewers(null);
             }
-            setViewers(viewerCount);
         }
         const intervalHandler = setInterval(getUserInfo, 30000);
         getUserInfo();
