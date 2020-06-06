@@ -3,7 +3,7 @@ import TwitchClient from 'twitch';
 import config from "../../config.json";
 import {TwitchGlitchPurple} from "../Logo/";
 import OverlayContext from "../Overlay";
-import styles from "./TwitchInfo.module.css";
+import "./TwitchInfo.css";
 
 const twitchClient = TwitchClient.withClientCredentials(config.twitch.clientId, config.twitch.clientSecret);
 
@@ -28,9 +28,9 @@ const TwitchInfo = () => {
         return () => clearInterval(intervalHandler);
     }, [overlayInfo.twitchUserName]);
 
-    return (viewers != null) ? <div className={styles.twitchViewerCount}>
-        <div className={styles.icon}><TwitchGlitchPurple size="1em"/></div>
-        <div className={styles.count}>{viewers}</div>
+    return (viewers != null) ? <div className="TwitchViewerCount">
+        <div className="Icon"><TwitchGlitchPurple size="1em"/></div>
+        <div className="Count">{viewers}</div>
     </div> : <></>;
 }
 

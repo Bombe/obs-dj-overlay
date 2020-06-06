@@ -1,4 +1,4 @@
-.info {
+.TrackInfo {
     display: inline-block;
     font-size: 220%;
     bottom: 0em;
@@ -7,11 +7,11 @@
     background: rgba(0, 0, 0, 0.5);
 }
 
-.artist {
+.TrackInfo .Artist {
     font-weight: bold;
     font-size: 120%;
 }
 
-.title {
+.TrackInfo .Title {
 
 }

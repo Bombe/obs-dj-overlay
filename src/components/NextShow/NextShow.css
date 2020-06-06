@@ -1,4 +1,4 @@
-.container {
+.NextShow {
     padding-top: 0.5em;
     background-color: rgb(0, 0, 0, 0.5);
     width: 100%;
@@ -7,7 +7,7 @@
     font-size: 150%;
 }
 
-.scroller {
+.NextShow .Text {
     position: relative;
     animation-name: slide-to-the-left;
     animation-duration: 60s;

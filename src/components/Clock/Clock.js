@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import styles from "./Clock.module.css";
+import "./Clock.css";
 
 const clockOptions = {
     hour: "numeric",
@@ -21,7 +21,7 @@ const Clock = () => {
         return () => clearInterval(intervalHandler);
     }, []);
 
-    return timeString ? (<div className={styles.Clock}>{timeString}</div>) : <></>;
+    return timeString ? (<div className="Clock">{timeString}</div>) : <></>;
 
 }
 
