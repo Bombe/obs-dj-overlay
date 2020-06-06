@@ -5,8 +5,8 @@ const OverlayContext = createContext();
 const Overlay = (props) => {
 
     const [ overlayInfo, setOverlayInfo ] = useState({
-        artist: "Artist",
-        title: "Title",
+        artist: "",
+        title: "",
         nextShow: "",
         twitchUserName: ""
     });
