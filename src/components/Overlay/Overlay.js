@@ -1,15 +1,15 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 
-const OverlayContext = createContext();
+const OverlayContext = createContext({
+    artist: "",
+    title: "",
+    nextShow: "",
+    twitchUserName: ""
+});
 
 const Overlay = (props) => {
 
-    const [ overlayInfo, setOverlayInfo ] = useState({
-        artist: "",
-        title: "",
-        nextShow: "",
-        twitchUserName: ""
-    });
+    const [overlayInfo, setOverlayInfo] = useState(useContext(OverlayContext));
 
     const updateInfo = () => {
         fetch("./overlay.json")
