@@ -19,30 +19,30 @@
 
 @keyframes slide-to-the-left {
     from {
-        opacity: -100%;
+        opacity: -1;
         margin-left: 100%;
         animation-timing-function: ease;
     }
 
     4% {
-        opacity: 100%;
+        opacity: 1;
         margin-left: 0%;
         animation-timing-function: ease;
     }
 
     12% {
-        opacity: 100%;
+        opacity: 1;
         margin-left: 0%;
         animation-timing-function: ease;
     }
 
     20% {
-        opacity: -100%;
+        opacity: -1;
         margin-left: -100%;
     }
 
     to {
-        opacity: -100%;
+        opacity: -1;
         margin-left: -100%;
     }
 }
