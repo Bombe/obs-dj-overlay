@@ -1,3 +1,20 @@
+# obs-overlay
+
+*obs-overlay* is a collection of small components that I use in
+combination with OBS’ Browser source to render an overlay
+with various information.
+
+## Using it
+
+1. Build and serve the application:
+
+   yarn build && serve -s build
+
+2. Point the Browser source to `http://localhost:5000/`.
+
+3. Modify the file `build/overlay.json` to change information to
+display.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
