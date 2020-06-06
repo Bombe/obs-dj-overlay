@@ -3,6 +3,10 @@ import React, {createContext, useContext, useEffect, useState} from "react";
 const OverlayContext = createContext({
     artist: "",
     title: "",
+    show: {
+        "title": "",
+        "subtitle": ""
+    },
     nextShow: "",
     twitchUserName: ""
 });
@@ -18,6 +22,10 @@ const Overlay = (props) => {
                 setOverlayInfo({
                     artist: json.artist,
                     title: json.title,
+                    show: {
+                        title: json.show.title,
+                        subtitle: json.show.subtitle
+                    },
                     nextShow: json.nextShow,
                     twitchUserName: json.twitchUserName
                 });

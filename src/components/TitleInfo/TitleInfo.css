@@ -1,0 +1,14 @@
+.TitleInfo {
+    font-size: 250%;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1em;
+}
+
+.TitleInfo .Title {
+    font-weight: bold;
+    font-size: 200%;
+}
+
+.TitleInfo .Subtitle {
+    font-weight: bold;
+}

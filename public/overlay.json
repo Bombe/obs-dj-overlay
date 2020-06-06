@@ -1,6 +1,10 @@
 {
     "artist": "Some Artist",
     "title": "Some Title (Some Remix)",
+    "show": {
+        "title": "Some Show",
+        "subtitle": "Some Episode on Some Date"
+    },
     "nextShow": "Some Date in the Future",
     "twitchUserName": ""
 }

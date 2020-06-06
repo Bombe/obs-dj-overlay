@@ -24,6 +24,8 @@ the information that is displayed.
 `track` and `artist` are empty, the track info block is not shown.
 * `title`: The title of the currently running track. When both
 `track` and `artist` are empty, the track info block is not shown.
+* `show.title` and `show.subtitle` can be set to include a large
+display for the show’s title.
 * `nextShow`: An announcement for the next show (optional).
 * `twitchUserName`: A [Twitch](https://twitch.tv/) user name to
 get the viewer count for (optional).
@@ -32,6 +34,8 @@ You can also override the CSS classes in OBS’s Browser source:
 
 * `App`: Main CSS class, font properties are defined here.
 * `Background`: Defines the background image.
+* `TitleInfo` (contains `Title` and `Subtitle`): Controls display of
+the title information.
 * `Clock`: Controls display of the clock.
 * `TwitchViewerCount` (contains `Icon` and `Count`): Controls
 display of the Twitch viewer count.

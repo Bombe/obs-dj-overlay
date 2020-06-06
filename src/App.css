@@ -23,6 +23,17 @@
 .Center {
     grid-row: 1;
     padding: 2.5em;
+    display: flex;
+}
+
+.Left {
+}
+
+.Expand {
+    flex-grow: 1;
+}
+
+.Right {
 }
 
 .Bottom {

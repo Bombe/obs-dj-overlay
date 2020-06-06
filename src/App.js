@@ -5,6 +5,7 @@ import {Overlay} from "./components/Overlay";
 import NextShow from "./components/NextShow";
 import TwitchInfo from "./components/TwitchInfo";
 import {Clock} from "./components/Clock/Clock";
+import TitleInfo from "./components/TitleInfo";
 
 function App() {
     return (
@@ -12,8 +13,15 @@ function App() {
             <div className="App">
                 <Overlay>
                     <div className="Center">
-                        <Clock/>
-                        <TwitchInfo/>
+                        <div className="Left">
+                            <TitleInfo/>
+                        </div>
+                        <div className="Expand">
+                        </div>
+                        <div className="Right">
+                            <Clock/>
+                            <TwitchInfo/>
+                        </div>
                     </div>
                     <div className="Bottom">
                         <TrackInfo/>
