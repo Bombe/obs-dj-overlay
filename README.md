@@ -4,7 +4,16 @@
 combination with [OBS’s](https://obsproject.com/) Browser
 source to render an overlay with various information.
 
-## Using it
+## Configuring It
+
+If you want to include a viewer count for a Twitch account
+you need register an application with Twitch, generate a
+client secret, copy `src/config.template.json` to `src/config.json`
+and enter both client ID and client secret in `src/config.json`.
+
+That’s it.
+
+## Using It
 
 1. Build and serve the application:
 
