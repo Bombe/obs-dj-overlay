@@ -7,6 +7,8 @@ import styles from "./TwitchInfo.module.css";
 
 const twitchClient = TwitchClient.withClientCredentials(config.twitch.clientId, config.twitch.clientSecret);
 
+const onceEvery = ms => Math.floor(Date.now() / ms)
+
 const TwitchInfo = () => {
 
     const overlayInfo = useContext(OverlayContext);
@@ -24,7 +26,7 @@ const TwitchInfo = () => {
             setViewers(viewerCount);
         }
         getUserInfo();
-    }, [Math.floor(Date.now() / 30000), overlayInfo.twitchUserName]);
+    }, [onceEvery(30000), overlayInfo.twitchUserName]);
 
     return (viewers != null) ? <div className={styles.twitchViewerCount}>
         <div className={styles.icon}><TwitchGlitchPurple size="1em"/></div>
