@@ -27,8 +27,8 @@ get the viewer count for (optional).
 
 You can also override the CSS classes in OBS’s Browser source:
 
-* `App`: Main CSS class, font properties and colors are defined
-here.
+* `App`: Main CSS class, font properties are defined here.
+* `Background`: Defines the background image.
 * `Clock`: Controls display of the clock.
 * `TwitchViewerCount` (contains `Icon` and `Count`): Controls
 display of the Twitch viewer count.

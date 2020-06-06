@@ -8,10 +8,16 @@
             1px 1px 0 grey;
     display: grid;
     grid-template-rows: 1fr max-content;
+    backdrop-filter: blur(80px);
+}
+
+.Background {
+    background-image: linear-gradient(30deg, red, orange, yellow, green, cyan, blue, violet, red);
     width: 100%;
     height: 100%;
     position: absolute;
-    background-image: linear-gradient(30deg, red, orange, yellow, green, cyan, blue, violet, red);
+    display: grid;
+    z-index: 1;
 }
 
 .Center {
