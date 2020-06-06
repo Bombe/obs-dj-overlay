@@ -24,7 +24,7 @@ const Overlay = (props) => {
         updateInfo();
         const timerHandler = setInterval(updateInfo, 1000);
         return () => clearTimeout(timerHandler);
-    }, [overlayInfo.artist, overlayInfo.title, overlayInfo.nextShow, overlayInfo.twitchUserName]);
+    }, []);
 
     return (
         <OverlayContext.Provider value={overlayInfo}>
