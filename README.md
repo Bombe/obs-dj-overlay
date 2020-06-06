@@ -12,8 +12,30 @@ with various information.
 
 2. Point the Browser source to `http://localhost:5000/`.
 
-3. Modify the file `build/overlay.json` to change information to
-display.
+## Customizing It
+
+You can modify the file `build/overlay.json` to change some of
+the information that is displayed.
+
+* `artist`: The artist of the currently running track. When both
+`track` and `artist` are empty, the track info block is not shown.
+* `title`: The title of the currently running track. When both
+`track` and `artist` are empty, the track info block is not shown.
+* `nextShow`: An announcement for the next show (optional).
+* `twitchUserName`: A [Twitch](https://twitch.tv/) user name to
+get the viewer count for (optional).
+
+You can also override the CSS classes in OBS’s Browser source:
+
+* `App`: Main CSS class, font properties and colors are defined
+here.
+* `Clock`: Controls display of the clock.
+* `TwitchViewerCount` (contains `Icon` and `Count`): Controls
+display of the Twitch viewer count.
+* `TrackInfo` (contains `Artist` and `Title`): Controls display of
+the track information.
+* `NextShow` (contains `Text`): Controls display of the “next
+show” announcement.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
