@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import TwitchClient from 'twitch';
-import config from "../../config.json";
+import config from "../Config";
 import {TwitchGlitchPurple} from "../Logo/";
 import OverlayContext from "../Overlay";
 import "./TwitchInfo.css";
