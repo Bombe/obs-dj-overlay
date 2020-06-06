@@ -4,7 +4,6 @@ const OverlayContext = createContext();
 
 const Overlay = (props) => {
 
-    const [ timer, setTimer ] = useState({});
     const [ overlayInfo, setOverlayInfo ] = useState({
         artist: "Artist",
         title: "Title",
