@@ -8,7 +8,10 @@ source to render an overlay with various information.
 
 1. Build and serve the application:
 
-   yarn build && serve -s build
+    ```
+    # yarn build
+    # serve -s build
+    ```
 
 2. Point the Browser source to `http://localhost:5000/`.
 
