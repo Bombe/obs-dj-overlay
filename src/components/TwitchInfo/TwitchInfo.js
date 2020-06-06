@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import TwitchClient from 'twitch';
 import config from "../../config.json";
-import { TwitchGlitchPurple } from "../Logo/";
+import {TwitchGlitchPurple} from "../Logo/";
 import OverlayContext from "../Overlay";
 import styles from "./TwitchInfo.module.css";
 
@@ -10,7 +10,7 @@ const twitchClient = TwitchClient.withClientCredentials(config.twitch.clientId, 
 const TwitchInfo = () => {
 
     const overlayInfo = useContext(OverlayContext);
-    const [ viewers, setViewers ] = useState(null);
+    const [viewers, setViewers] = useState(null);
 
     useEffect(() => {
         const getUserInfo = () => {
@@ -22,6 +22,7 @@ const TwitchInfo = () => {
                 setViewers(null);
             }
         }
+
         const intervalHandler = setInterval(getUserInfo, 30000);
         getUserInfo();
         return () => clearInterval(intervalHandler);

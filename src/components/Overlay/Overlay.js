@@ -15,9 +15,15 @@ const Overlay = (props) => {
         fetch("./overlay.json")
             .then(response => response.json())
             .then(json => {
-                setOverlayInfo({ artist: json.artist, title: json.title, nextShow: json.nextShow, twitchUserName: json.twitchUserName });
+                setOverlayInfo({
+                    artist: json.artist,
+                    title: json.title,
+                    nextShow: json.nextShow,
+                    twitchUserName: json.twitchUserName
+                });
             })
-            .catch(() => {});
+            .catch(() => {
+            });
     };
 
     useEffect(() => {
@@ -28,7 +34,7 @@ const Overlay = (props) => {
 
     return (
         <OverlayContext.Provider value={overlayInfo}>
-            { props.children }
+            {props.children}
         </OverlayContext.Provider>
     );
 }
