@@ -32,5 +32,4 @@ const Overlay = (props) => {
     );
 }
 
-export default Overlay;
-export { OverlayContext };
+export {Overlay as default, OverlayContext};
