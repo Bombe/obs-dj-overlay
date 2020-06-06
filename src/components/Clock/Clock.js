@@ -4,7 +4,8 @@ import "./Clock.css";
 const clockOptions = {
     hour: "numeric",
     minute: "numeric",
-    second: "numeric"
+    second: "numeric",
+    hour12: false
 };
 
 const formatter = new Intl.DateTimeFormat("default", clockOptions);
