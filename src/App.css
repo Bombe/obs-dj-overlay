@@ -8,3 +8,12 @@
     height: 100%;
     position: absolute;
 }
+
+.Center {
+    grid-row: 1;
+    padding: 2.5em;
+}
+
+.Bottom {
+    grid-row: 2;
+}

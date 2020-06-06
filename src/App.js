@@ -9,10 +9,10 @@ function App() {
     return (
         <div className="App">
             <Overlay>
-                <div style={{display: "grid-item"}}>
+                <div className="Center">
                     <TwitchInfo/>
                 </div>
-                <div style={{display: "grid-item"}}>
+                <div className="Bottom">
                     <TrackInfo/>
                     <NextShow/>
                 </div>

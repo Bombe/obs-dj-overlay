@@ -1,8 +1,6 @@
 .twitchViewerCount {
-    float: right;
-    padding: 1em;
+    text-align: right;
     font-size: 250%;
-    vertical-align: baseline;
 }
 
 .icon {
