@@ -21,6 +21,7 @@ const Overlay = (props) => {
     };
 
     useEffect(() => {
+        updateInfo();
         const timerHandler = setInterval(updateInfo, 1000);
         return () => clearTimeout(timerHandler);
     }, [overlayInfo.artist, overlayInfo.title, overlayInfo.nextShow, overlayInfo.twitchUserName]);
