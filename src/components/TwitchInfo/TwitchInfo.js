@@ -1,32 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TwitchClient from 'twitch';
-import { TwitchGlitchPurple } from "../Logo/";
 import config from "../../config.json";
+import { TwitchGlitchPurple } from "../Logo/";
+import OverlayContext from "../Overlay";
 import styles from "./TwitchInfo.module.css";
 
 const twitchClient = TwitchClient.withClientCredentials(config.twitch.clientId, config.twitch.clientSecret);
 
 const TwitchInfo = () => {
 
-    const [ timer, setTimer ] = useState(() => {});
+    const overlayInfo = useContext(OverlayContext);
     const [ viewers, setViewers ] = useState(null);
 
     useEffect(() => {
         async function getUserInfo() {
-            const user = await twitchClient.helix.users.getUserByName(config.twitch.userName);
-            let viewerCount = null
-            if (user) {
-                const stream = await twitchClient.helix.streams.getStreamByUserId(user);
+            let viewerCount = null;
+            if (overlayInfo.twitchUserName) {
+                const stream = await twitchClient.helix.streams.getStreamByUserName(overlayInfo.twitchUserName);
                 if (stream) {
                     viewerCount = stream.viewers;
                 }
             }
             setViewers(viewerCount);
-            setTimer(setTimeout(getUserInfo, 30000));
         }
         getUserInfo();
-        return () => clearTimeout(timer);
-    }, [viewers]);
+    }, [Math.floor(Date.now() / 30000), overlayInfo.twitchUserName]);
 
     return (viewers != null) ? <div className={styles.twitchViewerCount}>
         <div className={styles.icon}><TwitchGlitchPurple size="1em"/></div>
@@ -34,4 +32,4 @@ const TwitchInfo = () => {
     </div> : <></>;
 }
 
-export { TwitchInfo };
+export default TwitchInfo;

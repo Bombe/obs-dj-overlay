@@ -8,15 +8,15 @@ import TwitchInfo from "./components/TwitchInfo";
 function App() {
     return (
         <div className="App">
-            <div style={{display: "grid-item"}}>
-                <TwitchInfo/>
-            </div>
-            <div style={{display: "grid-item"}}>
-                <Overlay>
+            <Overlay>
+                <div style={{display: "grid-item"}}>
+                    <TwitchInfo/>
+                </div>
+                <div style={{display: "grid-item"}}>
                     <TrackInfo/>
                     <NextShow/>
-                </Overlay>
-            </div>
+                </div>
+            </Overlay>
         </div>
     );
 }

@@ -9,23 +9,22 @@ const Overlay = (props) => {
         artist: "Artist",
         title: "Title",
         nextShow: "",
+        twitchUserName: ""
     });
 
     const updateInfo = () => {
         fetch("./overlay.json")
             .then(response => response.json())
             .then(json => {
-                setOverlayInfo({ artist: json.artist, title: json.title, nextShow: json.nextShow });
+                setOverlayInfo({ artist: json.artist, title: json.title, nextShow: json.nextShow, twitchUserName: json.twitchUserName });
             })
-            .then(() => {
-                setTimer(setTimeout(updateInfo, 1000));
-            })
+            .catch(() => {});
     };
 
     useEffect(() => {
-        updateInfo();
-        return () => clearTimeout(timer);
-    }, [overlayInfo.artist, overlayInfo.title, overlayInfo.nextShow]);
+        const timerHandler = setInterval(updateInfo, 1000);
+        return () => clearTimeout(timerHandler);
+    }, [overlayInfo.artist, overlayInfo.title, overlayInfo.nextShow, overlayInfo.twitchUserName]);
 
     return (
         <OverlayContext.Provider value={overlayInfo}>

@@ -1,7 +1,6 @@
 {
     "twitch": {
         "cliendId": "",
-        "clientSecret": "",
-        "userName": ""
+        "clientSecret": ""
     }
 }

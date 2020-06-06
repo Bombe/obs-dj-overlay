@@ -1,3 +1,3 @@
-import { TwitchInfo } from "./TwitchInfo";
+import TwitchInfo from "./TwitchInfo";
 
 export { TwitchInfo as default };
