@@ -14,3 +14,12 @@
     white-space: pre;
     text-align: center;
 }
+
+.Message .Measurement {
+    position: absolute;
+    left: 0;
+    top: 0;
+    visibility: hidden;
+    font-weight: bold;
+    white-space: pre;
+}
