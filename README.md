@@ -32,6 +32,9 @@ the information that is displayed.
 * `track.artist` and `track.title`: The artist and title of the
 currently running track. When both `track` and `artist` are
 empty, the track info block is not shown.
+* `track.number`: The number of the currently running track.
+Display of the number will be omitted if this is empty or 0,
+and it will be ignored if both `artist` and `track` are empty.
 * `show.title` and `show.subtitle` can be set to include a large
 display for the show’s title.
 * `nextShow`: An announcement for the next show (optional).
@@ -47,8 +50,8 @@ the title information.
 * `Clock`: Controls display of the clock.
 * `TwitchViewerCount` (contains `Icon` and `Count`): Controls
 display of the Twitch viewer count.
-* `TrackInfo` (contains `Artist` and `Title`): Controls display of
-the track information.
+* `TrackInfo` (contains `Number`, `Artist` and `Title`): Controls
+display of the track information.
 * `NextShow` (contains `Text`): Controls display of the “next
 show” announcement.
 

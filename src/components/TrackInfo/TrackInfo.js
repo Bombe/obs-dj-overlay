@@ -7,6 +7,10 @@ const TrackInfo = () => {
 
     return (overlayInfo.track && (overlayInfo.track.artist || overlayInfo.track.title)) ? (
         <div className="TrackInfo">
+            {overlayInfo.track.number ?
+                <div className="Number">{overlayInfo.track.number}</div>
+                : <></>
+            }
             <div className="Artist">{overlayInfo.track.artist}</div>
             <div className="Title">{overlayInfo.track.title}</div>
         </div>
