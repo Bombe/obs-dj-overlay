@@ -10,6 +10,7 @@ const OverlayContext = createContext({
         "title": "",
         "subtitle": ""
     },
+    message: "",
     nextShow: "",
     twitchUserName: ""
 });
@@ -32,6 +33,7 @@ const Overlay = (props) => {
                         title: json.show.title,
                         subtitle: json.show.subtitle
                     },
+                    message: json.message,
                     nextShow: json.nextShow,
                     twitchUserName: json.twitchUserName
                 });

@@ -8,6 +8,7 @@
     "title": "Some Show",
     "subtitle": "Some Episode on Some Date"
   },
+  "message": "",
   "nextShow": "Some Date in the Future",
   "twitchUserName": ""
 }

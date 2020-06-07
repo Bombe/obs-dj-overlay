@@ -37,6 +37,7 @@ Display of the number will be omitted if this is empty or 0,
 and it will be ignored if both `artist` and `track` are empty.
 * `show.title` and `show.subtitle` can be set to include a large
 display for the show’s title.
+* `message`: A message that will be enlarged and centered.
 * `nextShow`: An announcement for the next show (optional).
 * `twitchUserName`: A [Twitch](https://twitch.tv/) user name to
 get the viewer count for (optional).
@@ -52,6 +53,7 @@ the title information.
 display of the Twitch viewer count.
 * `TrackInfo` (contains `Number`, `Artist` and `Title`): Controls
 display of the track information.
+* `Message` (contains `Text`): Controls display of the message.
 * `NextShow` (contains `Text`): Controls display of the “next
 show” announcement.
 
