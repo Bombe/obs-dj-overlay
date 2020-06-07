@@ -1,8 +1,10 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 
 const OverlayContext = createContext({
-    artist: "",
-    title: "",
+    track: {
+        artist: "",
+        title: ""
+    },
     show: {
         "title": "",
         "subtitle": ""
@@ -20,8 +22,10 @@ const Overlay = (props) => {
             .then(response => response.json())
             .then(json => {
                 setOverlayInfo({
-                    artist: json.artist,
-                    title: json.title,
+                    track: {
+                        artist: json.track.artist,
+                        title: json.track.title,
+                    },
                     show: {
                         title: json.show.title,
                         subtitle: json.show.subtitle

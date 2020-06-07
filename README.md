@@ -29,10 +29,9 @@ That’s it.
 You can modify the file `build/overlay.json` to change some of
 the information that is displayed.
 
-* `artist`: The artist of the currently running track. When both
-`track` and `artist` are empty, the track info block is not shown.
-* `title`: The title of the currently running track. When both
-`track` and `artist` are empty, the track info block is not shown.
+* `track.artist` and `track.title`: The artist and title of the
+currently running track. When both `track` and `artist` are
+empty, the track info block is not shown.
 * `show.title` and `show.subtitle` can be set to include a large
 display for the show’s title.
 * `nextShow`: An announcement for the next show (optional).
