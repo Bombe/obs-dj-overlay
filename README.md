@@ -1,8 +1,13 @@
-# obs-overlay
+# obs-dj-overlay
 
-*obs-overlay* is a collection of small components that I use in
-combination with [OBS’s](https://obsproject.com/) Browser
-source to render an overlay with various information.
+*obs-dj-overlay* is a collection of small components that can
+be used in combination with [OBS](https://obsproject.com/)’s
+Browser source to render an overlay with various information.
+
+It has been created with for DJs who are streaming music to
+a video platform such as [Twitch](https://twitch.tv/) and who
+want to include some information about the tracks they are
+currently playing.
 
 ## Configuring It
 
@@ -39,8 +44,8 @@ and it will be ignored if both `artist` and `track` are empty.
 display for the show’s title.
 * `message`: A message that will be enlarged and centered.
 * `nextShow`: An announcement for the next show (optional).
-* `twitchUserName`: A [Twitch](https://twitch.tv/) user name to
-get the viewer count for (optional).
+* `twitchUserName`: A Twitch user name to get the viewer
+count for (optional).
 
 You can also override the CSS classes in OBS’s Browser source:
 
