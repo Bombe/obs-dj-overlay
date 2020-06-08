@@ -1,3 +1,5 @@
-const {currentState} = require("./State")
+const State = require("./State")
 
-exports.State = currentState
+module.exports = {
+    currentState: State.currentState
+}

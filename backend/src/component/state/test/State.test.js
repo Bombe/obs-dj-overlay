@@ -1,10 +1,10 @@
 const expect = require("chai").expect
-const {State} = require("../")
+const State = require("../")
 
 describe("State", () => {
 
     it("should have empty start values", () => {
-        expect(State).to.eql({
+        expect(State.currentState()).to.eql({
             track: {
                 number: 0,
                 artist: "",

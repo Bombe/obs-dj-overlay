@@ -13,6 +13,8 @@ const defaultState = {
     twitchUserName: ""
 }
 
-const currentState = {...defaultState}
+let state = {...defaultState}
 
-exports.currentState = currentState
+module.exports = {
+    currentState: () => state
+}
