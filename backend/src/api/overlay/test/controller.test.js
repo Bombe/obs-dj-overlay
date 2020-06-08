@@ -6,7 +6,7 @@ describe("“overlay” Controller", () => {
     describe("The GET / method", () => {
 
         it("should return the current state", () => {
-            const stateToServe = {track: {number: 1, artist: "Artist", title: "Title"}}
+            const stateToServe = {state: 1, to: 2, serve: 3}
             let servedState
             const response = {
                 json: (document) => {
