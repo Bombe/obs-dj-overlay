@@ -16,5 +16,6 @@ const defaultState = {
 let state = {...defaultState}
 
 module.exports = {
-    currentState: () => state
+    currentState: () => state,
+    setTrackNumber: (trackNumber) => state.track.number = trackNumber
 }
