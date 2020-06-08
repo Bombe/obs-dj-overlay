@@ -1,5 +1,3 @@
-const {State} = require("../../component/state")
-
-exports.get = (request, response) => {
-    response.json(State)
-}
+module.exports = (state) => ({
+    get: (request, response) => response.json(state.currentState())
+})
