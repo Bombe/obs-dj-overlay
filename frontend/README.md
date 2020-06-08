@@ -49,7 +49,7 @@ count for (optional).
 
 You can also override the CSS classes in OBS’s Browser source:
 
-* `App`: Main CSS class, font properties are defined here.
+* `Viewer`: Main CSS class, font properties are defined here.
 * `Background`: Defines the background image.
 * `TitleInfo` (contains `Title` and `Subtitle`): Controls display of
 the title information.

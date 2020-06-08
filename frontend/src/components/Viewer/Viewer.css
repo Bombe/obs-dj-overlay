@@ -1,4 +1,4 @@
-.App {
+.Viewer {
     font-family: "Droid Serif";
     color: whitesmoke;
     text-shadow:
@@ -20,22 +20,22 @@
     z-index: 1;
 }
 
-.Center {
+.Viewer .Center {
     grid-row: 1;
     padding: 2.5em;
     display: flex;
 }
 
-.Left {
+.Viewer .Left {
 }
 
-.Expand {
+.Viewer .Expand {
     flex-grow: 1;
 }
 
-.Right {
+.Viewer .Right {
 }
 
-.Bottom {
+.Viewer .Bottom {
     grid-row: 2;
 }
