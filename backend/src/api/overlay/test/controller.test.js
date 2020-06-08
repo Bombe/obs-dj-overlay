@@ -3,7 +3,7 @@ const controller = require("../controller")
 
 describe("“overlay” Controller", () => {
 
-    describe("The get() method", () => {
+    describe("The GET / method", () => {
 
         it("should return the current state", () => {
             const stateToServe = {track: {number: 1, artist: "Artist", title: "Title"}}
