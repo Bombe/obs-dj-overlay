@@ -18,7 +18,7 @@ const OverlayService = {
     defaultValue: () => defaultOverlayInfo,
 
     get: () =>
-        fetch("./overlay.json")
+        fetch("/overlay")
             .then(response => response.json())
             .then(json => ({
                 track: {
@@ -34,8 +34,10 @@ const OverlayService = {
                 nextShow: json.nextShow,
                 twitchUserName: json.twitchUserName
             }))
-            .catch(() => defaultOverlayInfo)
+            .catch(() => defaultOverlayInfo),
 
+    setShowInfo: (title, subtitle) =>
+        fetch("/overlay/show", { method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({title, subtitle}), mode: "same-origin"})
 }
 
 export {OverlayService}
