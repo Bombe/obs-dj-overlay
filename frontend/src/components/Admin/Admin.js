@@ -102,7 +102,7 @@ const Admin = () => {
         <div className={styles.Admin}>
             <Typography variant="h3">Admin Interface</Typography>
             <Grid className={styles.Inputs} container spacing={3}>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} lg={4} xl={3}>
                     <Group title="Show">
                         <form onSubmit={sendShowInfo}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
@@ -123,7 +123,7 @@ const Admin = () => {
                         </form>
                     </Group>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} lg={4} xl={3}>
                     <Group title="Track">
                         <form onSubmit={sendTrackInfo}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
@@ -149,7 +149,7 @@ const Admin = () => {
                         </form>
                     </Group>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} lg={4} xl={3}>
                     <Group title="Message">
                         <form onSubmit={sendMessage}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
@@ -162,7 +162,7 @@ const Admin = () => {
                         </form>
                     </Group>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} lg={4} xl={3}>
                     <Group title="Twitch">
                         <form onSubmit={sendTwitchData}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
