@@ -26,4 +26,11 @@ describe("State", () => {
         expect(State.currentState().show.subtitle).to.equal("Subtitle")
     })
 
+    it("should keep track info when set", () => {
+        State.setTrackInfo(12, "Artist", "Title")
+        expect(State.currentState().track.number).to.equal(12)
+        expect(State.currentState().track.artist).to.equal("Artist")
+        expect(State.currentState().track.title).to.equal("Title")
+    })
+
 })

@@ -20,5 +20,10 @@ module.exports = {
     setShowInfo: (title, subtitle) => {
         state.show.title = title
         state.show.subtitle = subtitle
+    },
+    setTrackInfo: (number, artist, title) => {
+        state.track.number = number
+        state.track.artist = artist
+        state.track.title = title
     }
 }
