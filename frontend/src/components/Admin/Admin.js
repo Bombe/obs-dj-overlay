@@ -113,7 +113,4 @@ const Admin = () => {
     )
 }
 
-/*
-
- */
 export {Admin}
