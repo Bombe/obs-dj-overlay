@@ -37,6 +37,9 @@ const Admin = () => {
     const [showSubtitleField, focusShowSubtitle] = useFocus()
     const [nextShowField, focusNextShow] = useFocus()
 
+    const [trackArtistField, focusTrackArtist] = useFocus()
+    const [trackTitleField, focusTrackTitle] = useFocus()
+
     const setFilteredTrackNumber = (value) => {
         setTrackNumber(parseInt(value.replace(/[^0-9]/, "")) || 0)
     }
@@ -102,9 +105,12 @@ const Admin = () => {
                     <Group title="Track">
                         <form onSubmit={sendTrackInfo}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
-                                <Grid item xs={12}><TextField label="The number of the track" variant="filled" value={trackNumber} onChange={onEvent(setFilteredTrackNumber)} fullWidth={true}/></Grid>
-                                <Grid item xs={12}><TextField label="The artist of the track" variant="filled" value={trackArtist} onChange={onEvent(setTrackArtist)} fullWidth={true}/></Grid>
-                                <Grid item xs={12}><TextField label="The title of the track" variant="filled" value={trackTitle} onChange={onEvent(setTrackTitle)} fullWidth={true}/></Grid>
+                                <Grid item xs={12}><TextField label="The number of the track" variant="filled" value={trackNumber} onChange={onEvent(setFilteredTrackNumber)}
+                                                              onKeyPress={onEnter(focusTrackArtist)} fullWidth={true}/></Grid>
+                                <Grid item xs={12}><TextField inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist} onChange={onEvent(setTrackArtist)}
+                                                              onKeyPress={onEnter(focusTrackTitle)} fullWidth={true}/></Grid>
+                                <Grid item xs={12}><TextField inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onEvent(setTrackTitle)}
+                                                              fullWidth={true}/></Grid>
                                 <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                             </Grid>
                         </form>
