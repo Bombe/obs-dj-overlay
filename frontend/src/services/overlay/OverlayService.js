@@ -5,11 +5,11 @@ const defaultOverlayInfo = {
         title: ""
     },
     show: {
-        "title": "",
-        "subtitle": ""
+        title: "",
+        subtitle: "",
+        nextShow: ""
     },
     message: "",
-    nextShow: "",
     twitchUserName: ""
 }
 
@@ -28,16 +28,16 @@ const OverlayService = {
                 },
                 show: {
                     title: json.show.title,
-                    subtitle: json.show.subtitle
+                    subtitle: json.show.subtitle,
+                    nextShow: json.show.nextShow
                 },
                 message: json.message,
-                nextShow: json.nextShow,
                 twitchUserName: json.twitchUserName
             }))
             .catch(() => defaultOverlayInfo),
 
-    setShowInfo: (title, subtitle) =>
-        fetch("/overlay/show", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({title, subtitle}), mode: "same-origin"}),
+    setShowInfo: (title, subtitle, nextShow) =>
+        fetch("/overlay/show", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({title, subtitle, nextShow}), mode: "same-origin"}),
 
     setTrackInfo: (number, artist, title) =>
         fetch("/overlay/track", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({number, artist, title}), mode: "same-origin"}),

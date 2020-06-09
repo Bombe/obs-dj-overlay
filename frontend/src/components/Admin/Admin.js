@@ -18,6 +18,7 @@ const Admin = () => {
     const [trackTitle, setTrackTitle] = useState("")
     const [showTitle, setShowTitle] = useState("")
     const [showSubtitle, setShowSubtitle] = useState("")
+    const [nextShow, setNextShow] = useState("")
     const [message, setMessage] = useState("")
     const [twitchUserName, setTwitchUserName] = useState("")
 
@@ -26,7 +27,7 @@ const Admin = () => {
     }
 
     const sendShowInfo = (event) => {
-        overlayService.setShowInfo(showTitle, showSubtitle)
+        overlayService.setShowInfo(showTitle, showSubtitle, nextShow)
         event.preventDefault()
     }
 
@@ -53,6 +54,7 @@ const Admin = () => {
                 setTrackTitle(overlayInfo.track.title)
                 setShowTitle(overlayInfo.show.title)
                 setShowSubtitle(overlayInfo.show.subtitle)
+                setNextShow(overlayInfo.show.nextShow)
                 setMessage(overlayInfo.message)
                 setTwitchUserName(overlayInfo.twitchUserName)
             })
@@ -68,6 +70,7 @@ const Admin = () => {
                             <Grid container spacing={2} direction="column" alignItems="stretch">
                                 <Grid item xs={12}><TextField label="The title of the show" variant="filled" value={showTitle} onChange={onEvent(setShowTitle)} fullWidth={true}/></Grid>
                                 <Grid item xs={12}><TextField label="The subtitle of the show" variant="filled" value={showSubtitle} onChange={onEvent(setShowSubtitle)} fullWidth={true}/></Grid>
+                                <Grid item xs={12}><TextField label="Announcement for the next show" variant="filled" value={nextShow} onChange={onEvent(setNextShow)} fullWidth={true}/></Grid>
                                 <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                             </Grid>
                         </form>

@@ -39,62 +39,80 @@ describe("“overlay” Controller", () => {
 
     describe("The PUT /show method", () => {
 
-        it("should update both title and subtitle", () => {
-            let showTitle, showSubtitle
+        it("should update show information", () => {
+            let showTitle, showSubtitle, nextShow
             controller({
-                setShowInfo: (s, t) => {
+                setShowInfo: (s, t, n) => {
                     showTitle = s
                     showSubtitle = t
+                    nextShow = n
                 }
-            }).setShowInfo({body: {title: "Title", subtitle: "Subtitle"}}, response)
+            }).setShowInfo({body: {title: "Title", subtitle: "Subtitle", nextShow: "Next"}}, response)
             expect(showTitle).to.equal("Title")
             expect(showSubtitle).to.equal("Subtitle")
+            expect(nextShow).to.equal("Next")
         })
 
         it("ends the request correctly", () => {
-            controller({setShowInfo: (s, t) => nothing})
-                .setShowInfo({body: {title: "Title", subtitle: "Subtitle"}}, response)
+            controller({setShowInfo: (s, t, n) => nothing})
+                .setShowInfo({body: {title: "Title", subtitle: "Subtitle", nextShow: "Next"}}, response)
             expect(response.endCalled()).to.equal(true)
         })
 
-        it("should not update title and subtitle if title is unset", () => {
+        it("should not update show information if title is unset", () => {
             let setShowInfoCalled = false
             controller({
-                setShowInfo: (s, t) => setShowInfoCalled = true
-            }).setShowInfo({body: {subtitle: "Subtitle"}}, response)
+                setShowInfo: () => setShowInfoCalled = true
+            }).setShowInfo({body: {subtitle: "Subtitle", nextShow: "Next"}}, response)
             expect(setShowInfoCalled).to.equal(false)
         })
 
-        it("should not update title and subtitle if subtitle is unset", () => {
+        it("should not update show information if subtitle is unset", () => {
             let setShowInfoCalled = false
             controller({
-                setShowInfo: (s, t) => setShowInfoCalled = true
-            }).setShowInfo({body: {title: "Title"}}, response)
+                setShowInfo: () => setShowInfoCalled = true
+            }).setShowInfo({body: {title: "Title", nextShow: "Next"}}, response)
+            expect(setShowInfoCalled).to.equal(false)
+        })
+
+        it("should not update show information if next show is unset", () => {
+            let setShowInfoCalled = false
+            controller({
+                setShowInfo: () => setShowInfoCalled = true
+            }).setShowInfo({body: {title: "Title", subtitle: "Subtitle"}}, response)
             expect(setShowInfoCalled).to.equal(false)
         })
 
         it("should return a 400 if title is unset", () => {
-            controller({setShowInfo: (s, t) => nothing})
-                .setShowInfo({body: {subtitle: "Subtitle"}}, response)
+            controller({setShowInfo: () => nothing})
+                .setShowInfo({body: {subtitle: "Subtitle", nextShow: "Next"}}, response)
             expect(response.setStatus()).to.equal(400)
         })
 
         it("should return a 400 if subtitle is unset", () => {
-            controller({setShowInfo: (s, t) => nothing})
-                .setShowInfo({body: {title: "Title"}}, response)
+            controller({setShowInfo: () => nothing})
+                .setShowInfo({body: {title: "Title", nextShow: "Next"}}, response)
             expect(response.setStatus()).to.equal(400)
         })
 
-        it("should update both title and subtitle if they are empty strings", () => {
-            let showTitle, showSubtitle
+        it("should return a 400 if next show is unset", () => {
+            controller({setShowInfo: () => nothing})
+                .setShowInfo({body: {title: "Title", subtitle: "Subtitle"}}, response)
+            expect(response.setStatus()).to.equal(400)
+        })
+
+        it("should update show information if all strings are empty", () => {
+            let showTitle, showSubtitle, nextShow
             controller({
-                setShowInfo: (s, t) => {
+                setShowInfo: (s, t, n) => {
                     showTitle = s
                     showSubtitle = t
+                    nextShow = n
                 }
-            }).setShowInfo({body: {title: "", subtitle: ""}}, response)
+            }).setShowInfo({body: {title: "", subtitle: "", nextShow: ""}}, response)
             expect(showTitle).to.equal("")
             expect(showSubtitle).to.equal("")
+            expect(nextShow).to.equal("")
         })
 
     })

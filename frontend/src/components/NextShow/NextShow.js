@@ -5,10 +5,10 @@ import OverlayContext from "../Overlay";
 const NextShow = () => {
     const overlayInfo = useContext(OverlayContext);
 
-    return overlayInfo.nextShow ? (
+    return overlayInfo.show.nextShow ? (
         <div className="NextShow">
             <div className="Text">
-                {overlayInfo.nextShow}
+                {overlayInfo.show.nextShow}
             </div>
         </div>
     ) : <></>

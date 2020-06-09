@@ -12,18 +12,19 @@ describe("State", () => {
             },
             show: {
                 title: "",
-                subtitle: ""
+                subtitle: "",
+                nextShow: "",
             },
             message: "",
-            nextShow: "",
             twitchUserName: ""
         })
     })
 
     it("should keep show info when set", () => {
-        State.setShowInfo("Title", "Subtitle")
+        State.setShowInfo("Title", "Subtitle", "Next")
         expect(State.currentState().show.title).to.equal("Title")
         expect(State.currentState().show.subtitle).to.equal("Subtitle")
+        expect(State.currentState().show.nextShow).to.equal("Next")
     })
 
     it("should keep track info when set", () => {
