@@ -10,10 +10,12 @@ import Group from "../Group"
 import styles from "./Admin.module.css"
 
 const onEvent = (setter) => (event) => setter(event.target.value)
-const onEnter = (focuser) => (event) => {
+const onEnter = (focuser, preventDefault) => (event) => {
     if (event.key === "Enter") {
-        focuser()
-        event.preventDefault()
+        focuser(event)
+        if (preventDefault) {
+            event.preventDefault()
+        }
     }
 }
 
@@ -26,6 +28,8 @@ const useFocus = () => {
 const SelectOnFocusTextField = (props) => {
     return <TextField {...props} onFocus={(event) => event.target.select()}/>
 }
+
+const blur = (event) => event.target.blur()
 
 const Admin = () => {
 
@@ -92,15 +96,15 @@ const Admin = () => {
                             <Grid container spacing={2} direction="column" alignItems="stretch">
                                 <Grid item xs={12}>
                                     <SelectOnFocusTextField label="The title of the show" variant="filled" value={showTitle} onChange={onEvent(setShowTitle)}
-                                                            onKeyPress={onEnter(focusShowSubtitle)} fullWidth={true}/>
+                                                            onKeyPress={onEnter(focusShowSubtitle, true)} fullWidth={true}/>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <SelectOnFocusTextField inputRef={showSubtitleField} label="The subtitle of the show" variant="filled" value={showSubtitle}
-                                                            onChange={onEvent(setShowSubtitle)} onKeyPress={onEnter(focusNextShow)} fullWidth={true}/>
+                                                            onChange={onEvent(setShowSubtitle)} onKeyPress={onEnter(focusNextShow, true)} fullWidth={true}/>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <SelectOnFocusTextField inputRef={nextShowField} label="Announcement for the next show" variant="filled" value={nextShow}
-                                                            onChange={onEvent(setNextShow)} fullWidth={true}/>
+                                                            onChange={onEvent(setNextShow)} onKeyPress={onEnter(blur, false)} fullWidth={true}/>
                                 </Grid>
                                 <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                             </Grid>
@@ -113,15 +117,15 @@ const Admin = () => {
                             <Grid container spacing={2} direction="column" alignItems="stretch">
                                 <Grid item xs={12}>
                                     <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onEvent(setFilteredTrackNumber)}
-                                                            onKeyPress={onEnter(focusTrackArtist)} fullWidth={true}/>
+                                                            onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true}/>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <SelectOnFocusTextField inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist}
-                                                            onChange={onEvent(setTrackArtist)} onKeyPress={onEnter(focusTrackTitle)} fullWidth={true}/>
+                                                            onChange={onEvent(setTrackArtist)} onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true}/>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <SelectOnFocusTextField inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle}
-                                                            onChange={onEvent(setTrackTitle)} fullWidth={true}/>
+                                                            onChange={onEvent(setTrackTitle)} onKeyPress={onEnter(blur, false)} fullWidth={true}/>
                                 </Grid>
                                 <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                             </Grid>
@@ -133,7 +137,7 @@ const Admin = () => {
                         <form onSubmit={sendMessage}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
                                 <Grid item xs={12}>
-                                    <SelectOnFocusTextField label="A message to display" variant="filled" value={message} onChange={onEvent(setMessage)}
+                                    <SelectOnFocusTextField label="A message to display" variant="filled" value={message} onChange={onEvent(setMessage)} onKeyPress={onEnter(blur, false)}
                                                             fullWidth={true}/>
                                 </Grid>
                                 <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
@@ -147,7 +151,7 @@ const Admin = () => {
                             <Grid container spacing={2} direction="column" alignItems="stretch">
                                 <Grid item xs={12}>
                                     <SelectOnFocusTextField label="Twitch user to show viewer count for" variant="filled" value={twitchUserName} onChange={onEvent(setTwitchUserName)}
-                                                            fullWidth={true}/>
+                                                            onKeyPress={onEnter(blur, false)} fullWidth={true}/>
                                 </Grid>
                                 <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                             </Grid>
