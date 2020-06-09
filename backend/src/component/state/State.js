@@ -25,5 +25,8 @@ module.exports = {
         state.track.number = number
         state.track.artist = artist
         state.track.title = title
+    },
+    setMessage: (message) => {
+        state.message = message
     }
 }

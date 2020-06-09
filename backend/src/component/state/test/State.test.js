@@ -33,4 +33,10 @@ describe("State", () => {
         expect(State.currentState().track.title).to.equal("Title")
     })
 
+    it("should keep message when set", () => {
+        State.setMessage("Message")
+        expect(State.currentState().message).to.equal("Message")
+    })
+
+
 })
