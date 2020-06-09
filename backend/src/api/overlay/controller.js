@@ -17,6 +17,15 @@ module.exports = (state) => ({
             response.status(400)
         }
         response.end()
+    },
+
+    setMessage: (request, response) => {
+        if (typeof request.body === "string") {
+            state.setMessage(request.body)
+        } else {
+            response.status(400)
+        }
+        response.end()
     }
 
 })

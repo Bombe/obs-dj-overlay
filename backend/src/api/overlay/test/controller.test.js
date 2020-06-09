@@ -207,4 +207,45 @@ describe("“overlay” Controller", () => {
 
     })
 
+    describe("The PUT /message method", () => {
+
+        let response
+        beforeEach(() => {
+            response = createResponseObject()
+        })
+
+        it("should update the message", () => {
+            let setMessage
+            controller({setMessage: (m) => setMessage = m})
+                .setMessage({body: "Message"}, response)
+            expect(setMessage).to.equal("Message")
+        })
+
+        it("should end the request if message is set", () => {
+            controller({setMessage: () => nothing})
+                .setMessage({body: "Message"}, response)
+            expect(response.endCalled()).to.equal(true)
+        })
+
+        it("should not set the message if message is missing", () => {
+            let setMessageCalled = false
+            controller({setMessage: () => setMessageCalled = true})
+                .setMessage({}, response)
+            expect(setMessageCalled).to.equal(false)
+        })
+
+        it("should return 400 if the message is missing", () => {
+            controller({setMessage: () => nothing})
+                .setMessage({}, response)
+            expect(response.setStatus()).to.equal(400)
+        })
+
+        it("should end the request if message is missing", () => {
+            controller({setMessage: () => nothing})
+                .setMessage({}, response)
+            expect(response.endCalled()).to.equal(true)
+        })
+
+    })
+
 })
