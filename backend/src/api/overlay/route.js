@@ -11,4 +11,7 @@ module.exports = (app, state) => {
     app.route("/overlay/track")
         .put(overlay.setTrackInfo)
 
+    app.route("/overlay/message")
+        .put(overlay.setMessage)
+
 }
