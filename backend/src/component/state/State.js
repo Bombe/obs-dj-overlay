@@ -17,5 +17,9 @@ let state = {...defaultState}
 
 module.exports = {
     currentState: () => state,
+    setShowInfo: (title, subtitle) => {
+        state.show.title = title
+        state.show.subtitle = subtitle
+    },
     setTrackNumber: (trackNumber) => state.track.number = trackNumber
 }
