@@ -19,6 +19,12 @@ const onEnter = (focuser, preventDefault) => (event) => {
         }
     }
 }
+const textAreaEnterHandler = (action) => (event) => {
+    if (event.key === "Enter" && event.ctrlKey) {
+        action(event)
+        event.target.select()
+    }
+}
 
 /* shamelessly stolen from https://stackoverflow.com/a/54159564/43582 */
 const useFocus = () => {
@@ -157,8 +163,8 @@ const Admin = () => {
                         <form onSubmit={sendMessage}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
                                 <Grid item xs={12}>
-                                    <SelectOnFocusTextField label="A message to display" variant="filled" value={message} onChange={onEvent(setMessage)} onKeyPress={onEnter(blur, false)}
-                                                            fullWidth={true}/>
+                                    <SelectOnFocusTextField label="A message to display" variant="filled" value={message} onChange={onEvent(setMessage)} onKeyPress={textAreaEnterHandler(sendMessage)}
+                                                            fullWidth={true} multiline={true} rows={4}/>
                                 </Grid>
                                 <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                             </Grid>
