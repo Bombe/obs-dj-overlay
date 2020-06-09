@@ -18,6 +18,7 @@ const Admin = () => {
     const [trackTitle, setTrackTitle] = useState("")
     const [showTitle, setShowTitle] = useState("")
     const [showSubtitle, setShowSubtitle] = useState("")
+    const [message, setMessage] = useState("")
 
     const setFilteredTrackNumber = (value) => {
         setTrackNumber(parseInt(value.replace(/[^0-9]/, "")) || 0)
@@ -33,6 +34,11 @@ const Admin = () => {
         event.preventDefault()
     }
 
+    const sendMessage = (event) => {
+        overlayService.setMessage(message)
+        event.preventDefault()
+    }
+
     useEffect(() => {
         overlayService.get()
             .then(overlayInfo => {
@@ -41,6 +47,7 @@ const Admin = () => {
                 setTrackTitle(overlayInfo.track.title)
                 setShowTitle(overlayInfo.show.title)
                 setShowSubtitle(overlayInfo.show.subtitle)
+                setMessage(overlayInfo.message)
             })
     }, [])
 
@@ -66,6 +73,16 @@ const Admin = () => {
                                 <Grid item xs={12}><TextField label="The number of the track" variant="filled" value={trackNumber} onChange={onEvent(setFilteredTrackNumber)} fullWidth={true}/></Grid>
                                 <Grid item xs={12}><TextField label="The artist of the track" variant="filled" value={trackArtist} onChange={onEvent(setTrackArtist)} fullWidth={true}/></Grid>
                                 <Grid item xs={12}><TextField label="The title of the track" variant="filled" value={trackTitle} onChange={onEvent(setTrackTitle)} fullWidth={true}/></Grid>
+                                <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
+                            </Grid>
+                        </form>
+                    </Group>
+                </Grid>
+                <Grid item xs={6}>
+                    <Group title="Message">
+                        <form onSubmit={sendMessage}>
+                            <Grid container spacing={2} direction="column" alignItems="stretch">
+                                <Grid item xs={12}><TextField label="A message to display" variant="filled" value={message} onChange={onEvent(setMessage)} fullWidth={true}/></Grid>
                                 <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                             </Grid>
                         </form>
