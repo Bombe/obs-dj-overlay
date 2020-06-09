@@ -1,3 +1,4 @@
+import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import TextField from "@material-ui/core/TextField"
@@ -127,14 +128,16 @@ const Admin = () => {
                     <Group title="Track">
                         <form onSubmit={sendTrackInfo}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
-                                <Grid item xs={12} container spacing={2} alignItems="center">
-                                    <Grid item xs={11}>
-                                        <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onEvent(setFilteredTrackNumber)}
-                                                                onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true}/>
-                                    </Grid>
-                                    <Grid item xs={1}>
-                                        <Button fullWidth={true} variant="contained" onClick={decrementTrackNumber}>-</Button>
-                                    </Grid>
+                                <Grid item xs={12} spacing={2} alignItems="center">
+                                    <Box display="flex" alignItems="center">
+                                        <Box flexGrow={1}>
+                                            <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onEvent(setFilteredTrackNumber)}
+                                                                    onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true}/>
+                                        </Box>
+                                        <Box style={{paddingLeft: "16px"}}>
+                                            <Button fullWidth={true} variant="contained" onClick={decrementTrackNumber}>-</Button>
+                                        </Box>
+                                    </Box>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <SelectOnFocusTextField inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist}
