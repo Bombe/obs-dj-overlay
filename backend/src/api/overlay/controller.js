@@ -26,6 +26,15 @@ module.exports = (state) => ({
             response.status(400)
         }
         response.end()
+    },
+
+    setTwitch: (request, response) => {
+        if (typeof request.body.username === "string") {
+            state.setTwitchUserName(request.body.username)
+        } else {
+            response.status(400)
+        }
+        response.end()
     }
 
 })

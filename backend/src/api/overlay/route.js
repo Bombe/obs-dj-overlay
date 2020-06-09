@@ -14,4 +14,7 @@ module.exports = (app, state) => {
     app.route("/overlay/message")
         .put(overlay.setMessage)
 
+    app.route("/overlay/twitch")
+        .put(overlay.setTwitch)
+
 }

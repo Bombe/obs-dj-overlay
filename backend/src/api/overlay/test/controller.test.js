@@ -238,4 +238,40 @@ describe("“overlay” Controller", () => {
 
     })
 
+    describe("The PUT /twitch method", () => {
+
+        it("should update the Twitch username", () => {
+            let setTwitchUserName
+            controller({setTwitchUserName: (t) => setTwitchUserName = t})
+                .setTwitch({body: {username: "TwitchUserName"}}, response)
+            expect(setTwitchUserName).to.equal("TwitchUserName")
+        })
+
+        it("should end the request correctly", () => {
+            controller({setTwitchUserName: () => nothing})
+                .setTwitch({body: {username: "TwitchUserName"}}, response)
+            expect(response.endCalled()).to.equal(true)
+        })
+
+        it("should not update the Twitch username if username is missing", () => {
+            let twitchUserNameCalled = false
+            controller({setTwitchUserName: () => twitchUserNameCalled = true})
+                .setTwitch({body: {}}, response)
+            expect(twitchUserNameCalled).to.equal(false)
+        })
+
+        it("should return 400 if username is missing", () => {
+            controller({setTwitchUserName: () => nothing})
+                .setTwitch({body: {}}, response)
+            expect(response.setStatus()).to.equal(400)
+        })
+
+        it("should end the request if username is missing", () => {
+            controller({setTwitchUserName: () => nothing})
+                .setTwitch({body: {}}, response)
+            expect(response.endCalled()).to.equal(true)
+        })
+
+    })
+
 })
