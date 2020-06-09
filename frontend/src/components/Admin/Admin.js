@@ -52,6 +52,10 @@ const Admin = () => {
         setTrackNumber(parseInt(value.replace(/[^0-9]/, "")) || 0)
     }
 
+    const decrementTrackNumber = () => {
+        setTrackNumber(trackNumber - 1)
+    }
+
     const sendShowInfo = (event) => {
         overlayService.setShowInfo(showTitle, showSubtitle, nextShow)
         event.preventDefault()
@@ -123,9 +127,14 @@ const Admin = () => {
                     <Group title="Track">
                         <form onSubmit={sendTrackInfo}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
-                                <Grid item xs={12}>
-                                    <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onEvent(setFilteredTrackNumber)}
-                                                            onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true}/>
+                                <Grid item xs={12} container spacing={2} alignItems="center">
+                                    <Grid item xs={11}>
+                                        <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onEvent(setFilteredTrackNumber)}
+                                                                onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true}/>
+                                    </Grid>
+                                    <Grid item xs={1}>
+                                        <Button fullWidth={true} variant="contained" onClick={decrementTrackNumber}>-</Button>
+                                    </Grid>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <SelectOnFocusTextField inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist}
