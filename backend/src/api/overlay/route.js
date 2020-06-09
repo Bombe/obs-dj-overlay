@@ -5,7 +5,4 @@ module.exports = (app, state) => {
     app.route("/overlay")
         .get(overlay.get)
 
-    app.route("/overlay/track/number")
-        .put(overlay.setTrackNumber)
-
 }

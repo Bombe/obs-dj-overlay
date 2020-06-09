@@ -8,15 +8,6 @@ module.exports = (state) => ({
             response.status(400)
         }
         response.end()
-    },
-
-    setTrackNumber: (request, response) => {
-        if (Number.isFinite(request.body)) {
-            state.setTrackNumber(request.body)
-        } else {
-            response.status(400)
-        }
-        response.end()
     }
 
 })

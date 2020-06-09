@@ -26,9 +26,4 @@ describe("State", () => {
         expect(State.currentState().show.subtitle).to.equal("Subtitle")
     })
 
-    it("should keep track number when set", () => {
-        State.setTrackNumber(123)
-        expect(State.currentState().track.number).to.equal(123)
-    })
-
 })
