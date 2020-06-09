@@ -43,7 +43,10 @@ const OverlayService = {
         fetch("/overlay/track", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({number, artist, title}), mode: "same-origin"}),
 
     setMessage: (message) =>
-        fetch("/overlay/message", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify(message), mode: "same-origin"})
+        fetch("/overlay/message", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify(message), mode: "same-origin"}),
+
+    setTwitchData: (username) =>
+        fetch("/overlay/twitch", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({username}), mode: "same-origin"})
 }
 
 export {OverlayService}

@@ -19,6 +19,7 @@ const Admin = () => {
     const [showTitle, setShowTitle] = useState("")
     const [showSubtitle, setShowSubtitle] = useState("")
     const [message, setMessage] = useState("")
+    const [twitchUserName, setTwitchUserName] = useState("")
 
     const setFilteredTrackNumber = (value) => {
         setTrackNumber(parseInt(value.replace(/[^0-9]/, "")) || 0)
@@ -39,6 +40,11 @@ const Admin = () => {
         event.preventDefault()
     }
 
+    const sendTwitchData = (event) => {
+        overlayService.setTwitchData(twitchUserName)
+        event.preventDefault()
+    }
+
     useEffect(() => {
         overlayService.get()
             .then(overlayInfo => {
@@ -48,6 +54,7 @@ const Admin = () => {
                 setShowTitle(overlayInfo.show.title)
                 setShowSubtitle(overlayInfo.show.subtitle)
                 setMessage(overlayInfo.message)
+                setTwitchUserName(overlayInfo.twitchUserName)
             })
     }, [])
 
@@ -83,6 +90,16 @@ const Admin = () => {
                         <form onSubmit={sendMessage}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
                                 <Grid item xs={12}><TextField label="A message to display" variant="filled" value={message} onChange={onEvent(setMessage)} fullWidth={true}/></Grid>
+                                <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
+                            </Grid>
+                        </form>
+                    </Group>
+                </Grid>
+                <Grid item xs={6}>
+                    <Group title="Twitch">
+                        <form onSubmit={sendTwitchData}>
+                            <Grid container spacing={2} direction="column" alignItems="stretch">
+                                <Grid item xs={12}><TextField label="Twitch user to show viewer count for" variant="filled" value={twitchUserName} onChange={onEvent(setTwitchUserName)} fullWidth={true}/></Grid>
                                 <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                             </Grid>
                         </form>
