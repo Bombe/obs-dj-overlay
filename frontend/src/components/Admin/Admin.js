@@ -164,7 +164,7 @@ const Admin = () => {
                             <Grid container spacing={2} direction="column" alignItems="stretch">
                                 <Grid item xs={12}>
                                     <SelectOnFocusTextField label="A message to display" variant="filled" value={message} onChange={onEvent(setMessage)} onKeyPress={textAreaEnterHandler(sendMessage)}
-                                                            fullWidth={true} multiline={true} rows={4}/>
+                                                            fullWidth={true} multiline={true} rows={4} helperText="Press Ctrl-Enter to submit!"/>
                                 </Grid>
                                 <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                             </Grid>
