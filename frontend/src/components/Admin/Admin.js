@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import TextField from "@material-ui/core/TextField"
 import Typography from "@material-ui/core/Typography"
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 
 import overlayService from "../../services/overlay"
 import Group from "../Group"
@@ -10,6 +10,18 @@ import Group from "../Group"
 import styles from "./Admin.module.css"
 
 const onEvent = (setter) => (event) => setter(event.target.value)
+const onEnter = (focuser) => (event) => {
+    if (event.key === "Enter") {
+        focuser()
+        event.preventDefault()
+    }
+}
+
+/* shamelessly stolen from https://stackoverflow.com/a/54159564/43582 */
+const useFocus = () => {
+    const htmlElementRef = useRef()
+    return [htmlElementRef, () => htmlElementRef.current && htmlElementRef.current.focus()]
+}
 
 const Admin = () => {
 
@@ -21,6 +33,9 @@ const Admin = () => {
     const [nextShow, setNextShow] = useState("")
     const [message, setMessage] = useState("")
     const [twitchUserName, setTwitchUserName] = useState("")
+
+    const [showSubtitleField, focusShowSubtitle] = useFocus()
+    const [nextShowField, focusNextShow] = useFocus()
 
     const setFilteredTrackNumber = (value) => {
         setTrackNumber(parseInt(value.replace(/[^0-9]/, "")) || 0)
@@ -68,9 +83,16 @@ const Admin = () => {
                     <Group title="Show">
                         <form onSubmit={sendShowInfo}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
-                                <Grid item xs={12}><TextField label="The title of the show" variant="filled" value={showTitle} onChange={onEvent(setShowTitle)} fullWidth={true}/></Grid>
-                                <Grid item xs={12}><TextField label="The subtitle of the show" variant="filled" value={showSubtitle} onChange={onEvent(setShowSubtitle)} fullWidth={true}/></Grid>
-                                <Grid item xs={12}><TextField label="Announcement for the next show" variant="filled" value={nextShow} onChange={onEvent(setNextShow)} fullWidth={true}/></Grid>
+                                <Grid item xs={12}>
+                                    <TextField label="The title of the show" variant="filled" value={showTitle} onChange={onEvent(setShowTitle)} onKeyPress={onEnter(focusShowSubtitle)}
+                                               fullWidth={true}/>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField inputRef={showSubtitleField} label="The subtitle of the show" variant="filled" value={showSubtitle} onChange={onEvent(setShowSubtitle)}
+                                               onKeyPress={onEnter(focusNextShow)} fullWidth={true}/>
+                                </Grid>
+                                <Grid item xs={12}><TextField inputRef={nextShowField} label="Announcement for the next show" variant="filled" value={nextShow} onChange={onEvent(setNextShow)}
+                                                              fullWidth={true}/></Grid>
                                 <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                             </Grid>
                         </form>
