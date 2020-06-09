@@ -23,8 +23,9 @@ const Admin = () => {
         setTrackNumber(parseInt(value.replace(/[^0-9]/, "")) || 0)
     }
 
-    const sendShowInfo = () => {
+    const sendShowInfo = (event) => {
         overlayService.setShowInfo(showTitle, showSubtitle)
+        event.preventDefault()
     }
 
     const sendTrackInfo = (event) => {
@@ -49,7 +50,7 @@ const Admin = () => {
             <Grid className={styles.Inputs} container spacing={3}>
                 <Grid item xs={6}>
                     <Group title="Show">
-                        <form onSubmit={sendShowInfo} action={""}>
+                        <form onSubmit={sendShowInfo}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
                                 <Grid item xs={12}><TextField label="The title of the show" variant="filled" value={showTitle} onChange={onEvent(setShowTitle)} fullWidth={true}/></Grid>
                                 <Grid item xs={12}><TextField label="The subtitle of the show" variant="filled" value={showSubtitle} onChange={onEvent(setShowSubtitle)} fullWidth={true}/></Grid>
