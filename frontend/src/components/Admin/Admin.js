@@ -128,7 +128,7 @@ const Admin = () => {
                     <Group title="Track">
                         <form onSubmit={sendTrackInfo}>
                             <Grid container spacing={2} direction="column" alignItems="stretch">
-                                <Grid item xs={12} spacing={2} alignItems="center">
+                                <Grid item xs={12}>
                                     <Box display="flex" alignItems="center">
                                         <Box flexGrow={1}>
                                             <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onEvent(setFilteredTrackNumber)}
