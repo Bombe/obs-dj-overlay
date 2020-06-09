@@ -28,5 +28,8 @@ module.exports = {
     },
     setMessage: (message) => {
         state.message = message
+    },
+    setTwitchUserName: (twitchUserName) => {
+        state.twitchUserName = twitchUserName
     }
 }

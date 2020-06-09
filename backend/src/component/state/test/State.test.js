@@ -38,5 +38,9 @@ describe("State", () => {
         expect(State.currentState().message).to.equal("Message")
     })
 
+    it("should keep twitch user name when set", () => {
+        State.setTwitchUserName("TwitchUserName")
+        expect(State.currentState().twitchUserName).to.equal("TwitchUserName")
+    })
 
 })
