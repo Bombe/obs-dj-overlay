@@ -16,6 +16,11 @@ const createResponseObject = () => {
 
 describe("“overlay” Controller", () => {
 
+    let response
+    beforeEach(() => {
+        response = createResponseObject()
+    })
+
     describe("The GET / method", () => {
 
         it("should return the current state", () => {
@@ -33,11 +38,6 @@ describe("“overlay” Controller", () => {
     })
 
     describe("The PUT /show method", () => {
-
-        let response
-        beforeEach(() => {
-            response = createResponseObject()
-        })
 
         it("should update both title and subtitle", () => {
             let showTitle, showSubtitle
@@ -100,11 +100,6 @@ describe("“overlay” Controller", () => {
     })
 
     describe("The PUT /track method", () => {
-
-        let response
-        beforeEach(() => {
-            response = createResponseObject()
-        })
 
         it("should update track data", () => {
             let setNumber, setArtist, setTitle
@@ -208,11 +203,6 @@ describe("“overlay” Controller", () => {
     })
 
     describe("The PUT /message method", () => {
-
-        let response
-        beforeEach(() => {
-            response = createResponseObject()
-        })
 
         it("should update the message", () => {
             let setMessage
