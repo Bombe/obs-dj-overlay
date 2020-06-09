@@ -8,4 +8,7 @@ module.exports = (app, state) => {
     app.route("/overlay/show")
         .put(overlay.setShowInfo)
 
+    app.route("/overlay/track")
+        .put(overlay.setTrackInfo)
+
 }
