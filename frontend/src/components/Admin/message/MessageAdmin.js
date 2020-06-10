@@ -1,4 +1,5 @@
 import React from "react"
+import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 
@@ -15,6 +16,10 @@ const textAreaEnterHandler = (action) => (event) => {
 
 const MessageAdmin = ({message, setMessage, originalMessage, sendMessage}) => {
 
+    const restoreMessage = () => {
+        setMessage(originalMessage)
+    }
+
     return (
         <Group title="Message">
             <form onSubmit={sendMessage}>
@@ -23,7 +28,12 @@ const MessageAdmin = ({message, setMessage, originalMessage, sendMessage}) => {
                         <SelectOnFocusTextField label="A message to display" variant="filled" value={message} onChange={onValueEventRun(setMessage)} onKeyPress={textAreaEnterHandler(sendMessage)}
                                                 fullWidth={true} multiline={true} rows={6} helperText="Press Ctrl-Enter to submit!" error={message !== originalMessage}/>
                     </Grid>
-                    <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
+                    <Grid item xs={12}>
+                        <Box display="flex" alignItems="center">
+                            <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Box>
+                            <Box style={{paddingLeft: "16px"}}><Button type="reset" variant="contained" fullWidth={true} onClick={restoreMessage}>Restore</Button></Box>
+                        </Box>
+                    </Grid>
                 </Grid>
             </form>
         </Group>
