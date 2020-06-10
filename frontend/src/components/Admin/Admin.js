@@ -28,6 +28,9 @@ const Admin = () => {
     const [showTitle, setShowTitle] = useState("")
     const [showSubtitle, setShowSubtitle] = useState("")
     const [nextShow, setNextShow] = useState("")
+    const [originalShowTitle, setOriginalShowTitle] = useState("")
+    const [originalShowSubtitle, setOriginalShowSubtitle] = useState("")
+    const [originalNextShow, setOriginalNextShow] = useState("")
     const [message, setMessage] = useState("")
     const [twitchUserName, setTwitchUserName] = useState("")
 
@@ -40,6 +43,14 @@ const Admin = () => {
 
     const decrementTrackNumber = () => {
         setTrackNumber(trackNumber - 1)
+    }
+
+    const sendShowInfo = (event) => {
+        overlayService.setShowInfo(showTitle, showSubtitle, nextShow)
+        setOriginalShowTitle(showTitle)
+        setOriginalShowSubtitle(showSubtitle)
+        setOriginalNextShow(nextShow)
+        event.preventDefault()
     }
 
     const sendTrackInfo = (event) => {
@@ -74,6 +85,9 @@ const Admin = () => {
                 setShowTitle(overlayInfo.show.title)
                 setShowSubtitle(overlayInfo.show.subtitle)
                 setNextShow(overlayInfo.show.nextShow)
+                setOriginalShowTitle(overlayInfo.show.title)
+                setOriginalShowSubtitle(overlayInfo.show.subtitle)
+                setOriginalNextShow(overlayInfo.show.nextShow)
                 setMessage(overlayInfo.message)
                 setTwitchUserName(overlayInfo.twitchUserName)
             })
@@ -84,7 +98,8 @@ const Admin = () => {
             <Typography variant="h3">Admin Interface</Typography>
             <Grid className={styles.Inputs} container spacing={3}>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
-                    <ShowAdmin showTitle={showTitle} showSubtitle={showSubtitle} nextShow={nextShow} setShowTitle={setShowTitle} setShowSubtitle={setShowSubtitle} setNextShow={setNextShow}/>
+                    <ShowAdmin showTitle={showTitle} showSubtitle={showSubtitle} nextShow={nextShow} setShowTitle={setShowTitle} setShowSubtitle={setShowSubtitle} setNextShow={setNextShow}
+                               sendShowInfo={sendShowInfo} originalShowTitle={originalShowTitle} originalShowSubtitle={originalShowSubtitle} originalNextShow={originalNextShow}/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
                     <Group title="Track">
