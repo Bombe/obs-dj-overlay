@@ -1,3 +1,4 @@
+import {DoneAll} from "@material-ui/icons"
 import React from "react"
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
@@ -25,7 +26,7 @@ const TwitchAdmin = ({username, setUsername, originalUsername, sendTwitchData}) 
                     </Grid>
                     <Grid item xs={12}>
                         <Box display="flex" alignItems="center">
-                            <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Box>
+                            <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
                             <Box style={{paddingLeft: "16px"}}><Button type="reset" variant="contained" fullWidth={true} onClick={restoreTwitchData} disabled={!modificationsPresent}>Restore</Button></Box>
                         </Box>
                     </Grid>

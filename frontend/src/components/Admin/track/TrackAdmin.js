@@ -1,3 +1,4 @@
+import {DoneAll} from "@material-ui/icons"
 import React from "react"
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
@@ -51,7 +52,7 @@ const TrackAdmin = ({number, artist, title, setNumber, setArtist, setTitle, orig
                     <Grid item xs={12}>
                         <Box display="flex" alignItems="center">
                             <Box flexGrow={1}>
-                                <Button type="submit" variant="contained" fullWidth={true}>Update</Button>
+                                <Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button>
                             </Box>
                             <Box style={{paddingLeft: "16px"}}>
                                 <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} disabled={!modificationsPresent}>Restore</Button>
