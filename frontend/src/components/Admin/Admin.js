@@ -8,16 +8,10 @@ import {blur, onEnter, onValueEventRun} from "../../utils/event"
 import Group from "../Group"
 import SelectOnFocusTextField from "../selectOnFocus"
 
+import MessageAdmin from "./message"
 import ShowAdmin from "./show"
 import TrackAdmin from "./track"
 import styles from "./Admin.module.css"
-
-const textAreaEnterHandler = (action) => (event) => {
-    if (event.key === "Enter" && event.ctrlKey) {
-        action(event)
-        event.target.select()
-    }
-}
 
 const Admin = () => {
 
@@ -102,17 +96,7 @@ const Admin = () => {
                                 originalNumber={originalTrackNumber} originalArtist={originalTrackArtist} originalTitle={originalTrackTitle} sendTrackInfo={sendTrackInfo}/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
-                    <Group title="Message">
-                        <form onSubmit={sendMessage}>
-                            <Grid container spacing={2} direction="column" alignItems="stretch">
-                                <Grid item xs={12}>
-                                    <SelectOnFocusTextField label="A message to display" variant="filled" value={message} onChange={onValueEventRun(setMessage)} onKeyPress={textAreaEnterHandler(sendMessage)}
-                                                            fullWidth={true} multiline={true} rows={4} helperText="Press Ctrl-Enter to submit!"/>
-                                </Grid>
-                                <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
-                            </Grid>
-                        </form>
-                    </Group>
+                    <MessageAdmin message={message} setMessage={setMessage} sendMessage={sendMessage}/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
                     <Group title="Twitch">
