@@ -13,6 +13,8 @@ const TwitchAdmin = ({username, setUsername, originalUsername, sendTwitchData}) 
         setUsername(originalUsername)
     }
 
+    const modificationsPresent = (username !== originalUsername)
+
     return (
         <Group title="Twitch">
             <form onSubmit={sendTwitchData}>
@@ -24,7 +26,7 @@ const TwitchAdmin = ({username, setUsername, originalUsername, sendTwitchData}) 
                     <Grid item xs={12}>
                         <Box display="flex" alignItems="center">
                             <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Box>
-                            <Box style={{paddingLeft: "16px"}}><Button type="reset" variant="contained" fullWidth={true} onClick={restoreTwitchData}>Restore</Button></Box>
+                            <Box style={{paddingLeft: "16px"}}><Button type="reset" variant="contained" fullWidth={true} onClick={restoreTwitchData} disabled={!modificationsPresent}>Restore</Button></Box>
                         </Box>
                     </Grid>
                 </Grid>

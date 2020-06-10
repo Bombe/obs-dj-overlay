@@ -20,6 +20,8 @@ const MessageAdmin = ({message, setMessage, originalMessage, sendMessage}) => {
         setMessage(originalMessage)
     }
 
+    const modificationsPresent = (message !== originalMessage)
+
     return (
         <Group title="Message">
             <form onSubmit={sendMessage}>
@@ -31,7 +33,7 @@ const MessageAdmin = ({message, setMessage, originalMessage, sendMessage}) => {
                     <Grid item xs={12}>
                         <Box display="flex" alignItems="center">
                             <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Box>
-                            <Box style={{paddingLeft: "16px"}}><Button type="reset" variant="contained" fullWidth={true} onClick={restoreMessage}>Restore</Button></Box>
+                            <Box style={{paddingLeft: "16px"}}><Button type="reset" variant="contained" fullWidth={true} onClick={restoreMessage} disabled={!modificationsPresent}>Restore</Button></Box>
                         </Box>
                     </Grid>
                 </Grid>

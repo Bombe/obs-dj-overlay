@@ -23,6 +23,8 @@ const TrackAdmin = ({number, artist, title, setNumber, setArtist, setTitle, orig
         setTitle(originalTitle)
     }
 
+    const modificationsPresent = (number !== originalNumber) || (artist !== originalArtist) || (title !== originalTitle)
+
     return (
         <Group title="Track">
             <form onSubmit={sendTrackInfo}>
@@ -52,7 +54,7 @@ const TrackAdmin = ({number, artist, title, setNumber, setArtist, setTitle, orig
                                 <Button type="submit" variant="contained" fullWidth={true}>Update</Button>
                             </Box>
                             <Box style={{paddingLeft: "16px"}}>
-                                <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo}>Restore</Button>
+                                <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} disabled={!modificationsPresent}>Restore</Button>
                             </Box>
                         </Box>
                     </Grid>

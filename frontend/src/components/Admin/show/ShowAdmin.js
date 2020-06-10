@@ -19,6 +19,8 @@ const ShowAdmin = ({showTitle, showSubtitle, nextShow, setShowTitle, setShowSubt
         setNextShow(originalNextShow)
     }
 
+    const modificationsPresent = (showTitle !== originalShowTitle) || (showSubtitle !== originalShowSubtitle) || (nextShow !== originalNextShow)
+
     return (
         <Group title="Show">
             <form onSubmit={sendShowInfo}>
@@ -38,7 +40,7 @@ const ShowAdmin = ({showTitle, showSubtitle, nextShow, setShowTitle, setShowSubt
                     <Grid item xs={12}>
                         <Box display="flex" alignItems="center">
                             <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Box>
-                            <Box style={{paddingLeft: "16px"}}><Button type="reset" variant="contained" fullWidth={true} onClick={restoreShowInfo}>Restore</Button></Box>
+                            <Box style={{paddingLeft: "16px"}}><Button type="reset" variant="contained" fullWidth={true} onClick={restoreShowInfo} disabled={!modificationsPresent}>Restore</Button></Box>
                         </Box>
                     </Grid>
                 </Grid>
