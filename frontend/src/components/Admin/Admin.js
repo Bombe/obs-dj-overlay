@@ -1,16 +1,13 @@
-import Button from "@material-ui/core/Button"
+import React, {useEffect, useState} from "react"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
-import React, {useEffect, useState} from "react"
 
 import overlayService from "../../services/overlay"
-import {blur, onEnter, onValueEventRun} from "../../utils/event"
-import Group from "../Group"
-import SelectOnFocusTextField from "../selectOnFocus"
 
 import MessageAdmin from "./message"
 import ShowAdmin from "./show"
 import TrackAdmin from "./track"
+import TwitchAdmin from "./twitch"
 import styles from "./Admin.module.css"
 
 const Admin = () => {
@@ -99,17 +96,7 @@ const Admin = () => {
                     <MessageAdmin message={message} setMessage={setMessage} sendMessage={sendMessage}/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
-                    <Group title="Twitch">
-                        <form onSubmit={sendTwitchData}>
-                            <Grid container spacing={2} direction="column" alignItems="stretch">
-                                <Grid item xs={12}>
-                                    <SelectOnFocusTextField label="Twitch user to show viewer count for" variant="filled" value={twitchUserName} onChange={onValueEventRun(setTwitchUserName)}
-                                                            onKeyPress={onEnter(blur, false)} fullWidth={true}/>
-                                </Grid>
-                                <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
-                            </Grid>
-                        </form>
-                    </Group>
+                    <TwitchAdmin username={twitchUserName} setUsername={setTwitchUserName} sendTwitchData={sendTwitchData}/>
                 </Grid>
             </Grid>
         </div>
