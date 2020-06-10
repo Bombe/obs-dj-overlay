@@ -24,6 +24,9 @@ const Admin = () => {
     const [trackNumber, setTrackNumber] = useState(0)
     const [trackArtist, setTrackArtist] = useState("")
     const [trackTitle, setTrackTitle] = useState("")
+    const [originalTrackNumber, setOriginalTrackNumber] = useState(0)
+    const [originalTrackArtist, setOriginalTrackArtist] = useState("")
+    const [originalTrackTitle, setOriginalTrackTitle] = useState("")
     const [showTitle, setShowTitle] = useState("")
     const [showSubtitle, setShowSubtitle] = useState("")
     const [nextShow, setNextShow] = useState("")
@@ -47,6 +50,9 @@ const Admin = () => {
 
     const sendTrackInfo = (event) => {
         overlayService.setTrackInfo(trackNumber, trackArtist, trackTitle)
+        setOriginalTrackNumber(trackNumber)
+        setOriginalTrackArtist(trackArtist)
+        setOriginalTrackTitle(trackTitle)
         if (trackNumber) {
             setTrackNumber(trackNumber + 1)
         }
@@ -69,6 +75,9 @@ const Admin = () => {
                 setTrackNumber(overlayInfo.track.number)
                 setTrackArtist(overlayInfo.track.artist)
                 setTrackTitle(overlayInfo.track.title)
+                setOriginalTrackNumber(overlayInfo.track.number)
+                setOriginalTrackArtist(overlayInfo.track.artist)
+                setOriginalTrackTitle(overlayInfo.track.title)
                 setShowTitle(overlayInfo.show.title)
                 setShowSubtitle(overlayInfo.show.subtitle)
                 setNextShow(overlayInfo.show.nextShow)
@@ -90,7 +99,7 @@ const Admin = () => {
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
                     <TrackAdmin number={trackNumber} artist={trackArtist} title={trackTitle} setNumber={setFilteredTrackNumber} setArtist={setTrackArtist} setTitle={setTrackTitle}
-                                sendTrackInfo={sendTrackInfo}/>
+                                originalNumber={originalTrackNumber} originalArtist={originalTrackArtist} originalTitle={originalTrackTitle} sendTrackInfo={sendTrackInfo}/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
                     <Group title="Message">

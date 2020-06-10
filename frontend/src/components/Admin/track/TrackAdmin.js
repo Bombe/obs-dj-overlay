@@ -8,7 +8,7 @@ import useFocus from "../../../utils/focus"
 import Group from "../../Group"
 import SelectOnFocusTextField from "../../selectOnFocus"
 
-const TrackAdmin = ({number, artist, title, setNumber, setArtist, setTitle, sendTrackInfo}) => {
+const TrackAdmin = ({number, artist, title, setNumber, setArtist, setTitle, originalNumber, originalArtist, originalTitle, sendTrackInfo}) => {
 
     const [trackArtistField, focusTrackArtist] = useFocus()
     const [trackTitleField, focusTrackTitle] = useFocus()
@@ -25,7 +25,7 @@ const TrackAdmin = ({number, artist, title, setNumber, setArtist, setTitle, send
                         <Box display="flex" alignItems="center">
                             <Box flexGrow={1}>
                                 <SelectOnFocusTextField label="The number of the track" variant="filled" value={number} onChange={onValueEventRun(setNumber)}
-                                                        onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true}/>
+                                                        onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true} error={number !== originalNumber}/>
                             </Box>
                             <Box style={{paddingLeft: "16px"}}>
                                 <Button fullWidth={true} variant="contained" onClick={decrementTrackNumber}>-</Button>
@@ -34,11 +34,11 @@ const TrackAdmin = ({number, artist, title, setNumber, setArtist, setTitle, send
                     </Grid>
                     <Grid item xs={12}>
                         <SelectOnFocusTextField inputRef={trackArtistField} label="The artist of the track" variant="filled" value={artist} onChange={onValueEventRun(setArtist)}
-                                                onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true}/>
+                                                onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true} error={artist !== originalArtist}/>
                     </Grid>
                     <Grid item xs={12}>
                         <SelectOnFocusTextField inputRef={trackTitleField} label="The title of the track" variant="filled" value={title} onChange={onValueEventRun(setTitle)}
-                                                onKeyPress={onEnter(blur, false)} fullWidth={true}/>
+                                                onKeyPress={onEnter(blur, false)} fullWidth={true} error={title !== originalTitle}/>
                     </Grid>
                     <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                 </Grid>
