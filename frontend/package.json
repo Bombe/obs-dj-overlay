@@ -12,6 +12,8 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-split-pane": "^0.1.91",
+    "react-twitch-embed": "^2.0.0",
     "twitch": "^4.0.10"
   },
   "scripts": {
