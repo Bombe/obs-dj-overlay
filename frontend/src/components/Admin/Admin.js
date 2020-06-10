@@ -1,7 +1,6 @@
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
-import TextField from "@material-ui/core/TextField"
 import Typography from "@material-ui/core/Typography"
 import React, {useEffect, useState} from "react"
 
@@ -9,6 +8,7 @@ import overlayService from "../../services/overlay"
 import useFocus from "../../utils/focus"
 import {blur, onEnter, onValueEventRun} from "../../utils/event"
 import Group from "../Group"
+import SelectOnFocusTextField from "../selectOnFocus"
 
 import styles from "./Admin.module.css"
 
@@ -17,10 +17,6 @@ const textAreaEnterHandler = (action) => (event) => {
         action(event)
         event.target.select()
     }
-}
-
-const SelectOnFocusTextField = (props) => {
-    return <TextField {...props} onFocus={(event) => event.target.select()}/>
 }
 
 const Admin = () => {
