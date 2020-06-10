@@ -54,15 +54,10 @@ const Admin = () => {
     }
 
     const sendTrackInfo = (event) => {
-        overlayService.get()
-            .then(overlayInfo => {
-                if (((overlayInfo.track.artist !== trackArtist) || (overlayInfo.track.title !== trackTitle)) && trackNumber && (overlayInfo.track.number === trackNumber)) {
-                    setTrackNumber(trackNumber + 1)
-                    overlayService.setTrackInfo(trackNumber + 1, trackArtist, trackTitle)
-                } else {
-                    overlayService.setTrackInfo(trackNumber, trackArtist, trackTitle)
-                }
-            })
+        overlayService.setTrackInfo(trackNumber, trackArtist, trackTitle)
+        if (trackNumber) {
+            setTrackNumber(trackNumber + 1)
+        }
         event.preventDefault()
     }
 
