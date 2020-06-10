@@ -25,6 +25,7 @@ const Admin = () => {
     const [originalShowSubtitle, setOriginalShowSubtitle] = useState("")
     const [originalNextShow, setOriginalNextShow] = useState("")
     const [message, setMessage] = useState("")
+    const [originalMessage, setOriginalMessage] = useState("")
     const [twitchUserName, setTwitchUserName] = useState("")
 
     const setFilteredTrackNumber = (value) => {
@@ -52,6 +53,7 @@ const Admin = () => {
 
     const sendMessage = (event) => {
         overlayService.setMessage(message)
+        setOriginalMessage(message)
         event.preventDefault()
     }
 
@@ -76,6 +78,7 @@ const Admin = () => {
                 setOriginalShowSubtitle(overlayInfo.show.subtitle)
                 setOriginalNextShow(overlayInfo.show.nextShow)
                 setMessage(overlayInfo.message)
+                setOriginalMessage(overlayInfo.message)
                 setTwitchUserName(overlayInfo.twitchUserName)
             })
     }, [])
@@ -93,7 +96,7 @@ const Admin = () => {
                                 originalNumber={originalTrackNumber} originalArtist={originalTrackArtist} originalTitle={originalTrackTitle} sendTrackInfo={sendTrackInfo}/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
-                    <MessageAdmin message={message} setMessage={setMessage} sendMessage={sendMessage}/>
+                    <MessageAdmin message={message} setMessage={setMessage} originalMessage={originalMessage} sendMessage={sendMessage}/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
                     <TwitchAdmin username={twitchUserName} setUsername={setTwitchUserName} sendTwitchData={sendTwitchData}/>

@@ -13,7 +13,7 @@ const textAreaEnterHandler = (action) => (event) => {
     }
 }
 
-const MessageAdmin = ({message, setMessage, sendMessage}) => {
+const MessageAdmin = ({message, setMessage, originalMessage, sendMessage}) => {
 
     return (
         <Group title="Message">
@@ -21,7 +21,7 @@ const MessageAdmin = ({message, setMessage, sendMessage}) => {
                 <Grid container spacing={2} direction="column" alignItems="stretch">
                     <Grid item xs={12}>
                         <SelectOnFocusTextField label="A message to display" variant="filled" value={message} onChange={onValueEventRun(setMessage)} onKeyPress={textAreaEnterHandler(sendMessage)}
-                                                fullWidth={true} multiline={true} rows={6} helperText="Press Ctrl-Enter to submit!"/>
+                                                fullWidth={true} multiline={true} rows={6} helperText="Press Ctrl-Enter to submit!" error={message !== originalMessage}/>
                     </Grid>
                     <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
                 </Grid>
