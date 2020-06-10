@@ -1,16 +1,15 @@
-import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import React, {useEffect, useState} from "react"
 
 import overlayService from "../../services/overlay"
-import useFocus from "../../utils/focus"
 import {blur, onEnter, onValueEventRun} from "../../utils/event"
 import Group from "../Group"
 import SelectOnFocusTextField from "../selectOnFocus"
 
 import ShowAdmin from "./show"
+import TrackAdmin from "./track"
 import styles from "./Admin.module.css"
 
 const textAreaEnterHandler = (action) => (event) => {
@@ -34,15 +33,8 @@ const Admin = () => {
     const [message, setMessage] = useState("")
     const [twitchUserName, setTwitchUserName] = useState("")
 
-    const [trackArtistField, focusTrackArtist] = useFocus()
-    const [trackTitleField, focusTrackTitle] = useFocus()
-
     const setFilteredTrackNumber = (value) => {
-        setTrackNumber(parseInt(value.replace(/[^0-9]/, "")) || 0)
-    }
-
-    const decrementTrackNumber = () => {
-        setTrackNumber(trackNumber - 1)
+        setTrackNumber(parseInt(value.toString().replace(/[^0-9]/, "")) || 0)
     }
 
     const sendShowInfo = (event) => {
@@ -97,32 +89,8 @@ const Admin = () => {
                                sendShowInfo={sendShowInfo} originalShowTitle={originalShowTitle} originalShowSubtitle={originalShowSubtitle} originalNextShow={originalNextShow}/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
-                    <Group title="Track">
-                        <form onSubmit={sendTrackInfo}>
-                            <Grid container spacing={2} direction="column" alignItems="stretch">
-                                <Grid item xs={12}>
-                                    <Box display="flex" alignItems="center">
-                                        <Box flexGrow={1}>
-                                            <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onValueEventRun(setFilteredTrackNumber)}
-                                                                    onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true}/>
-                                        </Box>
-                                        <Box style={{paddingLeft: "16px"}}>
-                                            <Button fullWidth={true} variant="contained" onClick={decrementTrackNumber}>-</Button>
-                                        </Box>
-                                    </Box>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <SelectOnFocusTextField inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist}
-                                                            onChange={onValueEventRun(setTrackArtist)} onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true}/>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <SelectOnFocusTextField inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle}
-                                                            onChange={onValueEventRun(setTrackTitle)} onKeyPress={onEnter(blur, false)} fullWidth={true}/>
-                                </Grid>
-                                <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
-                            </Grid>
-                        </form>
-                    </Group>
+                    <TrackAdmin number={trackNumber} artist={trackArtist} title={trackTitle} setNumber={setFilteredTrackNumber} setArtist={setTrackArtist} setTitle={setTrackTitle}
+                                sendTrackInfo={sendTrackInfo}/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
                     <Group title="Message">
