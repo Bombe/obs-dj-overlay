@@ -27,6 +27,7 @@ const Admin = () => {
     const [message, setMessage] = useState("")
     const [originalMessage, setOriginalMessage] = useState("")
     const [twitchUserName, setTwitchUserName] = useState("")
+    const [originalTwitchUserName, setOriginalTwitchUserName] = useState("")
 
     const setFilteredTrackNumber = (value) => {
         setTrackNumber(parseInt(value.toString().replace(/[^0-9]/, "")) || 0)
@@ -59,6 +60,7 @@ const Admin = () => {
 
     const sendTwitchData = (event) => {
         overlayService.setTwitchData(twitchUserName)
+        setOriginalTwitchUserName(twitchUserName)
         event.preventDefault()
     }
 
@@ -80,6 +82,7 @@ const Admin = () => {
                 setMessage(overlayInfo.message)
                 setOriginalMessage(overlayInfo.message)
                 setTwitchUserName(overlayInfo.twitchUserName)
+                setOriginalTwitchUserName(overlayInfo.twitchUserName)
             })
     }, [])
 
@@ -99,7 +102,7 @@ const Admin = () => {
                     <MessageAdmin message={message} setMessage={setMessage} originalMessage={originalMessage} sendMessage={sendMessage}/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
-                    <TwitchAdmin username={twitchUserName} setUsername={setTwitchUserName} sendTwitchData={sendTwitchData}/>
+                    <TwitchAdmin username={twitchUserName} setUsername={setTwitchUserName} originalUsername={originalTwitchUserName} sendTwitchData={sendTwitchData}/>
                 </Grid>
             </Grid>
         </div>
