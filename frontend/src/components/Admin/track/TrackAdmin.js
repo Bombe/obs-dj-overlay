@@ -17,6 +17,12 @@ const TrackAdmin = ({number, artist, title, setNumber, setArtist, setTitle, orig
         setNumber(number - 1)
     }
 
+    const restoreTrackInfo = () => {
+        setNumber(originalNumber)
+        setArtist(originalArtist)
+        setTitle(originalTitle)
+    }
+
     return (
         <Group title="Track">
             <form onSubmit={sendTrackInfo}>
@@ -40,7 +46,16 @@ const TrackAdmin = ({number, artist, title, setNumber, setArtist, setTitle, orig
                         <SelectOnFocusTextField inputRef={trackTitleField} label="The title of the track" variant="filled" value={title} onChange={onValueEventRun(setTitle)}
                                                 onKeyPress={onEnter(blur, false)} fullWidth={true} error={title !== originalTitle}/>
                     </Grid>
-                    <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
+                    <Grid item xs={12}>
+                        <Box display="flex" alignItems="center">
+                            <Box flexGrow={1}>
+                                <Button type="submit" variant="contained" fullWidth={true}>Update</Button>
+                            </Box>
+                            <Box style={{paddingLeft: "16px"}}>
+                                <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo}>Restore</Button>
+                            </Box>
+                        </Box>
+                    </Grid>
                 </Grid>
             </form>
         </Group>
