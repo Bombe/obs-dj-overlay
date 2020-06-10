@@ -126,7 +126,7 @@ const Admin = () => {
                 <Box id="preview-frame" height={225}>
                     <iframe id={"preview-iframe"} style={{transform: "scale(0.3125)", transformOrigin: "0 0", overflow: "hidden"}} title={"Preview"} width={1280} height={720} src={"/"}/>
                 </Box>
-                <Box><TwitchPlayer id="twitch-video-player" channel="bombe___" width={400} height={225}/></Box>
+                <Box><TwitchPlayer id="twitch-video-player" channel="bombe___" width={400} height={225} muted={true}/></Box>
                 <Box flexGrow={1} id="twitch-chat-box"><TwitchChat id="twitch-chat" channel="bombe___" parent={["localhost"]} width="100%" height="100%"/></Box>
             </Box>
         </SplitPane>
