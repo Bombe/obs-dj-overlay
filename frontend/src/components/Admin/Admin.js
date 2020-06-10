@@ -3,9 +3,10 @@ import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import TextField from "@material-ui/core/TextField"
 import Typography from "@material-ui/core/Typography"
-import React, {useEffect, useRef, useState} from "react"
+import React, {useEffect, useState} from "react"
 
 import overlayService from "../../services/overlay"
+import useFocus from "../../utils/focus"
 import Group from "../Group"
 
 import styles from "./Admin.module.css"
@@ -24,12 +25,6 @@ const textAreaEnterHandler = (action) => (event) => {
         action(event)
         event.target.select()
     }
-}
-
-/* shamelessly stolen from https://stackoverflow.com/a/54159564/43582 */
-const useFocus = () => {
-    const htmlElementRef = useRef()
-    return [htmlElementRef, () => htmlElementRef.current && htmlElementRef.current.focus()]
 }
 
 const SelectOnFocusTextField = (props) => {
