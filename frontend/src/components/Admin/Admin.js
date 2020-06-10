@@ -10,6 +10,7 @@ import {blur, onEnter, onValueEventRun} from "../../utils/event"
 import Group from "../Group"
 import SelectOnFocusTextField from "../selectOnFocus"
 
+import ShowAdmin from "./show"
 import styles from "./Admin.module.css"
 
 const textAreaEnterHandler = (action) => (event) => {
@@ -30,9 +31,6 @@ const Admin = () => {
     const [message, setMessage] = useState("")
     const [twitchUserName, setTwitchUserName] = useState("")
 
-    const [showSubtitleField, focusShowSubtitle] = useFocus()
-    const [nextShowField, focusNextShow] = useFocus()
-
     const [trackArtistField, focusTrackArtist] = useFocus()
     const [trackTitleField, focusTrackTitle] = useFocus()
 
@@ -42,11 +40,6 @@ const Admin = () => {
 
     const decrementTrackNumber = () => {
         setTrackNumber(trackNumber - 1)
-    }
-
-    const sendShowInfo = (event) => {
-        overlayService.setShowInfo(showTitle, showSubtitle, nextShow)
-        event.preventDefault()
     }
 
     const sendTrackInfo = (event) => {
@@ -91,25 +84,7 @@ const Admin = () => {
             <Typography variant="h3">Admin Interface</Typography>
             <Grid className={styles.Inputs} container spacing={3}>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
-                    <Group title="Show">
-                        <form onSubmit={sendShowInfo}>
-                            <Grid container spacing={2} direction="column" alignItems="stretch">
-                                <Grid item xs={12}>
-                                    <SelectOnFocusTextField label="The title of the show" variant="filled" value={showTitle} onChange={onValueEventRun(setShowTitle)}
-                                                            onKeyPress={onEnter(focusShowSubtitle, true)} fullWidth={true}/>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <SelectOnFocusTextField inputRef={showSubtitleField} label="The subtitle of the show" variant="filled" value={showSubtitle}
-                                                            onChange={onValueEventRun(setShowSubtitle)} onKeyPress={onEnter(focusNextShow, true)} fullWidth={true}/>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <SelectOnFocusTextField inputRef={nextShowField} label="Announcement for the next show" variant="filled" value={nextShow}
-                                                            onChange={onValueEventRun(setNextShow)} onKeyPress={onEnter(blur, false)} fullWidth={true}/>
-                                </Grid>
-                                <Grid item xs={12}><Button type="submit" variant="contained" fullWidth={true}>Update</Button></Grid>
-                            </Grid>
-                        </form>
-                    </Group>
+                    <ShowAdmin showTitle={showTitle} showSubtitle={showSubtitle} nextShow={nextShow} setShowTitle={setShowTitle} setShowSubtitle={setShowSubtitle} setNextShow={setNextShow}/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={3}>
                     <Group title="Track">
