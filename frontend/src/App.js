@@ -12,6 +12,9 @@ const App = () => {
                 <Route path="/admin">
                     <Admin/>
                 </Route>
+                <Route path="/preview">
+                    <Viewer/>
+                </Route>
                 <Route path="/">
                     <Link to="/admin">
                         <Viewer/>
