@@ -9,6 +9,8 @@ a video platform such as [Twitch](https://twitch.tv/) and who
 want to include some information about the tracks they are
 currently playing.
 
+![Screenshot of the admin interface](images/admin-interface.png)
+
 ## Configuring It
 
 If you want to include a viewer count for a Twitch account
