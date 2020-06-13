@@ -11,6 +11,22 @@ currently playing.
 
 ![Screenshot of the admin interface](images/admin-interface.png)
 
+This screenshot shows most of obs-dj-overlay’s features in
+action. On the left side there are input fields for everything
+you can change during runtime, on the right side there’s a
+preview of the rendered overlay, the current stream on
+Twitch and the Twitch chat.
+
+The different sections in the admin interface are independent
+from one another, i.e. you can change track info without at
+the same time changing the show info. Modified fields are
+shown in red to give a clear indication that unsaved data is
+present.
+
+The preview looks different from the Twitch stream because
+OBS’s Browser source can apply custom CSS to the preview to
+change its appearance.
+
 ## Configuring It
 
 If you want to include a viewer count for a Twitch account
