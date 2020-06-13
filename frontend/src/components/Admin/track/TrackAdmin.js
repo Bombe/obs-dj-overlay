@@ -34,10 +34,10 @@ const TrackAdmin = ({number, artist, title, setNumber, setArtist, setTitle, orig
                         <Box display="flex" alignItems="center">
                             <Box flexGrow={1}>
                                 <SelectOnFocusTextField label="The number of the track" variant="filled" value={number} onChange={onValueEventRun(setNumber)}
-                                                        onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true} error={number !== originalNumber}/>
+                                                        onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true} error={number !== originalNumber} tabIndex={2}/>
                             </Box>
                             <Box style={{paddingLeft: "16px"}}>
-                                <Button fullWidth={true} variant="contained" onClick={decrementTrackNumber}>-</Button>
+                                <Button fullWidth={true} variant="contained" onClick={decrementTrackNumber} tabIndex={1}>-</Button>
                             </Box>
                         </Box>
                     </Grid>
