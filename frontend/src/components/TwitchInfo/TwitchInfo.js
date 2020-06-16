@@ -11,19 +11,24 @@ const twitchClient = hasTwitchConfig ? TwitchClient.withClientCredentials(config
 const TwitchInfo = () => {
 
     const overlayInfo = useContext(OverlayContext);
+    const [maxViewers, setMaxViewers] = useState(0)
     const [viewers, setViewers] = useState(null);
 
     useEffect(() => {
         const getUserInfo = () => {
             if (overlayInfo.twitchUserName) {
                 twitchClient.helix.streams.getStreamByUserName(overlayInfo.twitchUserName)
-                    .then(stream => setViewers(stream.viewers))
+                    .then(stream => {
+                        setViewers(stream.viewers)
+                        setMaxViewers(m => Math.max(stream.viewers, m))
+                    })
                     .catch(() => setViewers(null));
             } else {
                 setViewers(null);
             }
         }
 
+        setMaxViewers(0)
         const intervalHandler = setInterval(getUserInfo, 30000);
         getUserInfo();
         return () => clearInterval(intervalHandler);
@@ -32,6 +37,7 @@ const TwitchInfo = () => {
     return (viewers != null) ? <div className="TwitchViewerCount">
         <div className="Icon"><TwitchGlitchPurple size="1em"/></div>
         <div className="Count">{viewers}</div>
+        <div className={((maxViewers) && (maxViewers !== viewers)) ? "Max" : "NoMax"}>{maxViewers}</div>
     </div> : <></>;
 }
 

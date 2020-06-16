@@ -13,3 +13,19 @@
 .TwitchViewerCount .Count {
     display: inline;
 }
+
+.TwitchViewerCount .Max {
+    display: inline;
+}
+
+.TwitchViewerCount .Max:before {
+    content: '/'
+}
+
+.TwitchViewerCount .Max:after {
+    content: ''
+}
+
+.TwitchViewerCount .NoMax {
+    display: none;
+}
