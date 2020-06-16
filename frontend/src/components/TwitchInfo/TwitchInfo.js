@@ -20,7 +20,7 @@ const TwitchInfo = () => {
                 twitchClient.helix.streams.getStreamByUserName(overlayInfo.twitchUserName)
                     .then(stream => {
                         setViewers(stream.viewers)
-                        setMaxViewers(m => Math.max(stream.viewers, m))
+                        setMaxViewers(m => stream.viewers ? Math.max(stream.viewers, m) : 0)
                     })
                     .catch(() => setViewers(null));
             } else {
