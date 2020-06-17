@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
+import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
-import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 
 import overlayService from "../../../services/overlay"
@@ -87,7 +87,7 @@ const AdminSection = () => {
     }, [])
 
     return (
-        <Paper className={styles.AdminSection}>
+        <Box className={styles.AdminSection}>
             <Typography variant="h3">Admin Interface</Typography>
             <Grid className={styles.Inputs} container spacing={3}>
                 <Grid item xs={12} sm={6} lg={4}>
@@ -105,7 +105,7 @@ const AdminSection = () => {
                     <TwitchAdmin username={twitchUserName} setUsername={setTwitchUserName} originalUsername={originalTwitchUserName} sendTwitchData={sendTwitchData}/>
                 </Grid>
             </Grid>
-        </Paper>
+        </Box>
     )
 }
 
