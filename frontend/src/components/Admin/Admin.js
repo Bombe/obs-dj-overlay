@@ -16,7 +16,7 @@ const Admin = () => {
                 <Box className={styles.Right}>
                     <Box display="flex" flexDirection="column" height="100%">
                         <Box id="preview-frame" height={225}>
-                            <iframe id="preview-iframe" style={{transform: "scale(0.3125)", transformOrigin: "0 0", overflow: "hidden"}} title="Preview" width={1280} height={720} src={"/preview"}/>
+                            <iframe id="preview-iframe" className={styles.Preview} style={{transform: "scale(0.3125)", transformOrigin: "0 0", overflow: "hidden"}} title="Preview" width={1280} height={720} src={"/preview"}/>
                         </Box>
                         <Box flexGrow={1}><TwitchEmbed muted={true} channel="bombe___" parent={["localhost"]} width="100%" height="100%"/></Box>
                     </Box>
