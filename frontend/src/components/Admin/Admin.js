@@ -4,8 +4,11 @@ import {TwitchEmbed} from "react-twitch-embed"
 
 import AdminSection from "./main"
 import styles from "./Admin.module.css"
+import {config} from "../Config/Config"
 
 const Admin = () => {
+
+    const twitchChannel = config.twitch.channel
 
     return (
         <div className={styles.Admin}>
@@ -18,7 +21,7 @@ const Admin = () => {
                         <Box id="preview-frame" height={225}>
                             <iframe id="preview-iframe" className={styles.Preview} style={{transform: "scale(0.3125)", transformOrigin: "0 0", overflow: "hidden"}} title="Preview" width={1280} height={720} src={"/preview"}/>
                         </Box>
-                        <Box flexGrow={1}><TwitchEmbed muted={true} channel="bombe___" parent={["localhost"]} width="100%" height="100%"/></Box>
+                        <Box flexGrow={1}><TwitchEmbed muted={true} channel={twitchChannel} parent={["localhost"]} width="100%" height="100%"/></Box>
                     </Box>
                 </Box>
             </Box>

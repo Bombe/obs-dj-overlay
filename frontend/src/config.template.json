@@ -1,5 +1,6 @@
 {
     "twitch": {
+        "channel": "",
         "clientId": "",
         "clientSecret": ""
     }

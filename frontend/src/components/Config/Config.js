@@ -1,7 +1,7 @@
 
 const defaultConfig = {
     twitch: {
-        clientId: "", clientSecret: ""
+        channel: "", clientId: "", clientSecret: ""
     }
 };
 
