@@ -4,7 +4,7 @@ import {TwitchEmbed} from "react-twitch-embed"
 
 import AdminSection from "./main"
 import styles from "./Admin.module.css"
-import {config} from "../Config/Config"
+import config from "../../utils/config"
 
 const Admin = () => {
 
