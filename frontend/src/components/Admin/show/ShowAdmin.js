@@ -1,15 +1,31 @@
 import Box from "@material-ui/core/Box"
 import {DoneAll, Undo} from "@material-ui/icons"
-import React from "react"
+import React, {useEffect, useState} from "react"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 
 import {blur, onEnter, onValueEventRun} from "../../../utils/event"
 import useFocus from "../../../utils/focus"
+import overlayService from "../../../services/overlay"
 import Group from "../../Group"
 import SelectOnFocusTextField from "../../selectOnFocus"
 
-const ShowAdmin = ({showTitle, showSubtitle, nextShow, setShowTitle, setShowSubtitle, setNextShow, sendShowInfo, originalShowTitle, originalShowSubtitle, originalNextShow}) => {
+const ShowAdmin = () => {
+
+    const [showTitle, setShowTitle] = useState("")
+    const [showSubtitle, setShowSubtitle] = useState("")
+    const [nextShow, setNextShow] = useState("")
+    const [originalShowTitle, setOriginalShowTitle] = useState("")
+    const [originalShowSubtitle, setOriginalShowSubtitle] = useState("")
+    const [originalNextShow, setOriginalNextShow] = useState("")
+
+    const sendShowInfo = (event) => {
+        overlayService.setShowInfo(showTitle, showSubtitle, nextShow)
+        setOriginalShowTitle(showTitle)
+        setOriginalShowSubtitle(showSubtitle)
+        setOriginalNextShow(nextShow)
+        event.preventDefault()
+    }
 
     const [showSubtitleField, focusShowSubtitle] = useFocus()
     const [nextShowField, focusNextShow] = useFocus()
@@ -21,6 +37,18 @@ const ShowAdmin = ({showTitle, showSubtitle, nextShow, setShowTitle, setShowSubt
     }
 
     const modificationsPresent = (showTitle !== originalShowTitle) || (showSubtitle !== originalShowSubtitle) || (nextShow !== originalNextShow)
+
+    useEffect(() => {
+        overlayService.get()
+            .then(overlayInfo => {
+                setShowTitle(overlayInfo.show.title)
+                setShowSubtitle(overlayInfo.show.subtitle)
+                setNextShow(overlayInfo.show.nextShow)
+                setOriginalShowTitle(overlayInfo.show.title)
+                setOriginalShowSubtitle(overlayInfo.show.subtitle)
+                setOriginalNextShow(overlayInfo.show.nextShow)
+            })
+    }, [])
 
     return (
         <Group title="Show">

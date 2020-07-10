@@ -18,12 +18,6 @@ const AdminSection = () => {
     const [originalTrackNumber, setOriginalTrackNumber] = useState(0)
     const [originalTrackArtist, setOriginalTrackArtist] = useState("")
     const [originalTrackTitle, setOriginalTrackTitle] = useState("")
-    const [showTitle, setShowTitle] = useState("")
-    const [showSubtitle, setShowSubtitle] = useState("")
-    const [nextShow, setNextShow] = useState("")
-    const [originalShowTitle, setOriginalShowTitle] = useState("")
-    const [originalShowSubtitle, setOriginalShowSubtitle] = useState("")
-    const [originalNextShow, setOriginalNextShow] = useState("")
     const [message, setMessage] = useState("")
     const [originalMessage, setOriginalMessage] = useState("")
     const [twitchUserName, setTwitchUserName] = useState("")
@@ -31,14 +25,6 @@ const AdminSection = () => {
 
     const setFilteredTrackNumber = (value) => {
         setTrackNumber(parseInt(value.toString().replace(/[^0-9]/, "")) || 0)
-    }
-
-    const sendShowInfo = (event) => {
-        overlayService.setShowInfo(showTitle, showSubtitle, nextShow)
-        setOriginalShowTitle(showTitle)
-        setOriginalShowSubtitle(showSubtitle)
-        setOriginalNextShow(nextShow)
-        event.preventDefault()
     }
 
     const sendTrackInfo = (event) => {
@@ -73,12 +59,6 @@ const AdminSection = () => {
                 setOriginalTrackNumber(overlayInfo.track.number)
                 setOriginalTrackArtist(overlayInfo.track.artist)
                 setOriginalTrackTitle(overlayInfo.track.title)
-                setShowTitle(overlayInfo.show.title)
-                setShowSubtitle(overlayInfo.show.subtitle)
-                setNextShow(overlayInfo.show.nextShow)
-                setOriginalShowTitle(overlayInfo.show.title)
-                setOriginalShowSubtitle(overlayInfo.show.subtitle)
-                setOriginalNextShow(overlayInfo.show.nextShow)
                 setMessage(overlayInfo.message)
                 setOriginalMessage(overlayInfo.message)
                 setTwitchUserName(overlayInfo.twitchUserName)
@@ -91,8 +71,7 @@ const AdminSection = () => {
             <Typography variant="h3">Admin Interface</Typography>
             <Grid className={styles.Inputs} container spacing={3}>
                 <Grid item xs={12} sm={6} lg={4}>
-                    <ShowAdmin showTitle={showTitle} showSubtitle={showSubtitle} nextShow={nextShow} setShowTitle={setShowTitle} setShowSubtitle={setShowSubtitle} setNextShow={setNextShow}
-                               sendShowInfo={sendShowInfo} originalShowTitle={originalShowTitle} originalShowSubtitle={originalShowSubtitle} originalNextShow={originalNextShow}/>
+                    <ShowAdmin/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
                     <TrackAdmin number={trackNumber} artist={trackArtist} title={trackTitle} setNumber={setFilteredTrackNumber} setArtist={setTrackArtist} setTitle={setTrackTitle}
