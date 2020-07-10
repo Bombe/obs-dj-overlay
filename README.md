@@ -34,6 +34,10 @@ you need register an application with Twitch, generate a
 client secret, copy `src/config.template.json` to `src/config.json`
 and enter both client ID and client secret in `src/config.json`.
 
+You also need to enter the name of a Twitch channel for the
+embedded chat and preview window. In most cases, that should
+be your channel, and Twitch will ask you to login.
+
 That’s it.
 
 ## Using It
@@ -48,18 +52,38 @@ That’s it.
     This will start the backend on port 5001. Don’t go there with
     your browser, there’s nothing to see. :)
     
-1. Now build and serve the frontend:
+1. Now start the frontend:
 
     ```
     # cd frontend
-    # yarn build
-    # serve -s build
+    # yarn start
     ```
 
-1. Point the Browser source to `http://localhost:5000/`. Also, point
-your browser to `http://localhost:5000/` and click anywhere to get
-to the admin interface. You can also directly head to
-`http://localhost:5000/admin` if your prefer.
+1. A browser window should open, pointing to `http://localhost:3000/`.
+You can click anywhere to get to the admin interface. You can also directly
+head to `http://localhost:3000/admin` if your prefer.
+
+## Embedding in OBS’s Docks
+
+If you are using OBS on Windows you can define Docks in the UI which allow
+you to embed websites in the OBS UI. For this, each of the sections of the
+admin interface can be embedded. The URLs for the respective sections are:
+
+* `/admin/embed/show`
+* `/admin/embed/track`
+* `/admin/embed/message`
+* `/admin/embed/twitch`
+
+OBS already offers docks for the Twitch chat and other information so you
+don’t really need obs-dj-overlay’s admin view for that.
+
+## Notes
+
+This project is not yet quite production ready; while it does run for me I
+can’t make any guarantees whatsoever for anybody else. The frontend is
+still running in development mode (until I get the automatic proxying running
+in production mode). Also, this project uses both npm and yarn, and how silly
+is that, please?
 
 ## Customizing It
 
