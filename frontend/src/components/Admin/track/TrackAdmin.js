@@ -7,8 +7,9 @@ import Grid from "@material-ui/core/Grid"
 import {blur, onEnter, onValueEventRun} from "../../../utils/event"
 import useFocus from "../../../utils/focus"
 import overlayService from "../../../services/overlay"
-import Group from "../../Group"
 import SelectOnFocusTextField from "../../selectOnFocus"
+
+import styles from "./TrackAdmin.module.css"
 
 const TrackAdmin = () => {
 
@@ -62,41 +63,39 @@ const TrackAdmin = () => {
     }, [])
 
     return (
-        <Group title="Track">
-            <form onSubmit={sendTrackInfo}>
-                <Grid container spacing={2} direction="column" alignItems="stretch">
-                    <Grid item xs={12}>
-                        <Box display="flex" alignItems="center">
-                            <Box flexGrow={1}>
-                                <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onValueEventRun(setFilteredTrackNumber)}
-                                                        onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true} error={trackNumber !== originalTrackNumber} tabIndex={2}/>
-                            </Box>
-                            <Box style={{paddingLeft: "16px"}}>
-                                <Button fullWidth={true} variant="contained" onClick={decrementTrackNumber} tabIndex={1}>-</Button>
-                            </Box>
+        <form onSubmit={sendTrackInfo} className={styles.Track}>
+            <Grid container spacing={2} direction="column" alignItems="stretch">
+                <Grid item xs={12}>
+                    <Box display="flex" alignItems="center">
+                        <Box flexGrow={1}>
+                            <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onValueEventRun(setFilteredTrackNumber)}
+                                                    onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true} error={trackNumber !== originalTrackNumber} tabIndex={2}/>
                         </Box>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <SelectOnFocusTextField inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist} onChange={onValueEventRun(setTrackArtist)}
-                                                onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true} error={trackArtist !== originalTrackArtist}/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <SelectOnFocusTextField inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setTrackTitle)}
-                                                onKeyPress={onEnter(blur, false)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Box display="flex" alignItems="center">
-                            <Box flexGrow={1}>
-                                <Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button>
-                            </Box>
-                            <Box style={{paddingLeft: "16px"}}>
-                                <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>
-                            </Box>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button fullWidth={true} variant="contained" onClick={decrementTrackNumber} tabIndex={1}>-</Button>
                         </Box>
-                    </Grid>
+                    </Box>
                 </Grid>
-            </form>
-        </Group>
+                <Grid item xs={12}>
+                    <SelectOnFocusTextField inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist} onChange={onValueEventRun(setTrackArtist)}
+                                            onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true} error={trackArtist !== originalTrackArtist}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <SelectOnFocusTextField inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setTrackTitle)}
+                                            onKeyPress={onEnter(blur, false)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Box display="flex" alignItems="center">
+                        <Box flexGrow={1}>
+                            <Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button>
+                        </Box>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>
+                        </Box>
+                    </Box>
+                </Grid>
+            </Grid>
+        </form>
     )
 
 }

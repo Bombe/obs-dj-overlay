@@ -1,6 +1,5 @@
 .Group {
     position: relative;
-    padding: 1em;
     border: 1px grey groove;
     border-radius: 8px;
     display: flex;

@@ -6,8 +6,9 @@ import {Delete, DoneAll, Undo} from "@material-ui/icons"
 
 import {onValueEventRun} from "../../../utils/event"
 import overlayService from "../../../services/overlay"
-import Group from "../../Group"
 import SelectOnFocusTextField from "../../selectOnFocus"
+
+import styles from "./MessageAdmin.module.css"
 
 const textAreaEnterHandler = (action) => (event) => {
     if (event.key === "Enter" && event.ctrlKey) {
@@ -47,27 +48,25 @@ const MessageAdmin = () => {
     }, [])
 
     return (
-        <Group title="Message">
-            <form onSubmit={sendMessage}>
-                <Grid container spacing={2} direction="column" alignItems="stretch">
-                    <Grid item xs={12}>
-                        <SelectOnFocusTextField label="A message to display" variant="filled" value={message} onChange={onValueEventRun(setMessage)} onKeyPress={textAreaEnterHandler(sendMessage)}
-                                                fullWidth={true} multiline={true} rows={6} helperText="Press Ctrl-Enter to submit!" error={message !== originalMessage}/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Box display="flex" alignItems="center">
-                            <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
-                            <Box style={{paddingLeft: "16px"}}>
-                                <Button variant="contained" fullWidth={true} onClick={clearMessage} disabled={messageIsClear} startIcon={<Delete/>}>Clear</Button>
-                            </Box>
-                            <Box style={{paddingLeft: "16px"}}>
-                                <Button type="reset" variant="contained" fullWidth={true} onClick={restoreMessage} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>
-                            </Box>
-                        </Box>
-                    </Grid>
+        <form onSubmit={sendMessage} className={styles.Message}>
+            <Grid container spacing={2} direction="column" alignItems="stretch">
+                <Grid item xs={12}>
+                    <SelectOnFocusTextField label="A message to display" variant="filled" value={message} onChange={onValueEventRun(setMessage)} onKeyPress={textAreaEnterHandler(sendMessage)}
+                                            fullWidth={true} multiline={true} rows={6} helperText="Press Ctrl-Enter to submit!" error={message !== originalMessage}/>
                 </Grid>
-            </form>
-        </Group>
+                <Grid item xs={12}>
+                    <Box display="flex" alignItems="center">
+                        <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button variant="contained" fullWidth={true} onClick={clearMessage} disabled={messageIsClear} startIcon={<Delete/>}>Clear</Button>
+                        </Box>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button type="reset" variant="contained" fullWidth={true} onClick={restoreMessage} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>
+                        </Box>
+                    </Box>
+                </Grid>
+            </Grid>
+        </form>
     )
 
 }
