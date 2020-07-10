@@ -12,16 +12,8 @@ import styles from "./AdminSection.module.css"
 
 const AdminSection = () => {
 
-    const [message, setMessage] = useState("")
-    const [originalMessage, setOriginalMessage] = useState("")
     const [twitchUserName, setTwitchUserName] = useState("")
     const [originalTwitchUserName, setOriginalTwitchUserName] = useState("")
-
-    const sendMessage = (event) => {
-        overlayService.setMessage(message)
-        setOriginalMessage(message)
-        event.preventDefault()
-    }
 
     const sendTwitchData = (event) => {
         overlayService.setTwitchData(twitchUserName)
@@ -32,8 +24,6 @@ const AdminSection = () => {
     useEffect(() => {
         overlayService.get()
             .then(overlayInfo => {
-                setMessage(overlayInfo.message)
-                setOriginalMessage(overlayInfo.message)
                 setTwitchUserName(overlayInfo.twitchUserName)
                 setOriginalTwitchUserName(overlayInfo.twitchUserName)
             })
@@ -50,7 +40,7 @@ const AdminSection = () => {
                     <TrackAdmin/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
-                    <MessageAdmin message={message} setMessage={setMessage} originalMessage={originalMessage} sendMessage={sendMessage}/>
+                    <MessageAdmin/>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
                     <TwitchAdmin username={twitchUserName} setUsername={setTwitchUserName} originalUsername={originalTwitchUserName} sendTwitchData={sendTwitchData}/>

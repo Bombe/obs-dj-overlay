@@ -1,12 +1,13 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import {Delete, DoneAll, Undo} from "@material-ui/icons"
 
+import {onValueEventRun} from "../../../utils/event"
+import overlayService from "../../../services/overlay"
 import Group from "../../Group"
 import SelectOnFocusTextField from "../../selectOnFocus"
-import {onValueEventRun} from "../../../utils/event"
 
 const textAreaEnterHandler = (action) => (event) => {
     if (event.key === "Enter" && event.ctrlKey) {
@@ -15,7 +16,16 @@ const textAreaEnterHandler = (action) => (event) => {
     }
 }
 
-const MessageAdmin = ({message, setMessage, originalMessage, sendMessage}) => {
+const MessageAdmin = () => {
+
+    const [message, setMessage] = useState("")
+    const [originalMessage, setOriginalMessage] = useState("")
+
+    const sendMessage = (event) => {
+        overlayService.setMessage(message)
+        setOriginalMessage(message)
+        event.preventDefault()
+    }
 
     const clearMessage = () => {
         setMessage("")
@@ -27,6 +37,14 @@ const MessageAdmin = ({message, setMessage, originalMessage, sendMessage}) => {
 
     const messageIsClear = (message === "")
     const modificationsPresent = (message !== originalMessage)
+
+    useEffect(() => {
+        overlayService.get()
+            .then(overlayInfo => {
+                setMessage(overlayInfo.message)
+                setOriginalMessage(overlayInfo.message)
+            })
+    }, [])
 
     return (
         <Group title="Message">
