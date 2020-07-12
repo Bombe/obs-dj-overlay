@@ -40,22 +40,45 @@ be your channel, and Twitch will ask you to login.
 
 That’s it.
 
-## Using It
+## Using It (Production Mode)
+
+1. Compile the frontend:
+
+    ```
+   # cd frontend
+   # yarn install && yarn build
+   ```
 
 1. Start the backend:
 
    ```
-   # cd backend
+   # cd ..
+   # npm install && npm start
+   ```
+
+    This will start obs-dj-overlay on port 5000. Open `http://localhost:5000`
+    in your browser and start using it!
+
+    If you want to use a different port than 5000, use:
+
+    ```
+   # PORT=12345 npm start
+   ```
+
+## Using It (Development Mode)
+
+1. Start the backend:
+
+    ```
+   # npm install
    # npm start
    ```
 
-    This will start the backend on port 5001. Don’t go there with
-    your browser, there’s nothing to see. :)
-    
-1. Now start the frontend:
+1. Start the frontend:
 
     ```
     # cd frontend
+    # yarn install
     # yarn start
     ```
 
