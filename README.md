@@ -131,7 +131,7 @@ i.e. the number you see in the interface is the number being sent to the
 backend on the next update.
 * The message has a multi-line input field that can be sent using
 Ctrl-Enter, after which all of the text will be selected for easy
-replacement.
+replacement. (This doesn’t seem to work on Windows, though.)
 
 In OBS you can apply a CSS override in the Browser source’s
 configuration. The following classes are used by the rendered overlay: 
