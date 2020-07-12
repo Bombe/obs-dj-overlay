@@ -125,10 +125,10 @@ navigated to, allowing easy replacement of all text.
 the last input field of the section. This allows very convenient multi-field
 data entry without sending intermediate state (i.e. updated artist but old
 title of a track) to the backend (and the rendered overlay).
-* When the track number is not 0 and it equals the current number being
-shown and the artist and/or track is changed, the track number is
-automatically incremented. If you want to change the number to an
-arbitrary position, make sure to change it before the artist and title.
+* When the track number is not 0 and the artist and/or track is changed,
+the track number is automatically incremented after being submitted,
+i.e. the number you see in the interface is the number being sent to the
+backend on the next update.
 * The message has a multi-line input field that can be sent using
 Ctrl-Enter, after which all of the text will be selected for easy
 replacement.
