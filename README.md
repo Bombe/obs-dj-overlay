@@ -143,8 +143,9 @@ the title information.
 * `Clock`: Controls display of the clock.
 * `TwitchViewerCount` (contains `Icon` and `Count`): Controls
 display of the Twitch viewer count.
-* `TrackInfo` (contains `Number`, `Artist` and `Title`): Controls
-display of the track information.
+* `TrackInfo` (contains `Number`, `Artist`, `Title`, and `LastTrack`, the
+latter containing `LastArtist` and `LastTitle`): Controls display of the track
+information.
 * `Message` (contains `Text`): Controls display of the message.
 * `NextShow` (contains `Text`): Controls display of the “next
 show” announcement.
