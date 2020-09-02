@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import OverlayContext from "../Overlay";
-import "./TrackInfo.css";
+import React, {useContext} from "react"
+import OverlayContext from "../Overlay"
+import "./TrackInfo.css"
 
 const TrackInfo = () => {
-    const overlayInfo = useContext(OverlayContext);
+    const overlayInfo = useContext(OverlayContext)
 
     return (overlayInfo.track && (overlayInfo.track.artist || overlayInfo.track.title)) ? (
         <div className="TrackInfo">
@@ -21,7 +21,7 @@ const TrackInfo = () => {
                 : <></>
             }
         </div>
-    ) : <></>;
+    ) : <></>
 }
 
-export default TrackInfo;
+export default TrackInfo
