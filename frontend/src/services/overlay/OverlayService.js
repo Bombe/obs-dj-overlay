@@ -4,6 +4,11 @@ const defaultOverlayInfo = {
         artist: "",
         title: ""
     },
+    lastTrack: {
+        number: 0,
+        artist: "",
+        title: ""
+    },
     show: {
         title: "",
         subtitle: "",
@@ -25,6 +30,11 @@ const OverlayService = {
                     number: json.track.number,
                     artist: json.track.artist,
                     title: json.track.title,
+                },
+                lastTrack: {
+                    number: json.lastTrack.number,
+                    artist: json.lastTrack.artist,
+                    title: json.lastTrack.title
                 },
                 show: {
                     title: json.show.title,

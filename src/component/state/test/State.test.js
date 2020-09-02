@@ -10,6 +10,11 @@ describe("State", () => {
                 artist: "",
                 title: ""
             },
+            lastTrack: {
+                number: 0,
+                artist: "",
+                title: ""
+            },
             show: {
                 title: "",
                 subtitle: "",
@@ -42,6 +47,55 @@ describe("State", () => {
     it("should keep twitch user name when set", () => {
         State.setTwitchUserName("TwitchUserName")
         expect(State.currentState().twitchUserName).to.equal("TwitchUserName")
+    })
+
+})
+
+describe("last track", () => {
+    beforeEach(() => {
+        State.setTrackInfo()
+    })
+
+    it("should be empty after calling setTrack once", () => {
+        State.setTrackInfo(1, "A1", "B1")
+        const state = State.currentState()
+        expect(state.lastTrack).to.be.eql({number: 0, artist: "", title: ""})
+    })
+
+    it("should show the first track when adding two tracks", () => {
+        State.setTrackInfo(1, "A1", "B1")
+        State.setTrackInfo(2, "A2", "B2")
+        const state = State.currentState()
+        expect(state.lastTrack).to.be.eql({number: 1, artist: "A1", title: "B1"})
+    })
+
+    it("should not update last track if number and artist are the same", () => {
+        State.setTrackInfo(1, "A1", "B1")
+        State.setTrackInfo(1, "A1", "B2")
+        const state = State.currentState()
+        expect(state.lastTrack).to.be.eql({number: 0, artist: "", title: ""})
+    })
+
+    it("should not update last track if number and title are the same", () => {
+        State.setTrackInfo(1, "A1", "B1")
+        State.setTrackInfo(1, "A2", "B1")
+        const state = State.currentState()
+        expect(state.lastTrack).to.be.eql({number: 0, artist: "", title: ""})
+    })
+
+    it("should not update last track if artist and title are the same", () => {
+        State.setTrackInfo(1, "A1", "B1")
+        State.setTrackInfo(2, "A1", "B1")
+        const state = State.currentState()
+        expect(state.lastTrack).to.be.eql({number: 0, artist: "", title: ""})
+    })
+
+    it("should reset last track if empty track is set", () => {
+        State.setTrackInfo(1, "A1", "B1")
+        State.setTrackInfo(2, "A2", "B2")
+        State.setTrackInfo(0, "", "")
+        const state = State.currentState()
+        expect(state.lastTrack).to.be.eql({number: 0, artist: "", title: ""})
     })
 
 })
