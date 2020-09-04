@@ -1,5 +1,5 @@
 import {DoneAll, Undo} from "@material-ui/icons"
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
@@ -7,11 +7,13 @@ import Grid from "@material-ui/core/Grid"
 import {blur, onEnter, onValueEventRun} from "../../../utils/event"
 import overlayService from "../../../services/overlay"
 import SelectOnFocusTextField from "../../selectOnFocus"
+import config from "../../../utils/config"
 
 import styles from "./TwitchAdmin.module.css"
 
 const TwitchAdmin = () => {
 
+    const submitButton = useRef(null)
     const [twitchUserName, setTwitchUserName] = useState("")
     const [originalTwitchUserName, setOriginalTwitchUserName] = useState("")
 
@@ -26,6 +28,10 @@ const TwitchAdmin = () => {
             .then(overlayInfo => {
                 setTwitchUserName(overlayInfo.twitchUserName)
                 setOriginalTwitchUserName(overlayInfo.twitchUserName)
+                if (overlayInfo.twitchUserName === "") {
+                    setTwitchUserName(config.twitch.channel)
+                    submitButton.current.click()
+                }
             })
     }, [])
 
@@ -44,7 +50,7 @@ const TwitchAdmin = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <Box display="flex" alignItems="center">
-                        <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
+                        <Box flexGrow={1}><Button ref={submitButton} type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
                         <Box style={{paddingLeft: "16px"}}>
                             <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTwitchData} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>
                         </Box>
