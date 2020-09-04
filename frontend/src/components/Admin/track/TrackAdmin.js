@@ -38,10 +38,6 @@ const TrackAdmin = () => {
     const [trackArtistField, focusTrackArtist] = useFocus()
     const [trackTitleField, focusTrackTitle] = useFocus()
 
-    const decrementTrackNumber = () => {
-        setTrackNumber(trackNumber - 1)
-    }
-
     const restoreTrackInfo = () => {
         setTrackNumber(originalTrackNumber)
         setTrackArtist(originalTrackArtist)
@@ -70,9 +66,6 @@ const TrackAdmin = () => {
                         <Box flexGrow={1}>
                             <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onValueEventRun(setFilteredTrackNumber)}
                                                     onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true} error={trackNumber !== originalTrackNumber} tabIndex={2}/>
-                        </Box>
-                        <Box style={{paddingLeft: "16px"}}>
-                            <Button fullWidth={true} variant="contained" onClick={decrementTrackNumber} tabIndex={1}>-</Button>
                         </Box>
                     </Box>
                 </Grid>
