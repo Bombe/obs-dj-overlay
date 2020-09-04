@@ -1,6 +1,5 @@
 FROM node:12
 WORKDIR /usr/src/app
-COPY package*.json ./
 COPY . .
 RUN cd frontend && yarn install && yarn build
 RUN npm ci --only=production
