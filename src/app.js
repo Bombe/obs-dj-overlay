@@ -4,6 +4,7 @@ const port = process.env.PORT || 5000
 const path = require("path")
 const routes = require("./api/overlay/route")
 const State = require("./component/state")
+const listenForOggComments = require("./component/icecast/icecast-server")
 
 app.use(express.json({strict: false}))
 
@@ -18,3 +19,10 @@ app.get("*", function (request, response) {
 })
 
 app.listen(port)
+listenForOggComments(8000, {
+    onHeader: (e) => {
+    },
+    onTrackData: (e) => {
+        console.log(e)
+    }
+})
