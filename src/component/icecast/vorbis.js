@@ -22,7 +22,7 @@ class Decoder extends stream.Writable {
         } else if ((this.currentStep === 1)) {
             const comments = this.readVorbisComment()
             if (comments) {
-                this.emit("track", {comments})
+                this.emit("track", parseComments(comments))
                 this.currentStep = 2
             }
         }
@@ -50,6 +50,15 @@ class Decoder extends stream.Writable {
         return userComments
     }
 
+}
+
+const parseComments = (comments) => {
+    const commentObject = {}
+    comments
+        .map(c => c.split("="))
+        .map(c => [c[0].toLowerCase(), c.filter((_, i) => i > 0).join("=")])
+        .forEach(c => commentObject[c[0]] = c[1])
+    return commentObject
 }
 
 module.exports = {Decoder}
