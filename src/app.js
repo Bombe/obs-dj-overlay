@@ -20,8 +20,6 @@ app.get("*", function (request, response) {
 })
 
 listenForOggComments(8000, {
-    onHeader: (e) => {
-    },
     onTrackData: (e) => {
         const cleanedTitle = titleCleaner(e.artist, e.title)
         if ((cleanedTitle.artist !== "") && (cleanedTitle.title !== "")) {
