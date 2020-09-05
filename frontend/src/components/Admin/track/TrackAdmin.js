@@ -65,6 +65,7 @@ const TrackAdmin = () => {
                 setTrackNumber(overlayInfo.track.number)
                 setTrackArtist(overlayInfo.track.artist)
                 setTrackTitle(overlayInfo.track.title)
+                setDirection(overlayInfo.track.direction === "down" ? "-1" : "+1")
                 setOriginalTrackNumber(overlayInfo.track.number)
                 setOriginalTrackArtist(overlayInfo.track.artist)
                 setOriginalTrackTitle(overlayInfo.track.title)
