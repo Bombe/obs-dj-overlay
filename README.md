@@ -125,7 +125,7 @@ is that, please?
 
 All data that is displayed can be modified from the web interface.
 Different sections are defined and all data within a section is updated
-at the same time and independent from data from other sections. That
+at the same time and independent of data from other sections. That
 means that you can change the message without updating it and then
 change the track information without the message also being set.
 
