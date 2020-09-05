@@ -8,7 +8,8 @@ describe("State", () => {
             track: {
                 number: 0,
                 artist: "",
-                title: ""
+                title: "",
+                direction: "up"
             },
             lastTrack: {
                 number: 0,
