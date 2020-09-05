@@ -40,6 +40,13 @@ describe("State", () => {
         expect(State.currentState().track.title).to.equal("Title")
     })
 
+    it("should reset current track if empty track is set", () => {
+        State.setTrackInfo(1, "A1", "B1")
+        State.setTrackInfo(0, "", "")
+        const state = State.currentState()
+        expect(state.track).to.contain({number: 0, artist: "", title: ""})
+    })
+
     it("should keep message when set", () => {
         State.setMessage("Message")
         expect(State.currentState().message).to.equal("Message")
@@ -48,6 +55,18 @@ describe("State", () => {
     it("should keep twitch user name when set", () => {
         State.setTwitchUserName("TwitchUserName")
         expect(State.currentState().twitchUserName).to.equal("TwitchUserName")
+    })
+
+})
+
+describe("Track Number Generation", () => {
+
+    it("should increment track number when number is 0", () => {
+        State.setTrackInfo(12, "Artist", "Title")
+        State.setTrackInfo(0, "Artist 2", "Title 2")
+        expect(State.currentState().track.number).to.equal(13)
+        expect(State.currentState().track.artist).to.equal("Artist 2")
+        expect(State.currentState().track.title).to.equal("Title 2")
     })
 
 })
