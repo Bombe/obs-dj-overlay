@@ -50,6 +50,11 @@ const TrackAdmin = () => {
 
     const flipDirection = (value) => {
         setDirection(value.target.value)
+        if (value.target.value === "-1") {
+            overlayService.setTrackNumberDirection("down")
+        } else {
+            overlayService.setTrackNumberDirection("up")
+        }
     }
 
     const modificationsPresent = (trackNumber !== originalTrackNumber) || (trackArtist !== originalTrackArtist) || (trackTitle !== originalTrackTitle)
