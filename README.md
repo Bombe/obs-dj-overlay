@@ -7,7 +7,8 @@ Browser source to render an overlay with various information.
 It has been created with for DJs who are streaming music to
 a video platform such as [Twitch](https://twitch.tv/) and who
 want to include some information about the tracks they are
-currently playing.
+currently playing. The track information can be automatically
+set by Traktor’s Broadcasting functionality.
 
 ![Screenshot of the admin interface](images/admin-interface.png)
 
@@ -64,6 +65,18 @@ That’s it.
     ```
    # PORT=12345 npm start
    ```
+
+    To enable the included icecast server for use with Traktor, set the
+    `ICECAST_PORT` environment variable:
+
+    ``` sh
+   # ICECAST_PORT=8000 npm start
+   ```
+
+   It is recommended to set Traktor to the smallest possible bitrate to
+   reduce the amount of data that has to be sent over the network. The
+   icecast server is not authenticated so make sure nobody but you can
+   reach the port!
 
 ## Using It (Development Mode)
 
