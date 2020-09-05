@@ -1,6 +1,9 @@
 .NextShow {
+    position: absolute;
+    left: 0;
+    bottom: 0;
     padding-top: 0.5em;
-    background-color: rgb(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
     overflow: hidden;
     height: 1.5em;
