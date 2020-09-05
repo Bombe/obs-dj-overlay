@@ -220,6 +220,56 @@ describe("“overlay” Controller", () => {
 
     })
 
+    describe("The PUT /trackNumberDirection method", () => {
+
+        it("should set the track direction to up if “up” was sent", () => {
+            let setDirection
+            controller({
+                setTrackNumberDirection: (direction) => {
+                    setDirection = direction
+                }
+            }).setTrackNumberDirection({body: "up"}, response)
+            expect(setDirection).to.equal("up")
+        })
+
+        it("should end request if “up” was sent", () => {
+            controller({setTrackNumberDirection: () => nothing}).setTrackNumberDirection({body: "up"}, response)
+            expect(response.endCalled()).to.be.true
+        })
+
+        it("should set the track direction to down if “down” was sent", () => {
+            let setDirection
+            controller({
+                setTrackNumberDirection: (direction) => {
+                    setDirection = direction
+                }
+            }).setTrackNumberDirection({body: "down"}, response)
+            expect(setDirection).to.equal("down")
+        })
+
+        it("should end request if “down” was sent", () => {
+            controller({setTrackNumberDirection: () => nothing}).setTrackNumberDirection({body: "down"}, response)
+            expect(response.endCalled()).to.be.true
+        })
+
+        it("should not set the track direction if something else was sent", () => {
+            let directionSet = false
+            controller({
+                setTrackNumberDirection: (direction) => {
+                    directionSet = true
+                }
+            }).setTrackNumberDirection({body: "something else"}, response)
+            expect(directionSet).to.be.false
+        })
+
+
+        it("should end request if something else was sent", () => {
+            controller({setTrackNumberDirection: () => nothing}).setTrackNumberDirection({body: "something else"}, response)
+            expect(response.endCalled()).to.be.true
+        })
+
+    })
+
     describe("The PUT /message method", () => {
 
         it("should update the message", () => {

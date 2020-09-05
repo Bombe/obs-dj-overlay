@@ -19,6 +19,15 @@ module.exports = (state) => ({
         response.end()
     },
 
+    setTrackNumberDirection: (request, response) => {
+        if (request.body === "up") {
+            state.setTrackNumberDirection("up")
+        } else if (request.body === "down") {
+            state.setTrackNumberDirection("down")
+        }
+        response.end()
+    },
+
     setMessage: (request, response) => {
         if (typeof request.body === "string") {
             state.setMessage(request.body)
