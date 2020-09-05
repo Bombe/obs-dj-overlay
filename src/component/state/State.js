@@ -37,7 +37,7 @@ module.exports = {
             currentTrack = {}
         } else if (numberOfChanges > 1) {
             lastTrack = currentTrack
-            if (number === 0) {
+            if ((number === 0) && (state.track.number !== 0)) {
                 if (state.track.direction === "up") {
                     number = state.track.number + 1
                 } else {
@@ -49,6 +49,13 @@ module.exports = {
         state.track.number = number
         state.track.artist = artist
         state.track.title = title
+    },
+    setTrackNumberDirection: (direction = "up") => {
+        if (direction === "down") {
+            state.track.direction = "down"
+        } else {
+            state.track.direction = "up"
+        }
     },
     resetLastTrack: () => {
         lastTrack = {}

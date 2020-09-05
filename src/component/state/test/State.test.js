@@ -60,6 +60,9 @@ describe("State", () => {
 })
 
 describe("Track Number Generation", () => {
+    beforeEach(() => {
+        State.setTrackInfo()
+    })
 
     it("should increment track number when number is 0", () => {
         State.setTrackInfo(12, "Artist", "Title")
@@ -67,6 +70,19 @@ describe("Track Number Generation", () => {
         expect(State.currentState().track.number).to.equal(13)
         expect(State.currentState().track.artist).to.equal("Artist 2")
         expect(State.currentState().track.title).to.equal("Title 2")
+    })
+
+    it("should decrement track number when track number is 0", () => {
+        State.setTrackInfo(12, "Artist", "Title")
+        State.setTrackNumberDirection("down")
+        State.setTrackInfo(0, "Artist 2", "Title 2")
+        expect(State.currentState().track.number).to.equal(11)
+    })
+
+    it("should not change the track number if it is 0", () => {
+        State.setTrackInfo(0, "Artist", "Title")
+        State.setTrackInfo(0, "Artist 2", "Title 2")
+        expect(State.currentState().track.number).to.equal(0)
     })
 
 })
