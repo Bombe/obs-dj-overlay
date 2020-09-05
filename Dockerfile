@@ -3,5 +3,5 @@ WORKDIR /usr/src/app
 COPY . .
 RUN cd frontend && yarn install && yarn build
 RUN npm ci --only=production
-EXPOSE 5000
+EXPOSE 5000 8000
 CMD ["node", "src/app.js"]
