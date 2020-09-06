@@ -1,15 +1,18 @@
 import React from "react"
+import {CardContent} from "@material-ui/core"
+import Card from "@material-ui/core/Card"
+import CardHeader from "@material-ui/core/CardHeader"
 
 import styles from "./Group.module.css"
 
 const Group = (props) => {
     return (
-        <div className={styles.Group}>
-            <div className={styles.GroupTitle}>
-                <span>{props.title}</span>
-            </div>
-            {props.children}
-        </div>
+        <Card className={styles.Group}>
+            <CardHeader className={styles.GroupTitle} title={props.title}/>
+            <CardContent className={styles.GroupContent}>
+                {props.children}
+            </CardContent>
+        </Card>
     )
 }
 

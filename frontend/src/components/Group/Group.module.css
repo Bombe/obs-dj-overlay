@@ -1,19 +1,10 @@
 .Group {
-    position: relative;
-    border: 1px grey groove;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
 }
 
 .Group .GroupTitle {
-    font-size: 80%;
-    position: absolute;
-    top: -.6em;
+    padding-bottom: 0;
 }
 
-.Group .GroupTitle span {
-    display: inline-block;
-    padding: 0 0.5em;
-    background-color: white;
+.Group .GroupContent {
+    padding: 0 !important;
 }
