@@ -47,6 +47,9 @@ class Decoder extends stream.Writable {
         if (framingBit !== 1) {
             return false
         }
+        if ((this.buffer.readUInt8(0) !== 3) || (this.buffer.toString("UTF-8", 1, 7) !== "vorbis")) {
+            return false
+        }
         return userComments
     }
 
