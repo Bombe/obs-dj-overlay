@@ -32,8 +32,9 @@ change its appearance.
 
 If you want to include a viewer count for a Twitch account
 you need register an application with Twitch, generate a
-client secret, copy `src/config.template.json` to `src/config.json`
-and enter both client ID and client secret in `src/config.json`.
+client secret, copy `frontend/src/config.template.json` to
+`frontend/src/config.json` and enter both client ID and client
+secret in `frontend/src/config.json`.
 
 You also need to enter the name of a Twitch channel for the
 embedded chat and preview window. In most cases, that should
