@@ -137,11 +137,14 @@ navigated to, allowing easy replacement of all text.
 * Pressing enter will only send the data to the backend once you are in
 the last input field of the section. This allows very convenient multi-field
 data entry without sending intermediate state (i.e. updated artist but old
-title of a track) to the backend (and the rendered overlay).
+title of a track) to the backend (and the rendered overlay). However, this
+is not the case for the “Track” section because I have noticed it’s very easy
+to submit new track information way too early so in the track section you
+have to use the “Update” button.
 * When the track number is not 0 and the artist and/or track is changed,
-the track number is automatically incremented after being submitted,
-i.e. the number you see in the interface is the number being sent to the
-backend on the next update.
+the track number is automatically incremented or decremented (according
+to the selected radio button) after being submitted, i.e. the number you see
+in the interface is the number being sent to the backend on the next update.
 * The message has a multi-line input field that can be sent using
 Ctrl-Enter, after which all of the text will be selected for easy
 replacement. (This doesn’t seem to work on Windows, though.)
