@@ -3,6 +3,7 @@ const titleCleaner = (artist, title) => {
         .map(splitRemixInfo)
         .map(removeOriginalMix)
         .map(removeExtendedMix)
+        .map(removeRadioMix)
         .map(moveFeatToArtist)
         .map(mergeRemixInfo)
         .map(trimFields)
@@ -36,6 +37,16 @@ const removeExtendedMix = ({artist, title, remix}) => {
     }
     if (/extended/i.test(remix)) {
         remix = remix.split(" ").filter(e => !/extended/i.test(e)).join(" ")
+    }
+    return {artist, title, remix}
+}
+
+const removeRadioMix = ({artist, title, remix}) => {
+    if (/^radio mix$/im.test(remix)) {
+        return {artist, title}
+    }
+    if (/radio/i.test(remix)) {
+        remix = remix.split(" ").filter(e => !/radio/i.test(e)).join(" ")
     }
     return {artist, title, remix}
 }

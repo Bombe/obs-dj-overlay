@@ -31,6 +31,10 @@ describe("The Title Cleaner", () => {
         expect(titleCleaner("artist", "Title (Extended Mix)")).to.eql({artist: "artist", title: "Title"})
     })
 
+    it("should remove “radio mix” from title", () => {
+        expect(titleCleaner("artist", "Title (Radio Mix)")).to.eql({artist: "artist", title: "Title"})
+    })
+
     it("should remove “extended” from title but keep the remixer", () => {
         expect(titleCleaner("artist", "Title (Remixer Extended Mix)")).to.eql({artist: "artist", title: "Title (Remixer Mix)"})
     })
