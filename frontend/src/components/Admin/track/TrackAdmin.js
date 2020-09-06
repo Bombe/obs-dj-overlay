@@ -1,4 +1,4 @@
-import {DoneAll, Undo} from "@material-ui/icons"
+import {DoneAll, Refresh} from "@material-ui/icons"
 import React, {useEffect, useState} from "react"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Radio from "@material-ui/core/Radio"
@@ -43,9 +43,16 @@ const TrackAdmin = () => {
     const [trackTitleField, focusTrackTitle] = useFocus()
 
     const restoreTrackInfo = () => {
-        setTrackNumber(originalTrackNumber)
-        setTrackArtist(originalTrackArtist)
-        setTrackTitle(originalTrackTitle)
+        overlayService.get()
+            .then(overlayInfo => {
+                setTrackNumber(overlayInfo.track.number)
+                setTrackArtist(overlayInfo.track.artist)
+                setTrackTitle(overlayInfo.track.title)
+                setDirection(overlayInfo.track.direction === "down" ? "-1" : "+1")
+                setOriginalTrackNumber(overlayInfo.track.number)
+                setOriginalTrackArtist(overlayInfo.track.artist)
+                setOriginalTrackTitle(overlayInfo.track.title)
+            })
     }
 
     const flipDirection = (value) => {
@@ -57,20 +64,7 @@ const TrackAdmin = () => {
         }
     }
 
-    const modificationsPresent = (trackNumber !== originalTrackNumber) || (trackArtist !== originalTrackArtist) || (trackTitle !== originalTrackTitle)
-
-    useEffect(() => {
-        overlayService.get()
-            .then(overlayInfo => {
-                setTrackNumber(overlayInfo.track.number)
-                setTrackArtist(overlayInfo.track.artist)
-                setTrackTitle(overlayInfo.track.title)
-                setDirection(overlayInfo.track.direction === "down" ? "-1" : "+1")
-                setOriginalTrackNumber(overlayInfo.track.number)
-                setOriginalTrackArtist(overlayInfo.track.artist)
-                setOriginalTrackTitle(overlayInfo.track.title)
-            })
-    }, [])
+    useEffect(restoreTrackInfo, [])
 
     return (
         <form onSubmit={sendTrackInfo} className={styles.Track}>
@@ -102,7 +96,7 @@ const TrackAdmin = () => {
                             <Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
-                            <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>
+                            <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} startIcon={<Refresh/>}>Reload</Button>
                         </Box>
                     </Box>
                 </Grid>
