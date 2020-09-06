@@ -50,4 +50,9 @@ describe("The Title Cleaner", () => {
     it("should move “ft Somebody Else” from title to artist", () => {
         expect(titleCleaner("Artist", "Title ft Somebody Else (Remixer Extended Mix)")).to.eql({artist: "Artist feat. Somebody Else", title: "Title (Remixer Mix)"})
     })
+
+    it("should clean up “ft Somebody Else” in artist", () => {
+        expect(titleCleaner("Artist ft Somebody Else", "Title")).to.eql({artist: "Artist feat. Somebody Else", title: "Title"})
+    })
+
 })

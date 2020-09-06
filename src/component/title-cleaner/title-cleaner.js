@@ -5,6 +5,7 @@ const titleCleaner = (artist, title) => {
         .map(removeExtendedMix)
         .map(removeRadioMix)
         .map(moveFeatToArtist)
+        .map(cleanUpFeatInArtist)
         .map(mergeRemixInfo)
         .map(trimFields)
         .shift()
@@ -57,6 +58,16 @@ const moveFeatToArtist = ({artist, title, remix}) => {
         const featuredArtist = searchResults[2]
         const cleanedTitle = (title.substring(0, searchResults.index) + title.substring(searchResults.index + searchResults[0].length)).replace(/( \(\)|\(\) )/g, "")
         return {artist: artist + " feat. " + featuredArtist, title: cleanedTitle, remix}
+    }
+    return {artist, title, remix}
+}
+
+const cleanUpFeatInArtist = ({artist,title,remix}) => {
+    const searchResults = /\bf(ea)?t\.? ([^)]*)/i.exec(artist)
+    if (searchResults) {
+        const featuredArtist = searchResults[2]
+        const cleanedArtist = (artist.substring(0, searchResults.index) + artist.substring(searchResults.index + searchResults[0].length)).replace(/( \(\)|\(\) )/g, "")
+        return {artist: cleanedArtist + " feat. " + featuredArtist, title, remix}
     }
     return {artist, title, remix}
 }
