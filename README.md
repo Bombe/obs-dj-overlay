@@ -42,6 +42,29 @@ be your channel, and Twitch will ask you to login.
 
 That’s it.
 
+## Using It (with Docker)
+
+1. Create configuration, see previous section above. Without this, the
+Twitch viewer count will not work.
+
+2. Build the docker image.
+
+    ``` sh
+   # docker build -t bombe/obs-dj-overlay:main .
+    ```
+
+    The name of the image (here `bombe/obs-dj-overlay:main`) can be chosen
+    freely.
+
+3. Run the docker image.
+
+    ``` sh
+   # docker run --detach --rm --publish 5000:5000 --publish 8000:8000 --env ICECAST_PORT=8000 bombe/obs-dj-overlay:main
+   ```
+
+After it has started (can take a couple of seconds, depending on your machine)
+you can point your browser to `http://localhost:5000/`.
+
 ## Using It (Production Mode)
 
 1. Compile the frontend:
