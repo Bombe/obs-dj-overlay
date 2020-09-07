@@ -5,4 +5,7 @@ module.exports = (app, history) => {
     app.route("/history")
         .get(controller.get)
 
+    app.route("/history/reset")
+        .put(controller.reset)
+
 }
