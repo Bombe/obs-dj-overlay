@@ -1,5 +1,9 @@
 const expect = require("chai").expect
-const State = require("../")
+const nullHistory = {
+    add: () => {
+    }
+}
+const State = require("../")(nullHistory)
 
 describe("State", () => {
 
@@ -132,6 +136,31 @@ describe("last track", () => {
         State.setTrackInfo(0, "", "")
         const state = State.currentState()
         expect(state.lastTrack).to.be.eql({number: 0, artist: "", title: ""})
+    })
+
+})
+
+describe("The History", () => {
+
+    const fakeHistory = {}
+    const state = require("../")(fakeHistory)
+    let setArtist
+    let setTitle
+
+    beforeEach(() => {
+        setArtist = undefined
+        setTitle = undefined
+        fakeHistory.add = (artist, title) => {
+            setArtist = artist
+            setTitle = title
+        }
+        const state = require("../")(fakeHistory)
+    })
+
+    it("should receive track when it’s added", () => {
+        state.setTrackInfo(1, "Artist", "Title")
+        expect(setArtist).to.eql("Artist")
+        expect(setTitle).to.eql("Title")
     })
 
 })
