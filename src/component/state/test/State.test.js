@@ -1,6 +1,8 @@
 const expect = require("chai").expect
 const nullHistory = {
     add: () => {
+    },
+    amend: () => {
     }
 }
 const State = require("../")(nullHistory)
@@ -146,13 +148,21 @@ describe("The History", () => {
     const state = require("../")(fakeHistory)
     let setArtist
     let setTitle
+    let amendedArtist
+    let amendedTitle
 
     beforeEach(() => {
         setArtist = undefined
         setTitle = undefined
+        amendedArtist = undefined
+        amendedTitle = undefined
         fakeHistory.add = (artist, title) => {
             setArtist = artist
             setTitle = title
+        }
+        fakeHistory.amend = (artist, title) => {
+            amendedArtist = artist
+            amendedTitle = title
         }
         const state = require("../")(fakeHistory)
     })
@@ -161,6 +171,13 @@ describe("The History", () => {
         state.setTrackInfo(1, "Artist", "Title")
         expect(setArtist).to.eql("Artist")
         expect(setTitle).to.eql("Title")
+    })
+
+    it("should amend last entry if only the artist is changed", () => {
+        state.setTrackInfo(1, "Atist", "Title")
+        state.setTrackInfo(1, "Artist", "Title")
+        expect(amendedArtist).to.eql("Artist")
+        expect(amendedTitle).to.eql("Title")
     })
 
 })

@@ -45,6 +45,8 @@ module.exports = history => ({
                 }
             }
             history.add(artist, title)
+        } else {
+            history.amend(artist, title)
         }
         currentTrack = {number, artist, title}
         state.track.number = number
