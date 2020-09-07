@@ -2,7 +2,10 @@
 }
 
 .Group .GroupTitle {
-    padding-bottom: 0;
+}
+
+.Group .GroupTitle .expandOpen {
+    transform: rotate(180deg);
 }
 
 .Group .GroupContent {
