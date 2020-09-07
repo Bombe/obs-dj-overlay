@@ -17,7 +17,7 @@ const AdminSection = () => {
             <Typography variant="h3">Admin Interface</Typography>
             <Grid className={styles.Inputs} container spacing={3}>
                 <Grid item xs={12} sm={6} lg={4}>
-                    <Group title="Show">
+                    <Group title="Show" expanded={false}>
                         <ShowAdmin/>
                     </Group>
                 </Grid>
@@ -32,7 +32,7 @@ const AdminSection = () => {
                     </Group>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
-                    <Group title="Twitch">
+                    <Group title="Twitch" expanded={false}>
                         <TwitchAdmin/>
                     </Group>
                 </Grid>
