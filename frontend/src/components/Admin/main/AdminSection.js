@@ -8,6 +8,8 @@ import MessageAdmin from "../message"
 import ShowAdmin from "../show"
 import TrackAdmin from "../track"
 import TwitchAdmin from "../twitch"
+import HistoryAdmin from "../history"
+
 import styles from "./AdminSection.module.css"
 
 const AdminSection = () => {
@@ -34,6 +36,11 @@ const AdminSection = () => {
                 <Grid item xs={12} sm={6} lg={4}>
                     <Group title="Twitch">
                         <TwitchAdmin/>
+                    </Group>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={4}>
+                    <Group title="History" expanded={false}>
+                        <HistoryAdmin/>
                     </Group>
                 </Grid>
             </Grid>
