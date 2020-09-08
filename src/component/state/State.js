@@ -23,7 +23,7 @@ let state = {...defaultState}
 let currentTrack = {}
 let lastTrack = {}
 
-module.exports = {
+module.exports = history => ({
     currentState: () => ({...state, lastTrack: {number: lastTrack.number || 0, artist: lastTrack.artist || "", title: lastTrack.title || ""}}),
     setShowInfo: (title, subtitle, nextShow) => {
         state.show.title = title
@@ -44,6 +44,9 @@ module.exports = {
                     number = state.track.number - 1
                 }
             }
+            history.add(artist, title)
+        } else {
+            history.amend(artist, title)
         }
         currentTrack = {number, artist, title}
         state.track.number = number
@@ -67,4 +70,4 @@ module.exports = {
     setTwitchUserName: (twitchUserName) => {
         state.twitchUserName = twitchUserName
     }
-}
+})
