@@ -8,15 +8,17 @@ It has been created with for DJs who are streaming music to
 a video platform such as [Twitch](https://twitch.tv/) and who
 want to include some information about the tracks they are
 currently playing. The track information can be automatically
-set by Traktor’s Broadcasting functionality.
+set by Traktor’s Broadcasting functionality. An clipboard export
+of a playlist with timestamps suitable for copy & paste into
+[Mixcloud](https://mixcloud.com/)’s tracklist editor is also available.
 
 ![Screenshot of the admin interface](images/admin-interface.png)
 
 This screenshot shows most of obs-dj-overlay’s features in
-action. On the left side there are input fields for everything
-you can change during runtime, on the right side there’s a
-preview of the rendered overlay, the current stream on
-Twitch and the Twitch chat.
+action. There are input fields for everything you can change during
+runtime, all panels are collapsible, and to the right of that there’s a
+preview of the rendered overlay, the current stream on Twitch and
+ the Twitch chat (not shown here).
 
 The different sections in the admin interface are independent
 from one another, i.e. you can change track info without at
