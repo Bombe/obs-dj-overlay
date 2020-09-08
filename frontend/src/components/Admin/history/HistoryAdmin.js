@@ -47,7 +47,7 @@ const HistoryAdmin = () => {
                             </TableHead>
                             <TableBody>
                                 {historyEntries.map(entry =>
-                                    <TableRow>
+                                    <TableRow key={entry.time}>
                                         <TableCell>{moment(entry.time).format("YYYY-MM-DD HH:mm:ss")}</TableCell>
                                         <TableCell>{entry.artist}</TableCell>
                                         <TableCell>{entry.title}</TableCell>
