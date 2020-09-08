@@ -17,8 +17,8 @@ import styles from "./HistoryAdmin.module.css"
 
 const ExportDialog = ({open, setOpened, historyEntries}) => {
 
-    const [from, setFrom] = useState(undefined)
-    const [to, setTo] = useState(undefined)
+    const [from, setFrom] = useState("")
+    const [to, setTo] = useState("")
     const [playlistEntries, setPlaylistEntries] = useState([])
     const [mixcloudPlaylist, setMixcloudPlaylist] = useState("")
 
