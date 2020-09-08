@@ -30,6 +30,11 @@ const HistoryAdmin = () => {
         setExportDialogOpen(true)
     }
 
+    const resetHistory = () => {
+        HistoryService.reset()
+        loadHistoryEntries()
+    }
+
     useEffect(loadHistoryEntries, [])
 
     return (
@@ -62,7 +67,7 @@ const HistoryAdmin = () => {
                         <Box flexGrow={1}><Button onClick={showExportDialog} disabled={historyEntries.length === 0} variant="contained" fullWidth={true} startIcon={<Save/>}>Export</Button></Box>
                         <ExportDialog open={exportDialogOpen} setOpened={setExportDialogOpen} historyEntries={historyEntries}/>
                         <Box flexGrow={1} style={{paddingLeft: "16px"}}><Button onClick={loadHistoryEntries} variant="contained" fullWidth={true} startIcon={<Refresh/>}>Reload</Button></Box>
-                        <Box flexGrow={1} style={{paddingLeft: "16px"}}><Button variant="contained" fullWidth={true} startIcon={<Delete/>}>Reset</Button></Box>
+                        <Box flexGrow={1} style={{paddingLeft: "16px"}}><Button onClick={resetHistory} variant="contained" fullWidth={true} startIcon={<Delete/>}>Reset</Button></Box>
                     </Box>
                 </Grid>
             </Grid>
