@@ -37,7 +37,6 @@ const Admin = () => {
                 <Route exact path={path}>
                     <Sources>
                         <div className={styles.Admin}>
-                            <Status/>
                             <Box className={styles.Screen} display="flex" flexDirection="row">
                                 <Box className={styles.Left} flexGrow={1}>
                                     <AdminSection/>
@@ -52,6 +51,7 @@ const Admin = () => {
                                     </Box>
                                 </Box>
                             </Box>
+                            <Status/>
                         </div>
                     </Sources>
                 </Route>

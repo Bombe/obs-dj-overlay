@@ -15,11 +15,14 @@ const Status = () => {
     const errorDetected = !traktorConnected
 
     return (
-        <AppBar position="fixed" style={{top: "auto", bottom: 0}}>
-            <Toolbar variant="dense" className={errorDetected ? styles.Error : styles.Okay}>
-                <Typography className={traktorConnected ? styles.Online : styles.Offline}>Traktor</Typography>
-            </Toolbar>
-        </AppBar>
+        <>
+            <AppBar position="fixed" style={{top: "auto", bottom: 0}}>
+                <Toolbar variant="dense" className={errorDetected ? styles.Error : styles.Okay}>
+                    <Typography className={traktorConnected ? styles.Online : styles.Offline}>Traktor</Typography>
+                </Toolbar>
+            </AppBar>
+            <Toolbar variant="dense"/>
+        </>
     )
 
 }
