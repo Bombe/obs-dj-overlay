@@ -180,4 +180,18 @@ describe("The History", () => {
         expect(amendedTitle).to.eql("Title")
     })
 
+    it("should add track if no number is sent and only the artist was changed", () => {
+        state.setTrackInfo(0, "Atist", "Title")
+        state.setTrackInfo(0, "Artist", "Title")
+        expect(setArtist).to.eql("Artist")
+        expect(setTitle).to.eql("Title")
+    })
+
+    it("should add track if no number is sent and only the title was changed", () => {
+        state.setTrackInfo(0, "Artist", "Ttle")
+        state.setTrackInfo(0, "Artist", "Title")
+        expect(setArtist).to.eql("Artist")
+        expect(setTitle).to.eql("Title")
+    })
+
 })
