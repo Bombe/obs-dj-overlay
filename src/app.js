@@ -6,6 +6,7 @@ const path = require("path")
 
 const overlayRoute = require("./api/overlay/route")
 const historyRoute = require("./api/history/route")
+const sourceRoute = require("./api/sources/route")
 
 const clock = require("./component/clock")
 const history = require("./component/history")(clock)
@@ -19,6 +20,7 @@ app.use(express.json({strict: false}))
 
 overlayRoute(app, State)
 historyRoute(app, history)
+sourceRoute(app, sources)
 
 // Serve any static files
 app.use(express.static(path.join(__dirname, "../frontend/build")))
