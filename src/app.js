@@ -29,7 +29,7 @@ app.get("*", function (request, response) {
 app.listen(port)
 
 if (icecastPort) {
-    listenForOggComments(8000, {
+    listenForOggComments(icecastPort, {
         onTrackData: (e) => {
             const cleanedTitle = titleCleaner(e.artist, e.title)
             if ((cleanedTitle.artist !== "") && (cleanedTitle.title !== "")) {
