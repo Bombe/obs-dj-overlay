@@ -9,6 +9,7 @@ import styles from "./Admin.module.css"
 import config from "../../utils/config"
 import {MessageAdmin} from "./message/MessageAdmin"
 import {ShowAdmin} from "./show/ShowAdmin"
+import {Status} from "./status"
 import {TrackAdmin} from "./track/TrackAdmin"
 import {TwitchAdmin} from "./twitch/TwitchAdmin"
 
@@ -36,6 +37,7 @@ const Admin = () => {
                 <Route exact path={path}>
                     <Sources>
                         <div className={styles.Admin}>
+                            <Status/>
                             <Box className={styles.Screen} display="flex" flexDirection="row">
                                 <Box className={styles.Left} flexGrow={1}>
                                     <AdminSection/>

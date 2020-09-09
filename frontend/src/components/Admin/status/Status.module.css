@@ -1,0 +1,17 @@
+.Error {
+    background-color: red;
+    color: yellow;
+}
+
+.Okay {
+    background-color: darkgreen;
+    color: white;
+}
+
+.Online:before {
+    content: '✔ ︎'
+}
+
+.Offline:before {
+    content: '✘ '
+}
