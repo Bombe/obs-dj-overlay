@@ -10,15 +10,3 @@
 .Screen {
     height: 100%;
 }
-
-.Left {
-}
-
-.Right {
-    overflow: hidden;
-    width: 400px;
-    margin-left: 16px;
-}
-
-.Preview {
-}
