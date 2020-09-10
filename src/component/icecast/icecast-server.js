@@ -2,7 +2,7 @@ const net = require("net")
 const ogg = require("./ogg")
 const vorbis = require("./vorbis")
 
-const listenForOggComments = (port, {onTrackData}) => {
+const listenForOggComments = (port, {onTrackData, onTraktorConnect, onTraktorDisconnect}) => {
 
     net.createServer(socket => {
         const dataBuffer = Buffer.alloc(65536)
@@ -28,6 +28,7 @@ const listenForOggComments = (port, {onTrackData}) => {
             }
         })
 
+        socket.setKeepAlive(true, 60000)
         socket.on("data", data => {
             const copied = data.copy(dataBuffer, dataBufferIndex)
             dataBufferIndex += copied
@@ -38,6 +39,7 @@ const listenForOggComments = (port, {onTrackData}) => {
                     if (headerLine.length === 0) {
                         headerComplete = true
                         socket.write("HTTP/1.0 200 OK\r\n\r\n")
+                        onTraktorConnect(socket)
                         socket.pipe(oggDecoder)
                     } else {
                         const lineArray = new Uint8Array(headerLine.length)
@@ -47,6 +49,8 @@ const listenForOggComments = (port, {onTrackData}) => {
                     dataBufferIndex -= offset + 2
                 }
             }
+        }).on("close", () => {
+            onTraktorDisconnect(socket)
         })
     }).listen(port)
 
