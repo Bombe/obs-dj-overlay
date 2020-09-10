@@ -28,6 +28,7 @@ const listenForOggComments = (port, {onTrackData, onTraktorConnect, onTraktorDis
             }
         })
 
+        socket.setKeepAlive(true, 60000)
         socket.on("data", data => {
             const copied = data.copy(dataBuffer, dataBufferIndex)
             dataBufferIndex += copied
