@@ -31,11 +31,11 @@ module.exports = history => ({
         state.show.nextShow = nextShow
     },
     setTrackInfo: (number = 0, artist = "", title = "") => {
-        const numberOfChanges = (number === currentTrack.number ? 0 : 1) + (artist === currentTrack.artist ? 0 : 1) + (title === currentTrack.title ? 0 : 1)
+        const numberOfChanges = (((number === 0) || (number === currentTrack.number)) ? 0 : 1) + (artist === currentTrack.artist ? 0 : 1) + (title === currentTrack.title ? 0 : 1)
         if ((number === 0) && (artist === "") && (title === "")) {
             lastTrack = {}
             currentTrack = {}
-        } else if (numberOfChanges > 1) {
+        } else if ((numberOfChanges > 1) || ((number === 0) && (numberOfChanges > 0))) {
             lastTrack = currentTrack
             if ((number === 0) && (state.track.number !== 0)) {
                 if (state.track.direction === "up") {

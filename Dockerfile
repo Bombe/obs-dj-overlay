@@ -4,4 +4,4 @@ COPY . .
 RUN cd frontend && yarn install && yarn build
 RUN npm ci --only=production
 EXPOSE 5000 8000
-CMD ["node", "src/app.js"]
+CMD ["npm", "start"]
