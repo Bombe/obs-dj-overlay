@@ -1,10 +1,12 @@
 import React from "react"
 import {BrowserRouter as Router, Route, Switch, useRouteMatch} from "react-router-dom"
 
+import {Sources} from "./context/sources"
 import AdminSection from "./main"
 import styles from "./Admin.module.css"
 import {MessageAdmin} from "./message/MessageAdmin"
 import {ShowAdmin} from "./show/ShowAdmin"
+import {Status} from "./status"
 import {TrackAdmin} from "./track/TrackAdmin"
 import {TwitchAdmin} from "./twitch/TwitchAdmin"
 
@@ -28,9 +30,25 @@ const Admin = () => {
                     <TwitchAdmin/>
                 </Route>
                 <Route exact path={path}>
-                    <div className={styles.Admin}>
-                        <AdminSection/>
-                    </div>
+                    <Sources>
+                        <div className={styles.Admin}>
+                            <Box className={styles.Screen} display="flex" flexDirection="row">
+                                <Box className={styles.Left} flexGrow={1}>
+                                    <AdminSection/>
+                                </Box>
+                                <Box className={styles.Right}>
+                                    <Box display="flex" flexDirection="column" height="100%">
+                                        <Box id="preview-frame" height={225}>
+                                            <iframe id="preview-iframe" className={styles.Preview} style={{transform: "scale(0.3125)", transformOrigin: "0 0", overflow: "hidden"}} title="Preview"
+                                                    width={1280} height={720} src={"/preview"}/>
+                                        </Box>
+                                        <Box flexGrow={1}><TwitchEmbed muted={true} channel={twitchChannel} parent={["localhost"]} width="100%" height="100%"/></Box>
+                                    </Box>
+                                </Box>
+                            </Box>
+                            <Status/>
+                        </div>
+                    </Sources>
                 </Route>
             </Switch>
         </Router>
