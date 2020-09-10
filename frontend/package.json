@@ -22,7 +22,8 @@
   },
   "resolutions": {
     "http-proxy": "^1.18.1",
-    "serialize-javascript": "^3.1.0"
+    "serialize-javascript": "^3.1.0",
+    "node-fetch": "^2.6.1"
   },
   "scripts": {
     "start": "react-scripts start",

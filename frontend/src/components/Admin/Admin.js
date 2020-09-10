@@ -5,6 +5,7 @@ import {Sources} from "./context/sources"
 import AdminSection from "./main"
 import {MessageAdmin} from "./message/MessageAdmin"
 import {ShowAdmin} from "./show/ShowAdmin"
+import {Status} from "./status"
 import {TrackAdmin} from "./track/TrackAdmin"
 import {TwitchAdmin} from "./twitch/TwitchAdmin"
 
@@ -30,6 +31,7 @@ const Admin = () => {
                 <Route exact path={path}>
                     <Sources>
                         <AdminSection/>
+                        <Status/>
                     </Sources>
                 </Route>
             </Switch>
