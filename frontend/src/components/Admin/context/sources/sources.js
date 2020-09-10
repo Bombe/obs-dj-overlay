@@ -2,7 +2,7 @@ import React, {createContext, useContext, useEffect, useState} from "react"
 
 import sourcesService from "../../../../services/sources"
 
-const SourcesContext = createContext({})
+const SourcesContext = createContext({loaded: false})
 
 const Sources = (props) => {
 
@@ -10,7 +10,7 @@ const Sources = (props) => {
 
     const updateSources = () => {
         sourcesService.get()
-            .then(sources => setSources(sources))
+            .then(sources => setSources({...sources, loaded: true}))
     }
 
     useEffect(() => {
