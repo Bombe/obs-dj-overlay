@@ -48,9 +48,9 @@ const ExportDialog = ({open, setOpened, historyEntries}) => {
             <DialogContent>
                 <Grid container spacing={2}>
                     <Grid item xs={1}><FormLabel>From</FormLabel></Grid>
-                    <Grid item xs={11}><TextField onChange={changeFrom} type="datetime-local" value={from}/></Grid>
+                    <Grid item xs={11}><TextField onChange={changeFrom} type="datetime-local" value={from} inputProps={{step: 1}}/></Grid>
                     <Grid item xs={1}><FormLabel>To</FormLabel></Grid>
-                    <Grid item xs={11}><TextField onChange={changeTo} type="datetime-local" value={to}/></Grid>
+                    <Grid item xs={11}><TextField onChange={changeTo} type="datetime-local" value={to} inputProps={{step: 1}}/></Grid>
                 </Grid>
             </DialogContent>
             <DialogActions>
