@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive 'src/**/*.test.js'",
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "version": "node src/version.js"
   },
   "license": "GPL-3.0-or-later",
   "devDependencies": {

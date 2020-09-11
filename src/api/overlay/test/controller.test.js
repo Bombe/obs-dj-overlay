@@ -1,18 +1,8 @@
 const expect = require("chai").expect
 const controller = require("../controller")
+const createResponseObject = require("../../test/response")
 
 const nothing = ({})
-
-const createResponseObject = () => {
-    let setStatus = -1
-    let endCalled = false
-    return {
-        status: (s) => setStatus = s,
-        end: () => endCalled = true,
-        setStatus: () => setStatus,
-        endCalled: () => endCalled
-    }
-}
 
 describe("“overlay” Controller", () => {
 
@@ -25,14 +15,8 @@ describe("“overlay” Controller", () => {
 
         it("should return the current state", () => {
             const stateToServe = {state: 1, to: 2, serve: 3}
-            let servedState
-            const response = {
-                json: (document) => {
-                    servedState = document
-                }
-            }
             controller({currentState: () => stateToServe}).get({}, response)
-            expect(servedState).to.eql(stateToServe)
+            expect(response.setJson()).to.eql(stateToServe)
         })
 
     })
@@ -307,6 +291,10 @@ describe("“overlay” Controller", () => {
     })
 
     describe("The PUT /twitch method", () => {
+
+        beforeEach(() => {
+            response = createResponseObject()
+        })
 
         it("should update the Twitch username", () => {
             let setTwitchUserName

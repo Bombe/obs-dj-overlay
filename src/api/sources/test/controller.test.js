@@ -1,19 +1,19 @@
 const {expect} = require("chai")
 const controller = require("../controller")
+const createResponseObject = require("../../test/response")
 
 describe("The Sources Controller", () => {
 
+    let response
+    beforeEach(() => {
+        response = createResponseObject()
+    })
+
     it("should return all current sources on GET /", () => {
-        let setBody
-        const response = {
-            json: body => {
-                setBody = body
-            }
-        }
         controller({
             get: () => ({traktor: []})
         }).get({}, response)
-        expect(setBody).to.eql({traktor: []})
+        expect(response.setJson()).to.eql({traktor: []})
     })
 
 })

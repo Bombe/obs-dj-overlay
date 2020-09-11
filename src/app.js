@@ -7,11 +7,13 @@ const path = require("path")
 const overlayRoute = require("./api/overlay/route")
 const historyRoute = require("./api/history/route")
 const sourceRoute = require("./api/sources/route")
+const runtimeRoute = require("./api/runtime/route")
 
 const clock = require("./component/clock")
 const history = require("./component/history")(clock)
 const State = require("./component/state")(history)
 const sources = require("./component/sources")
+const version = require("./component/version")("../../../version.json")
 
 const listenForOggComments = require("./component/icecast/icecast-server")
 const {titleCleaner} = require("./component/title-cleaner")
@@ -21,6 +23,7 @@ app.use(express.json({strict: false}))
 overlayRoute(app, State)
 historyRoute(app, history)
 sourceRoute(app, sources)
+runtimeRoute(app, version)
 
 // Serve any static files
 app.use(express.static(path.join(__dirname, "../frontend/build")))
