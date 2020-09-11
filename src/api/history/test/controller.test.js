@@ -1,31 +1,20 @@
 const {expect} = require("chai")
 const controller = require("../controller")
+const createResponseObject = require("../../test/response")
 
 describe("The History Controller", () => {
 
-    let endCalled
-    const response = {
-        end: () => {
-            endCalled = true
-        }
-    }
-
+    let response
     beforeEach(() => {
-        endCalled = false
+        response = createResponseObject()
     })
 
     it("should return all history entries", () => {
         const historyComponent = {
             entries: () => [{artist: "A1", title: "T1", time: 123}, {artist: "A2", title: "T2", time: 125}]
         }
-        let body
-        const response = {
-            json: (j) => {
-                body = j
-            }
-        }
         controller(historyComponent).get({}, response)
-        expect(body).to.eql([{artist: "A1", title: "T1", time: 123}, {artist: "A2", title: "T2", time: 125}])
+        expect(response.setJson()).to.eql([{artist: "A1", title: "T1", time: 123}, {artist: "A2", title: "T2", time: 125}])
     })
 
     it("should reset the history", () => {
@@ -45,7 +34,7 @@ describe("The History Controller", () => {
             }
         }
         controller(historyComponent).reset({}, response)
-        expect(endCalled).to.be.true
+        expect(response.endCalled()).to.be.true
     })
 
 })

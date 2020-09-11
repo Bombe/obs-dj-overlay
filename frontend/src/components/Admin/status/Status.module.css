@@ -1,17 +1,29 @@
-.Error {
-    background-color: red;
-    color: yellow;
+.Toolbar {
+    min-height: auto !important;
+    padding-top: 0.75ex;
+    padding-bottom: 0.75ex;
 }
 
-.Okay {
-    background-color: darkgreen;
-    color: white;
+.Traktor {
+    flex-grow: 1;
+}
+
+.Online {
+    color: darkgreen;
 }
 
 .Online:before {
     content: '✔ ︎'
 }
 
+.Offline {
+    color: red;
+}
+
 .Offline:before {
     content: '✘ '
+}
+
+.Version {
+    font-size: 80%;
 }
