@@ -23,3 +23,7 @@
 .Offline:before {
     content: '✘ '
 }
+
+.Version {
+    font-size: 80%;
+}
