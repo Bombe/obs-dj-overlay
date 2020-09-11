@@ -24,7 +24,7 @@ const Status = () => {
     return (
         <>
             <AppBar position="fixed" style={{top: "auto", bottom: 0, visibility: hidden ? "hidden" : "inherit"}}>
-                <Toolbar variant="dense" className={errorDetected ? styles.Error : styles.Okay}>
+                <Toolbar variant="dense" className={errorDetected ? styles.Error : styles.Okay} style={{minHeight: "inherit", paddingTop: "0.5ex", paddingBottom: "0.5ex"}}>
                     <Typography className={traktorConnected ? styles.Online : styles.Offline}>Traktor</Typography>
                 </Toolbar>
             </AppBar>
