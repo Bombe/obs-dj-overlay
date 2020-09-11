@@ -49,6 +49,7 @@ const listenForOggComments = (port, {onTrackData, onTraktorConnect, onTraktorDis
                     dataBufferIndex -= offset + 2
                 }
             }
+        }).on("error", () => {
         }).on("close", () => {
             onTraktorDisconnect(socket)
         })
