@@ -1,6 +1,6 @@
 import React from "react"
 
-import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom"
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 
 import Viewer from "./components/Viewer"
 import Admin from "./components/Admin"
@@ -16,9 +16,9 @@ const App = () => {
                     <Viewer/>
                 </Route>
                 <Route path="/">
-                    <Link to="/admin">
+                    <a href={"/admin"}>
                         <Viewer/>
-                    </Link>
+                    </a>
                 </Route>
             </Switch>
         </Router>
