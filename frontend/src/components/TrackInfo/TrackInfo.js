@@ -13,7 +13,7 @@ const TrackInfo = () => {
             }
             <div className="Artist">{overlayInfo.track.artist}</div>
             <div className="Title">{overlayInfo.track.title}</div>
-            {overlayInfo.lastTrack.number !== 0 && overlayInfo.lastTrack.artist !== "" && overlayInfo.lastTrack.title !== "" ?
+            {overlayInfo.lastTrack.artist !== "" && overlayInfo.lastTrack.title !== "" ?
                 <div className="LastTrack">
                     <div className="LastArtist">{overlayInfo.lastTrack.artist}</div>
                     <div className="LastTitle">{overlayInfo.lastTrack.title}</div>
