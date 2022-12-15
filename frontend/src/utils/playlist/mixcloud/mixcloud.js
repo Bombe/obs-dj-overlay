@@ -13,4 +13,4 @@ const mixcloud = {
 const formatNumber = (number) => number.toString().padStart(2, "0")
 const formatDuration = (duration) => formatNumber(duration.hours()) + ":" + formatNumber(duration.minutes()) + ":" + formatNumber(duration.seconds())
 
-export {mixcloud}
+module.exports = mixcloud
