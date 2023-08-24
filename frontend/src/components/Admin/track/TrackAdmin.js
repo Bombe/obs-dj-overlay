@@ -74,7 +74,7 @@ const TrackAdmin = () => {
                     <RadioGroup value={direction} onChange={flipDirection}>
                         <Box display="flex" alignItems="center">
                             <Box flexGrow={1}>
-                                <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onValueEventRun(setFilteredTrackNumber)}
+                                <SelectOnFocusTextField id="track-number-input" label="The number of the track" variant="filled" value={trackNumber} onChange={onValueEventRun(setFilteredTrackNumber)}
                                                         onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true} error={trackNumber !== originalTrackNumber} tabIndex={2}/>
                             </Box>
                             <Box style={{paddingLeft: "16px", paddingRight: "16px"}}>Direction:</Box>
