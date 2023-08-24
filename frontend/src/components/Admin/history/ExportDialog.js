@@ -11,6 +11,7 @@ import {Assignment} from "@material-ui/icons"
 import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component"
 
 import playlist from "../../../utils/playlist"
+import htmlTable from "../../../utils/playlist/html-table"
 import mixcloud from "../../../utils/playlist/mixcloud"
 
 import styles from "./HistoryAdmin.module.css"
@@ -20,6 +21,7 @@ const ExportDialog = ({open, setOpened, historyEntries}) => {
     const [from, setFrom] = useState("")
     const [to, setTo] = useState("")
     const [playlistEntries, setPlaylistEntries] = useState([])
+    const [htmlTablePlaylist, setHtmlTablePlaylist] = useState("")
     const [mixcloudPlaylist, setMixcloudPlaylist] = useState("")
 
     const closeDialog = () => {
@@ -39,6 +41,10 @@ const ExportDialog = ({open, setOpened, historyEntries}) => {
     }, [historyEntries, from, to])
 
     useEffect(() => {
+        setHtmlTablePlaylist(htmlTable.export(playlistEntries, from))
+    }, [playlistEntries, from])
+
+    useEffect(() => {
         setMixcloudPlaylist(mixcloud.export(playlistEntries, from))
     }, [playlistEntries, from])
 
@@ -54,6 +60,9 @@ const ExportDialog = ({open, setOpened, historyEntries}) => {
                 </Grid>
             </DialogContent>
             <DialogActions>
+                <CopyToClipboard text={htmlTablePlaylist}>
+                    <Button disabled={from === undefined || to === undefined} startIcon={<Assignment/>}>HTML Table</Button>
+                </CopyToClipboard>
                 <CopyToClipboard text={mixcloudPlaylist}>
                     <Button disabled={from === undefined || to === undefined} startIcon={<Assignment/>}>Mixcloud</Button>
                 </CopyToClipboard>
