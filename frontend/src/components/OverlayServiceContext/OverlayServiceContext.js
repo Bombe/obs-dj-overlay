@@ -14,4 +14,4 @@ const WithOverlayService = (props) => {
     )
 }
 
-module.exports = {OverlayServiceContext, WithOverlayService}
+export { OverlayServiceContext, WithOverlayService }
