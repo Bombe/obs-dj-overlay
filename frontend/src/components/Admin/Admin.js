@@ -8,34 +8,37 @@ import {ShowAdmin} from "./show/ShowAdmin"
 import {Status} from "./status"
 import {TrackAdmin} from "./track/TrackAdmin"
 import {TwitchAdmin} from "./twitch/TwitchAdmin"
+import {WithOverlayService} from "../OverlayServiceContext";
 
 const Admin = () => {
 
     const {path} = useRouteMatch()
 
     return (
-        <Router>
-            <Switch>
-                <Route path={`${path}/embed/show`}>
-                    <ShowAdmin/>
-                </Route>
-                <Route path={`${path}/embed/track`}>
-                    <TrackAdmin/>
-                </Route>
-                <Route path={`${path}/embed/message`}>
-                    <MessageAdmin/>
-                </Route>
-                <Route path={`${path}/embed/twitch`}>
-                    <TwitchAdmin/>
-                </Route>
-                <Route exact path={path}>
-                    <Sources>
-                        <AdminSection/>
-                        <Status/>
-                    </Sources>
-                </Route>
-            </Switch>
-        </Router>
+        <WithOverlayService>
+            <Router>
+                <Switch>
+                    <Route path={`${path}/embed/show`}>
+                        <ShowAdmin/>
+                    </Route>
+                    <Route path={`${path}/embed/track`}>
+                        <TrackAdmin/>
+                    </Route>
+                    <Route path={`${path}/embed/message`}>
+                        <MessageAdmin/>
+                    </Route>
+                    <Route path={`${path}/embed/twitch`}>
+                        <TwitchAdmin/>
+                    </Route>
+                    <Route exact path={path}>
+                        <Sources>
+                            <AdminSection/>
+                            <Status/>
+                        </Sources>
+                    </Route>
+                </Switch>
+            </Router>
+        </WithOverlayService>
     )
 
 }

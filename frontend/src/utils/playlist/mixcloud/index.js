@@ -1,1 +1,1 @@
-export {mixcloud as default} from "./mixcloud"
+module.exports = require("./mixcloud")

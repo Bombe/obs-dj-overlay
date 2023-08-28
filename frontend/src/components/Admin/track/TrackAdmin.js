@@ -1,5 +1,5 @@
 import {DoneAll, Refresh} from "@material-ui/icons"
-import React, {useEffect, useState} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Radio from "@material-ui/core/Radio"
 import RadioGroup from "@material-ui/core/RadioGroup"
@@ -9,13 +9,14 @@ import Grid from "@material-ui/core/Grid"
 
 import {blur, onEnter, onValueEventRun} from "../../../utils/event"
 import useFocus from "../../../utils/focus"
-import overlayService from "../../../services/overlay"
+import {OverlayServiceContext} from "../../OverlayServiceContext"
 import SelectOnFocusTextField from "../../selectOnFocus"
 
 import styles from "./TrackAdmin.module.css"
 
 const TrackAdmin = () => {
 
+    const overlayService = useContext(OverlayServiceContext)
     const [trackNumber, setTrackNumber] = useState(0)
     const [direction, setDirection] = useState("+1")
     const [trackArtist, setTrackArtist] = useState("")
@@ -73,7 +74,7 @@ const TrackAdmin = () => {
                     <RadioGroup value={direction} onChange={flipDirection}>
                         <Box display="flex" alignItems="center">
                             <Box flexGrow={1}>
-                                <SelectOnFocusTextField label="The number of the track" variant="filled" value={trackNumber} onChange={onValueEventRun(setFilteredTrackNumber)}
+                                <SelectOnFocusTextField id="track-number-input" label="The number of the track" variant="filled" value={trackNumber} onChange={onValueEventRun(setFilteredTrackNumber)}
                                                         onKeyPress={onEnter(focusTrackArtist, true)} fullWidth={true} error={trackNumber !== originalTrackNumber} tabIndex={2}/>
                             </Box>
                             <Box style={{paddingLeft: "16px", paddingRight: "16px"}}>Direction:</Box>
