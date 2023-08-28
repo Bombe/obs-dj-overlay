@@ -14,4 +14,4 @@ const collector = {
     }
 }
 
-module.exports = collector
+export {collector}

@@ -1,1 +1,1 @@
-module.exports = require("./collector")
+export {collector as default} from './collector'

@@ -8,7 +8,7 @@ import {ShowAdmin} from "./show/ShowAdmin"
 import {Status} from "./status"
 import {TrackAdmin} from "./track/TrackAdmin"
 import {TwitchAdmin} from "./twitch/TwitchAdmin"
-import {WithOverlayService} from "../OverlayServiceContext";
+import WithOverlayService from "../OverlayServiceContext";
 
 const Admin = () => {
 
