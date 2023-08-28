@@ -1,5 +1,6 @@
+import {collector} from '../collector'
+
 const {expect} = require("chai")
-const collector = require("../")
 
 const entry1 = {artist: "Artist 1", title: "Title 1", time: 1599551262000} // Di  8 Sep 2020 09:47:42 CEST
 const entry2 = {artist: "Artist 2", title: "Title 2", time: 1599551562000} // Di  8 Sep 2020 09:52:42 CEST

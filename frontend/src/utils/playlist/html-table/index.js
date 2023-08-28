@@ -1,1 +1,1 @@
-module.exports = require("./html-table")
+export {htmlTable as default} from  './html-table'

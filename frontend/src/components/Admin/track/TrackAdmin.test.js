@@ -2,7 +2,7 @@ import {render, screen} from "@testing-library/react"
 import React from "react"
 import {expect} from "chai"
 
-import {WithOverlayService} from "../../OverlayServiceContext"
+import WithOverlayService from "../../OverlayServiceContext"
 import TrackAdmin from "./"
 
 describe('The Track Administration', () => {

@@ -1,1 +1,1 @@
-module.exports = require("./OverlayServiceContext")
+export {WithOverlayService as default, OverlayServiceContext} from './OverlayServiceContext'

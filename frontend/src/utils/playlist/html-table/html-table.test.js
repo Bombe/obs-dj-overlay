@@ -1,5 +1,6 @@
+import {htmlTable} from './html-table'
+
 const {expect} = require("chai")
-const htmlTable = require("../html-table")
 
 const entry2 = {artist: "Artist 2", title: "Title 2", time: 1599551562000} // Di  8 Sep 2020 09:52:42 CEST
 const entry3 = {artist: "Artist 3", title: "Title 3", time: 1599552062000} // Di  8 Sep 2020 10:01:02 CEST
