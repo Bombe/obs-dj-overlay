@@ -28,6 +28,11 @@ module.exports = (state) => ({
         response.end()
     },
 
+    resetLastTrack: (request, response) => {
+        state.resetLastTrack()
+        response.end()
+    },
+
     setMessage: (request, response) => {
         if (typeof request.body === "string") {
             state.setMessage(request.body)

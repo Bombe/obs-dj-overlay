@@ -330,4 +330,21 @@ describe("“overlay” Controller", () => {
 
     })
 
+    describe("The DELETE /lastTrack method", () => {
+
+        it("should reset the last track", () => {
+            let lastTrackReset = false
+            controller({resetLastTrack: () => lastTrackReset = true})
+                .resetLastTrack({}, response)
+            expect(lastTrackReset).to.be.true
+        })
+
+        it("should end the request correctly", () => {
+            controller({resetLastTrack: () => nothing})
+                .resetLastTrack({}, response)
+            expect(response.endCalled()).to.be.true
+        })
+
+    })
+
 })
