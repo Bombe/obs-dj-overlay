@@ -140,6 +140,14 @@ describe("last track", () => {
         expect(state.lastTrack).to.be.eql({number: 0, artist: "", title: ""})
     })
 
+    it("should reset last track if reset function is called", () => {
+        State.setTrackInfo(1, "A1", "B1")
+        State.setTrackInfo(2, "A2", "B2")
+        State.resetLastTrack()
+        const state = State.currentState()
+        expect(state.lastTrack).to.be.deep.equal({number: 0, artist: "", title: ""})
+    })
+
 })
 
 describe("The History", () => {
