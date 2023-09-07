@@ -57,6 +57,9 @@ const OverlayService = {
     setTrackNumberDirection: (direction = "up") =>
         fetch("/overlay/trackNumberDirection", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify(direction)}),
 
+    resetLastTrack: () =>
+        fetch("/overlay/lastTrack", { method: "DELETE" }),
+
     setMessage: (message) =>
         fetch("/overlay/message", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify(message), mode: "same-origin"}),
 

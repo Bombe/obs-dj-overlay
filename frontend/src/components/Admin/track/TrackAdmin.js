@@ -1,4 +1,4 @@
-import {DoneAll, Refresh} from "@material-ui/icons"
+import {Delete, DoneAll, Refresh} from "@material-ui/icons"
 import React, {useContext, useEffect, useState} from "react"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Radio from "@material-ui/core/Radio"
@@ -56,6 +56,10 @@ const TrackAdmin = () => {
             })
     }
 
+    const resetLastTrack = () => {
+        overlayService.resetLastTrack()
+    }
+
     const flipDirection = (value) => {
         setDirection(value.target.value)
         if (value.target.value === "-1") {
@@ -95,6 +99,9 @@ const TrackAdmin = () => {
                     <Box display="flex" alignItems="center">
                         <Box flexGrow={1}>
                             <Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button>
+                        </Box>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button type="reset" variant="contained" fullWidth={true} onClick={resetLastTrack} startIcon={<Delete/>}>Reset Last Track</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
                             <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} startIcon={<Refresh/>}>Reload</Button>
