@@ -30,23 +30,21 @@ module.exports = history => ({
         state.show.subtitle = subtitle
         state.show.nextShow = nextShow
     },
-    setTrackInfo: (number = 0, artist = "", title = "") => {
-        const numberOfChanges = (((number === 0) || (number === currentTrack.number)) ? 0 : 1) + (artist === currentTrack.artist ? 0 : 1) + (title === currentTrack.title ? 0 : 1)
-        if ((number === 0) && (artist === "") && (title === "")) {
-            lastTrack = {}
-            currentTrack = {}
-        } else if ((numberOfChanges > 1) || ((number === 0) && (numberOfChanges > 0))) {
-            lastTrack = currentTrack
-            if ((number === 0) && (state.track.number !== 0)) {
-                if (state.track.direction === "up") {
-                    number = state.track.number + 1
-                } else {
-                    number = state.track.number - 1
+    setTrackInfo: (number = 0, artist = "", title = "", amend = false) => {
+        if (amend) {
+            history.amend(artist, title)
+        } else {
+            if ((artist !== "") && (title !== "")) {
+                if ((number === 0) && (state.track.number !== 0)) {
+                    if (state.track.direction === "up") {
+                        number = state.track.number + 1
+                    } else {
+                        number = state.track.number - 1
+                    }
                 }
             }
+            lastTrack = currentTrack
             history.add(artist, title)
-        } else {
-            history.amend(artist, title)
         }
         currentTrack = {number, artist, title}
         state.track.number = number
@@ -62,7 +60,6 @@ module.exports = history => ({
     },
     resetLastTrack: () => {
         lastTrack = {}
-        currentTrack = {}
     },
     setMessage: (message) => {
         state.message = message
