@@ -1,4 +1,4 @@
-import {Delete, DoneAll, Refresh} from "@material-ui/icons"
+import {Delete, DoneAll, Edit, Refresh} from "@material-ui/icons"
 import React, {useContext, useEffect, useState} from "react"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Radio from "@material-ui/core/Radio"
@@ -56,6 +56,10 @@ const TrackAdmin = () => {
             })
     }
 
+    const amendCurrentTrack = () => {
+        overlayService.amendCurrentTrack(trackNumber, trackArtist, trackTitle)
+    }
+
     const resetLastTrack = () => {
         overlayService.resetLastTrack()
     }
@@ -88,17 +92,20 @@ const TrackAdmin = () => {
                     </RadioGroup>
                 </Grid>
                 <Grid item xs={12}>
-                    <SelectOnFocusTextField inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist} onChange={onValueEventRun(setTrackArtist)}
+                    <SelectOnFocusTextField id="track-artist-input" inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist} onChange={onValueEventRun(setTrackArtist)}
                                             onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true} error={trackArtist !== originalTrackArtist}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <SelectOnFocusTextField inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setTrackTitle)}
+                    <SelectOnFocusTextField id="track-title-input" inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setTrackTitle)}
                                             onKeyPress={onEnter(blur, true)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
                 </Grid>
                 <Grid item xs={12}>
                     <Box display="flex" alignItems="center">
                         <Box flexGrow={1}>
                             <Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button>
+                        </Box>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button type="reset" variant="contained" fullWidth={true} onClick={amendCurrentTrack} startIcon={<Edit/>}>Amend</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
                             <Button type="reset" variant="contained" fullWidth={true} onClick={resetLastTrack} startIcon={<Delete/>}>Reset Last Track</Button>
