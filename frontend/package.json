@@ -28,10 +28,10 @@
     "object-path": "^0.11.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject"
   },
   "proxy": "http://localhost:5000",
   "eslintConfig": {
@@ -48,5 +48,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "chai": "^4.3.8",
+    "craco": "^0.0.3",
+    "msw": "^1.2.5"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

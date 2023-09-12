@@ -111,33 +111,20 @@ describe("last track", () => {
         expect(state.lastTrack).to.be.eql({number: 1, artist: "A1", title: "B1"})
     })
 
-    it("should not update last track if number and artist are the same", () => {
-        State.setTrackInfo(1, "A1", "B1")
-        State.setTrackInfo(1, "A1", "B2")
-        const state = State.currentState()
-        expect(state.lastTrack).to.be.eql({number: 0, artist: "", title: ""})
-    })
-
-    it("should not update last track if number and title are the same", () => {
-        State.setTrackInfo(1, "A1", "B1")
-        State.setTrackInfo(1, "A2", "B1")
-        const state = State.currentState()
-        expect(state.lastTrack).to.be.eql({number: 0, artist: "", title: ""})
-    })
-
-    it("should not update last track if artist and title are the same", () => {
-        State.setTrackInfo(1, "A1", "B1")
-        State.setTrackInfo(2, "A1", "B1")
-        const state = State.currentState()
-        expect(state.lastTrack).to.be.eql({number: 0, artist: "", title: ""})
-    })
-
-    it("should reset last track if empty track is set", () => {
+    it("should not change last track if track is amended", () => {
         State.setTrackInfo(1, "A1", "B1")
         State.setTrackInfo(2, "A2", "B2")
-        State.setTrackInfo(0, "", "")
+        State.setTrackInfo(2, "A3", "B3", true)
         const state = State.currentState()
-        expect(state.lastTrack).to.be.eql({number: 0, artist: "", title: ""})
+        expect(state.lastTrack).to.be.deep.equal({number: 1, artist: "A1", title: "B1"})
+    })
+
+    it("should reset last track if reset function is called", () => {
+        State.setTrackInfo(1, "A1", "B1")
+        State.setTrackInfo(2, "A2", "B2")
+        State.resetLastTrack()
+        const state = State.currentState()
+        expect(state.lastTrack).to.be.deep.equal({number: 0, artist: "", title: ""})
     })
 
 })
@@ -173,25 +160,11 @@ describe("The History", () => {
         expect(setTitle).to.eql("Title")
     })
 
-    it("should amend last entry if only the artist is changed", () => {
+    it("should amend last entry if the amend flag is set", () => {
         state.setTrackInfo(1, "Atist", "Title")
-        state.setTrackInfo(1, "Artist", "Title")
+        state.setTrackInfo(1, "Artist", "Title", true)
         expect(amendedArtist).to.eql("Artist")
         expect(amendedTitle).to.eql("Title")
-    })
-
-    it("should add track if no number is sent and only the artist was changed", () => {
-        state.setTrackInfo(0, "Atist", "Title")
-        state.setTrackInfo(0, "Artist", "Title")
-        expect(setArtist).to.eql("Artist")
-        expect(setTitle).to.eql("Title")
-    })
-
-    it("should add track if no number is sent and only the title was changed", () => {
-        state.setTrackInfo(0, "Artist", "Ttle")
-        state.setTrackInfo(0, "Artist", "Title")
-        expect(setArtist).to.eql("Artist")
-        expect(setTitle).to.eql("Title")
     })
 
 })

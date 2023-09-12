@@ -12,7 +12,7 @@ module.exports = (state) => ({
 
     setTrackInfo: (request, response) => {
         if ((Number.isFinite(request.body.number) || (request.body.number === "")) && (typeof request.body.artist === "string") && (typeof request.body.title === "string")) {
-            state.setTrackInfo(request.body.number === "" ? "" : Math.floor(request.body.number), request.body.artist, request.body.title)
+            state.setTrackInfo(request.body.number === "" ? "" : Math.floor(request.body.number), request.body.artist, request.body.title, !!request.body.amend)
         } else {
             response.status(400)
         }
@@ -25,6 +25,11 @@ module.exports = (state) => ({
         } else if (request.body === "down") {
             state.setTrackNumberDirection("down")
         }
+        response.end()
+    },
+
+    resetLastTrack: (request, response) => {
+        state.resetLastTrack()
         response.end()
     },
 
