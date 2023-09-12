@@ -202,6 +202,26 @@ describe("“overlay” Controller", () => {
             expect(response.endCalled()).to.equal(true)
         })
 
+        it("should forward number, artist, title, and amend flag to state", () => {
+            let parameters = {}
+            controller({setTrackInfo: (number, artist, title, amend) => parameters = {number, artist, title, amend}})
+                .setTrackInfo({body: {number: 1, artist: "Artist", title: "Title", amend: true}}, response)
+            expect(parameters).to.be.deep.equal({number: 1, artist: "Artist", title: "Title", amend: true})
+        })
+
+        it("should should normalize a missing amend flag to false", () => {
+            let amendFlag
+            controller({setTrackInfo: (number, artist, title, amend) => amendFlag = amend})
+                .setTrackInfo({body: {number: 1, artist: "Artist", title: "Title"}}, response)
+            expect(amendFlag).to.be.false
+        })
+
+        it("should should normalize a non-zero, non-empty amend flag to true", () => {
+            let amendFlag
+            controller({setTrackInfo: (number, artist, title, amend) => amendFlag = amend})
+                .setTrackInfo({body: {number: 1, artist: "Artist", title: "Title", amend: "17"}}, response)
+            expect(amendFlag).to.be.true
+        })
     })
 
     describe("The PUT /trackNumberDirection method", () => {
