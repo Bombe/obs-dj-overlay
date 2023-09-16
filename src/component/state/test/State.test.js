@@ -13,6 +13,7 @@ describe("State", () => {
         expect(State.currentState()).to.eql({
             track: {
                 number: 0,
+                cover: "",
                 artist: "",
                 title: "",
                 direction: "up"
@@ -40,10 +41,19 @@ describe("State", () => {
     })
 
     it("should keep track info when set", () => {
-        State.setTrackInfo(12, "Artist", "Title")
+        State.setTrackInfo(12, "Artist", "Title", false, "Cover")
         expect(State.currentState().track.number).to.equal(12)
         expect(State.currentState().track.artist).to.equal("Artist")
         expect(State.currentState().track.title).to.equal("Title")
+        expect(State.currentState().track.cover).to.equal("Cover")
+    })
+
+    it("should reset cover if not explicitely set", () => {
+        State.setTrackInfo(12, "Artist", "Title", false, "Cover")
+        State.setTrackInfo(0, "Artist 2", "Title 2", false)
+        expect(State.currentState().track.artist).to.equal("Artist 2")
+        expect(State.currentState().track.title).to.equal("Title 2")
+        expect(State.currentState().track.cover).to.equal("")
     })
 
     it("should reset current track if empty track is set", () => {
@@ -68,6 +78,7 @@ describe("State", () => {
 describe("Track Number Generation", () => {
     beforeEach(() => {
         State.setTrackInfo()
+        State.setTrackNumberDirection("up")
     })
 
     it("should increment track number when number is 0", () => {
