@@ -10,11 +10,15 @@ describe('The Overlay Service', () => {
     })
 
     it('should have a default value with keys for the track', () => {
-        expect(defaultValue.track).to.have.all.keys('number', 'artist', 'title', 'direction')
+        expect(defaultValue.track).to.have.all.keys('number', 'cover', 'artist', 'title', 'direction')
     })
 
     it('should have a default value with 0 for the track’s number', () => {
         expect(defaultValue.track.number).to.equal(0)
+    })
+
+    it('should have a default value with an empty string for the track’s cover', () => {
+        expect(defaultValue.track.cover).to.equal("")
     })
 
     it('should have a default value with an empty string for the track’s artist', () => {

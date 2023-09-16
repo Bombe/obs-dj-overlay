@@ -1,6 +1,7 @@
 const defaultOverlayInfo = {
     track: {
         number: 0,
+        cover: "",
         artist: "",
         title: "",
         direction: "up"
@@ -29,6 +30,7 @@ const OverlayService = {
             .then(json => ({
                 track: {
                     number: json.track.number,
+                    cover: json.track.cover,
                     artist: json.track.artist,
                     title: json.track.title,
                     direction: json.track.direction
