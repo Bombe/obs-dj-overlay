@@ -9,29 +9,32 @@ import TitleInfo from "../TitleInfo"
 import Message from "../Message"
 
 import "./Viewer.css"
+import WithOverlayService from "../OverlayServiceContext";
 
 const Viewer = () => {
     return (
         <div className="Background">
             <div className="Viewer ">
-                <Overlay>
-                    <Message/>
-                    <div className="Center">
-                        <div className="Left">
-                            <TitleInfo/>
+                <WithOverlayService>
+                    <Overlay>
+                        <Message/>
+                        <div className="Center">
+                            <div className="Left">
+                                <TitleInfo/>
+                            </div>
+                            <div className="Expand">
+                            </div>
+                            <div className="Right">
+                                <Clock/>
+                                <TwitchInfo/>
+                            </div>
                         </div>
-                        <div className="Expand">
+                        <div className="Bottom">
+                            <TrackInfo/>
+                            <NextShow/>
                         </div>
-                        <div className="Right">
-                            <Clock/>
-                            <TwitchInfo/>
-                        </div>
-                    </div>
-                    <div className="Bottom">
-                        <TrackInfo/>
-                        <NextShow/>
-                    </div>
-                </Overlay>
+                    </Overlay>
+                </WithOverlayService>
             </div>
         </div>
     )
