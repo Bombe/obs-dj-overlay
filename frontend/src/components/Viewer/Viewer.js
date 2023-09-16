@@ -1,7 +1,7 @@
 import React from "react"
 
 import TrackInfo from "../TrackInfo"
-import {Overlay} from "../Overlay"
+import WithOverlayInfo from "../OverlayInfoContext"
 import NextShow from "../NextShow"
 import TwitchInfo from "../TwitchInfo"
 import Clock from "../Clock"
@@ -16,7 +16,7 @@ const Viewer = () => {
         <div className="Background">
             <div className="Viewer ">
                 <WithOverlayService>
-                    <Overlay>
+                    <WithOverlayInfo>
                         <Message/>
                         <div className="Center">
                             <div className="Left">
@@ -33,7 +33,7 @@ const Viewer = () => {
                             <TrackInfo/>
                             <NextShow/>
                         </div>
-                    </Overlay>
+                    </WithOverlayInfo>
                 </WithOverlayService>
             </div>
         </div>

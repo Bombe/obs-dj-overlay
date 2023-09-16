@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import TwitchClient from 'twitch';
 import config from "../../utils/config";
 import {TwitchGlitchPurple} from "../Logo/";
-import OverlayContext from "../Overlay";
+import {OverlayContext} from "../OverlayInfoContext";
 import "./TwitchInfo.css";
 
 const hasTwitchConfig = (config && config.twitch && config.twitch.clientId && config.twitch.clientSecret);

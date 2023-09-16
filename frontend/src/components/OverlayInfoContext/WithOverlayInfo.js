@@ -5,7 +5,7 @@ import {OverlayServiceContext} from "../OverlayServiceContext";
 
 const OverlayContext = createContext(defaultOverlayService.defaultValue());
 
-const Overlay = (props) => {
+const WithOverlayInfo = (props) => {
 
     const overlayService = useContext(OverlayServiceContext)
     const [overlayInfo, setOverlayInfo] = useState(useContext(OverlayContext));
@@ -26,4 +26,4 @@ const Overlay = (props) => {
     );
 }
 
-export {Overlay as default, OverlayContext};
+export {WithOverlayInfo as default, OverlayContext};

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./NextShow.css";
-import OverlayContext from "../Overlay";
+import {OverlayContext} from "../OverlayInfoContext";
 
 const NextShow = () => {
     const overlayInfo = useContext(OverlayContext);
