@@ -17,6 +17,11 @@ describe('The Track Administration', () => {
         expect(screen.getByLabelText(/the number of the track/i)).to.exist
     })
 
+    it('should have a field labeled "cover"', () => {
+        render(<WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService>)
+        expect(screen.getByLabelText(/cover/i)).to.exist
+    });
+
     it('should have a button labeled “reset last track”', () => {
         render(<WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService>)
         expect(screen.getByText(/reset last track/i)).to.exist

@@ -53,8 +53,8 @@ const OverlayService = {
     setShowInfo: (title, subtitle, nextShow) =>
         fetch("/overlay/show", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({title, subtitle, nextShow}), mode: "same-origin"}),
 
-    setTrackInfo: (number, artist, title) =>
-        fetch("/overlay/track", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({number, artist, title}), mode: "same-origin"}),
+    setTrackInfo: (number, artist, title, cover) =>
+        fetch("/overlay/track", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({number, artist, title, cover}), mode: "same-origin"}),
 
     setTrackNumberDirection: (direction = "up") =>
         fetch("/overlay/trackNumberDirection", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify(direction)}),
