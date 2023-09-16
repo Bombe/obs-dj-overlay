@@ -55,4 +55,15 @@ describe('The Track Info element', () => {
         expect(screen.getByTitle('last-title').textContent).to.eq('Last Title')
     });
 
+    it('should not display the cover image if no cover image is set', () => {
+        render(<WithOverlayInfo overlayInfo={{track: {artist: 'Artist'}, lastTrack: {}}}><TrackInfo/></WithOverlayInfo>)
+        expect(screen.queryByTitle('cover-image')).to.be.null
+    });
+
+    it('should display the cover image if cover image is set', () => {
+        render(<WithOverlayInfo overlayInfo={{track: {artist: 'Artist', cover: 'img:a'}, lastTrack: {}}}><TrackInfo/></WithOverlayInfo>)
+        expect(screen.getByTitle('cover-image').tagName).to.eql('IMG')
+        expect(screen.getByTitle('cover-image').getAttribute("src")).to.eql('img:a')
+    });
+
 });
