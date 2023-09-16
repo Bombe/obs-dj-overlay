@@ -202,11 +202,11 @@ describe("“overlay” Controller", () => {
             expect(response.endCalled()).to.equal(true)
         })
 
-        it("should forward number, artist, title, and amend flag to state", () => {
+        it("should forward number, artist, title, amend flag, and cover to state", () => {
             let parameters = {}
-            controller({setTrackInfo: (number, artist, title, amend) => parameters = {number, artist, title, amend}})
-                .setTrackInfo({body: {number: 1, artist: "Artist", title: "Title", amend: true}}, response)
-            expect(parameters).to.be.deep.equal({number: 1, artist: "Artist", title: "Title", amend: true})
+            controller({setTrackInfo: (number, artist, title, amend, cover) => parameters = {number, artist, title, amend, cover}})
+                .setTrackInfo({body: {number: 1, artist: "Artist", title: "Title", amend: true, cover: "Cover"}}, response)
+            expect(parameters).to.be.deep.equal({number: 1, artist: "Artist", title: "Title", amend: true, cover: "Cover"})
         })
 
         it("should should normalize a missing amend flag to false", () => {
