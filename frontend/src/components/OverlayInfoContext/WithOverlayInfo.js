@@ -8,16 +8,21 @@ const OverlayContext = createContext(defaultOverlayService.defaultValue());
 const WithOverlayInfo = (props) => {
 
     const overlayService = useContext(OverlayServiceContext)
-    const [overlayInfo, setOverlayInfo] = useState(useContext(OverlayContext));
+    const overlayContext = useContext(OverlayContext)
+    const [overlayInfo, setOverlayInfo] = useState(props.overlayInfo || overlayContext);
 
     useEffect(() => {
+        if (props.overlayInfo) {
+            return () => {}
+        }
+
         const updateInfo = () => {
             overlayService.get().then(setOverlayInfo)
         };
 
         const timerHandler = setInterval(updateInfo, 1000);
         return () => clearTimeout(timerHandler);
-    }, [overlayService]);
+    }, [overlayService, props.overlayInfo]);
 
     return (
         <OverlayContext.Provider value={overlayInfo}>
