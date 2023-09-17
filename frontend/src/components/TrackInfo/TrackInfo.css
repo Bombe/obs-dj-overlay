@@ -38,14 +38,14 @@
 .TrackInfo .Artist {
     grid-area: artist;
     align-self: end;
-    font-weight: bold;
-    font-size: 120%;
 }
 
 .TrackInfo .Title {
     grid-area: title;
     align-self: end;
     margin-bottom: 0.5ex;
+    font-weight: bold;
+    font-size: 120%;
 }
 
 .TrackInfo .LastTrack {

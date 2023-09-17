@@ -1,118 +1,139 @@
 import React from "react"
-import {render, screen} from "@testing-library/react";
+import {act, render, screen} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {expect} from 'chai'
 
+import WithCrateService from "../../CrateServiceContext";
 import {CrateAdmin} from './CrateAdmin'
 
 describe('The Crate Admin', () => {
 
-    it('should start with an empty crate', () => {
-        render(<CrateAdmin/>)
-        expect(screen.queryAllByTitle("record")).to.be.an('array').and.to.be.empty
+    const createRecord = (artist, title, cover) => ({artist, title, cover})
+
+    const createRecordResponse = records => Promise.resolve({json: () => Promise.resolve(records)})
+    const createStatusResponse = status => Promise.resolve({status})
+
+    const defaultCrateService = {
+        getRecords: () => createRecordResponse([]),
+        importRecords: () => createStatusResponse(200),
+        reset: () => Promise.resolve()
+    }
+
+    it('should load the crate from the service', async () => {
+        const crateService = {...defaultCrateService, getRecords: () => createRecordResponse([createRecord('Artist', 'Title', 'Cover')])}
+        await act(async () => await render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
+        expect(screen.queryAllByTitle("record")).to.have.lengthOf(1)
     });
 
-    it('should have a button labeled "import"', () => {
-        render(<CrateAdmin/>)
+    it('should generate IDs for the entries in the crate', async () => {
+        const crateService = {
+            ...defaultCrateService, getRecords: () => createRecordResponse([
+                createRecord('C', 'F', ''), createRecord('B', 'E', ''), createRecord('F', 'A', ''),
+                createRecord('C', 'E', ''), createRecord('B', 'X'), createRecord('A', 'F', '')
+            ])
+        }
+        await act(async () => await render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
+        const ids = new Set(Array.from(document.body.querySelectorAll("[title='record']")).map(element => element.getAttribute('data-id')))
+        expect(ids).to.have.lengthOf(6)
+    });
+
+    it('should sort entries in the crate', async () => {
+        const crateService = {
+            ...defaultCrateService, getRecords: () => createRecordResponse([
+                createRecord('C', 'F', ''), createRecord('B', 'E', ''), createRecord('F', 'A', ''),
+                createRecord('C', 'E', ''), createRecord('B', 'X'), createRecord('A', 'F', '')
+            ])
+        }
+        await act(async () => await render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
+        expect(Array.from(document.body.querySelectorAll("[title='record']")).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')}))).to.be.deep.eql([
+            {artist: 'A', title: 'F'}, {artist: 'B', title: 'E'}, {artist: 'B', title: 'X'}, {artist: 'C', title: 'E'}, {artist: 'C', title: 'F'}, {artist: 'F', title: 'A'}
+        ])
+    });
+
+    it('should have a button labeled "import"', async () => {
+        await act(async () => render(<WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService>))
         expect(screen.getByRole('button', {name: /import/i})).to.exist
     });
 
-    it('should have an input field for the import', () => {
-        render(<CrateAdmin/>)
+    it('should have an input field for the import', async () => {
+        await act(async () => render(<WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService>))
         expect(screen.getByLabelText(/import/i)).to.exist
     });
 
-    it('should not import anything if input field does not contain anything', () => {
-        render(<CrateAdmin/>)
+    it('should not import anything if input field does not contain anything', async () => {
+        let importCalled = false
+        const crateService = {...defaultCrateService, importRecords: () => importCalled = true}
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
         userEvent.click(screen.getByRole('button', {name: /import/i}))
-        expect(screen.queryAllByTitle('record')).to.be.an('array').and.to.be.empty
+        expect(importCalled).to.be.false
     });
 
-    it('should import a single track from input field', () => {
-        render(<CrateAdmin/>)
-        userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","title":"Title","cover":"Cover"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
+    it('should import a single track from input field', async () => {
+        let importedTrack = []
+        const crateService = {
+            ...defaultCrateService,
+            getRecords: () => createRecordResponse(importedTrack),
+            importRecords: string => {
+                importedTrack = JSON.parse(string)
+                return defaultCrateService.importRecords()
+            },
+        }
+        await act(async () => {
+            render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
+            await userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","title":"Title","cover":"Cover"}]')
+            userEvent.click(screen.getByRole('button', {name: /import/i}))
+        })
         expect(screen.queryAllByTitle('record')).to.have.lengthOf(1)
     });
 
-    it('should clear the input field after successful importing', () => {
-        render(<CrateAdmin/>)
-        userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","title":"Title","cover":"Cover"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
+    it('should clear the input field after successful importing', async () => {
+        await act(async () => {
+            render(<WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService>)
+            await userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","title":"Title","cover":"Cover"}]')
+            userEvent.click(screen.getByRole('button', {name: /import/i}))
+        })
         expect(screen.getByLabelText(/import/i).value).to.be.empty
     });
 
-    it('should not clear the input field after unsuccessful importing', () => {
-        render(<CrateAdmin/>)
-        userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","tit')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
+    it('should not clear the input field after unsuccessful importing', async () => {
+        const crateService = {...defaultCrateService, importRecords: () => createStatusResponse(400)}
+        await act(async () => {
+            render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
+            await userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","tit')
+            userEvent.click(screen.getByRole('button', {name: /import/i}))
+        })
         expect(screen.getByLabelText(/import/i).value).to.be.eql('[{"artist":"Artist","tit')
     });
 
-    it('should import multiple tracks from input field', () => {
-        render(<CrateAdmin/>)
-        userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","title":"Title","cover":"Cover"},{"artist":"Artist 2","title":"Title 2","cover":"Cover 2"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
-        expect(screen.queryAllByTitle('record')).to.have.lengthOf(2)
-    });
-
-    it('should add imported tracks to existing tracks', () => {
-        render(<CrateAdmin/>)
-        userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","title":"Title","cover":"Cover"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
-        userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist 2","title":"Title 2","cover":"Cover 2"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
-        expect(screen.queryAllByTitle('record')).to.have.lengthOf(2)
-    });
-
-    it('should have a button to clear the crates', () => {
-        render(<CrateAdmin/>)
+    it('should have a button to clear the crates', async () => {
+        await act(async () => render(<WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService>))
         expect(screen.getByRole('button', {name: /clear/i})).to.exist
     });
 
-    it('should clear the crate when button is pressed', () => {
-        render(<CrateAdmin/>)
-        userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","title":"Title","cover":"Cover"},{"artist":"Artist 2","title":"Title 2","cover":"Cover 2"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
-        userEvent.click(screen.getByRole('button', {name: /clear/i}))
-        expect(screen.queryAllByTitle('record')).to.have.lengthOf(0)
+    it('should tell the crate service to reset the crate when clear button is pressed', async () => {
+        let resetCalled = false
+        const crateService = {
+            ...defaultCrateService, reset: () => {
+                resetCalled = true
+                return Promise.resolve()
+            }
+        }
+        await act(async () => {
+            render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
+            userEvent.click(screen.getByRole('button', {name: /clear/i}))
+        })
+        expect(resetCalled).to.be.true
     });
 
-    it('should call given setters if a row is clicked', () => {
+    it('should call given setters if a row is clicked', async () => {
         let calledSetters = {}
-        const setArtist = artist => calledSetters = {...calledSetters, artist }
-        const setTitle = title => calledSetters = {...calledSetters, title }
-        const setCover = cover => calledSetters = {...calledSetters, cover }
-        render(<CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover}/>)
-        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"id1","artist":"Artist","title":"Title","cover":"Cover"},{"id":"id2","artist":"Artist 2","title":"Title 2","cover":"Cover 2"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
+        const setArtist = artist => calledSetters = {...calledSetters, artist}
+        const setTitle = title => calledSetters = {...calledSetters, title}
+        const setCover = cover => calledSetters = {...calledSetters, cover}
+        const crateService = {...defaultCrateService, getRecords: () => createRecordResponse([{id: "id1", artist: "Artist", title: "Title", cover: "Cover"}, {id: "id2", artist: "Artist 2", title: "Title 2", cover: "Cover 2"}])}
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover}/></WithCrateService>))
         userEvent.dblClick(document.body.querySelector('[title="record"][data-id="id2"]'))
         expect(calledSetters).to.be.deep.eql({artist: 'Artist 2', title: 'Title 2', cover: 'Cover 2'})
-    });
-
-    it('should sort entries on importing', () => {
-        render(<CrateAdmin/>)
-        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"D1","artist":"D","title":"D","cover":"Cover"},{"id":"B1","artist":"B","title":"B","cover":"Cover 2"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
-        expect(Array.from(document.body.querySelectorAll('[title="record"]')).map(element => ({id: element.getAttribute('data-id')}))).to.be.deep.eql([{id: 'B1'}, {id: 'D1'}])
-    });
-
-    it('should keep all entries sorted', () => {
-        render(<CrateAdmin/>)
-        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"D1","artist":"D","title":"D","cover":"Cover"},{"id":"B1","artist":"B","title":"B","cover":"Cover 2"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
-        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"C1","artist":"C","title":"C","cover":"Cover"},{"id":"A1","artist":"A","title":"A","cover":"Cover 2"},{"id":"F1","artist":"F","title":"F","cover":"Cover 2"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
-        expect(Array.from(document.body.querySelectorAll('[title="record"]')).map(element => ({id: element.getAttribute('data-id')}))).to.be.deep.eql([{id: 'A1'}, {id: 'B1'}, {id: 'C1'}, {id: 'D1'}, {id: 'F1'}])
-    });
-
-    it('should sort by both artist and name', () => {
-        render(<CrateAdmin/>)
-        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"D1","artist":"D","title":"D","cover":"Cover"},{"id":"D2","artist":"D","title":"B","cover":"Cover"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
-        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"D3","artist":"D","title":"C","cover":"Cover"}]')
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
-        expect(Array.from(document.body.querySelectorAll('[title="record"]')).map(element => ({id: element.getAttribute('data-id')}))).to.be.deep.eql([{id: 'D2'}, {id: 'D3'}, {id: 'D1'}])
     });
 
 });

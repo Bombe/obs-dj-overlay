@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useCallback, useContext, useEffect, useState} from 'react'
 import Grid from "@material-ui/core/Grid";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -12,47 +12,46 @@ import {Delete, PlaylistAdd} from "@material-ui/icons";
 import * as uuid from "uuid";
 
 import {onValueEventRun} from "../../../utils/event";
+import {CrateServiceContext} from "../../CrateServiceContext";
 
 import styles from "./CrateAdmin.module.css"
 
-const parseRecords = jsonObject => {
-    if (!Array.isArray(jsonObject)) {
-        return [];
-    }
-    return jsonObject
-        .map(object =>
-            ({id: object.id || uuid.v4(), artist: object.artist, title: object.title, cover: object.cover})
-        )
-        .filter(object => object.artist !== undefined && object.title !== undefined && object.cover !== undefined)
-}
-
-const sortRecords = (left, right) => {
-    const artistComparison = left.artist.toLowerCase().localeCompare(right.artist.toLowerCase())
-    if (artistComparison !== 0) {
-        return artistComparison
-    }
-    return left.title.toLowerCase().localeCompare(right.title.toLowerCase())
-}
+const sortRecords = (left, right) =>
+    left.artist.toLowerCase().localeCompare(right.artist.toLowerCase()) ||
+    left.title.toLowerCase().localeCompare(right.title.toLowerCase())
 
 const CrateAdmin = ({setArtist, setTitle, setCover}) => {
 
+    const crateService = useContext(CrateServiceContext)
     const [crateEntries, setCrateEntries] = useState([])
     const [importString, setImportString] = useState("")
 
-    const importFromClipboard = () => {
-        try {
-            const parsedImport = JSON.parse(importString)
-            const parsedRecords = parseRecords(parsedImport)
-            const allEntries = [...crateEntries, ...parsedRecords]
-            allEntries.sort(sortRecords)
-            setCrateEntries(allEntries)
-            setImportString("")
-        } catch (SyntaxError) {
+    const reloadCrate = useCallback(() => {
+        crateService.getRecords()
+            .then(result => result.json())
+            .then(records => {
+                records.sort(sortRecords)
+                return records
+            })
+            .then(records => records.map(record => ({...record, id: record.id || uuid.v4()})))
+            .then(records => setCrateEntries(records))
+    }, [crateService])
+
+    const importFromInputField = () => {
+        if (importString !== "") {
+            crateService.importRecords(importString)
+                .then(result => {
+                    if (result.status === 200) {
+                        setImportString("")
+                    }
+                })
+                .then(reloadCrate)
         }
     }
 
     const clearCrate = () => {
-        setCrateEntries([])
+        crateService.reset()
+            .then(reloadCrate)
     }
 
     const exportRowValues = record => {
@@ -60,6 +59,10 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
         setTitle(record.title)
         setCover(record.cover)
     }
+
+    useEffect(() => {
+        reloadCrate()
+    }, [reloadCrate])
 
     return (
         <Grid container spacing={2} direction="column" alignItems="stretch" className={styles.Crate}>
@@ -77,7 +80,6 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
                                 <TableRow key={record.id} title="record" data-id={record.id} data-artist={record.artist} data-title={record.title} data-cover={record.cover} onDoubleClick={() => exportRowValues(record)}>
                                     <TableCell>{record.artist}</TableCell>
                                     <TableCell>{record.title}</TableCell>
-                                    <TableCell style={{display: 'none'}}>{record.cover}</TableCell>
                                 </TableRow>
                             )}
                         </TableBody>
@@ -87,7 +89,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
             <Grid item xs={12}>
                 <Box display="flex">
                     <Box flexGrow={1}><TextField id="import-string" label="Import" fullWidth={true} value={importString} onChange={onValueEventRun(setImportString)}></TextField></Box>
-                    <Box paddingLeft="16px"><Button onClick={importFromClipboard} variant="contained" startIcon={<PlaylistAdd/>}>Import</Button></Box>
+                    <Box paddingLeft="16px"><Button onClick={importFromInputField} variant="contained" startIcon={<PlaylistAdd/>}>Import</Button></Box>
                     <Box paddingLeft="16px"><Button onClick={clearCrate} variant="contained" startIcon={<Delete/>}>Clear</Button></Box>
                 </Box>
             </Grid>
