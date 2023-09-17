@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import {BrowserRouter as Router, Route, Switch, useRouteMatch} from "react-router-dom"
 
 import {Sources} from "./context/sources"
@@ -15,6 +15,10 @@ const Admin = () => {
 
     const {path} = useRouteMatch()
 
+    const [artist, setArtist] = useState("")
+    const [title, setTitle] = useState("")
+    const [cover, setCover] = useState("")
+
     return (
         <WithOverlayService>
             <Router>
@@ -23,10 +27,10 @@ const Admin = () => {
                         <ShowAdmin/>
                     </Route>
                     <Route path={`${path}/embed/track`}>
-                        <TrackAdmin/>
+                        <TrackAdmin artistState={[artist, setArtist]} titleState={[title, setTitle]} coverState={[cover, setCover]}/>
                     </Route>
                     <Route path={`${path}/embed/crate`}>
-                        <CrateAdmin/>
+                        <CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover}/>
                     </Route>
                     <Route path={`${path}/embed/message`}>
                         <MessageAdmin/>

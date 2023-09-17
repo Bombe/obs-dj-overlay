@@ -14,14 +14,18 @@ import SelectOnFocusTextField from "../../selectOnFocus"
 
 import styles from "./TrackAdmin.module.css"
 
-const TrackAdmin = () => {
+const TrackAdmin = ({artistState, titleState, coverState}) => {
+
+    const overriddenArtistState = useState("")
+    const overriddenTitleState = useState("")
+    const overriddenCoverState = useState("")
 
     const overlayService = useContext(OverlayServiceContext)
     const [trackNumber, setTrackNumber] = useState(0)
     const [direction, setDirection] = useState("+1")
-    const [trackArtist, setTrackArtist] = useState("")
-    const [trackTitle, setTrackTitle] = useState("")
-    const [trackCover, setTrackCover] = useState("")
+    const [trackArtist, setTrackArtist] = artistState || overriddenArtistState
+    const [trackTitle, setTrackTitle] = titleState || overriddenTitleState
+    const [trackCover, setTrackCover] = coverState || overriddenCoverState
     const [originalTrackNumber, setOriginalTrackNumber] = useState(0)
     const [originalTrackArtist, setOriginalTrackArtist] = useState("")
     const [originalTrackTitle, setOriginalTrackTitle] = useState("")
