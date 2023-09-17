@@ -64,6 +64,10 @@ const TrackAdmin = () => {
 
     const amendCurrentTrack = () => {
         overlayService.amendCurrentTrack(trackNumber, trackArtist, trackTitle, trackCover)
+        setOriginalTrackNumber(trackNumber)
+        setOriginalTrackArtist(trackArtist)
+        setOriginalTrackTitle(trackTitle)
+        setOriginalTrackCover(trackCover)
     }
 
     const resetLastTrack = () => {
