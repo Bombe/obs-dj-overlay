@@ -69,4 +69,16 @@ describe('The Crate Admin', () => {
         expect(screen.queryAllByTitle('record')).to.have.lengthOf(0)
     });
 
+    it('should call given setters if a row is clicked', () => {
+        let calledSetters = {}
+        const setArtist = artist => calledSetters = {...calledSetters, artist }
+        const setTitle = title => calledSetters = {...calledSetters, title }
+        const setCover = cover => calledSetters = {...calledSetters, cover }
+        render(<CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover}/>)
+        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"id1","artist":"Artist","title":"Title","cover":"Cover"},{"id":"id2","artist":"Artist 2","title":"Title 2","cover":"Cover 2"}]')
+        userEvent.click(screen.getByRole('button', {name: /import/i}))
+        userEvent.dblClick(document.body.querySelector('[title="record"][data-id="id2"]'))
+        expect(calledSetters).to.be.deep.eql({artist: 'Artist 2', title: 'Title 2', cover: 'Cover 2'})
+    });
+
 });

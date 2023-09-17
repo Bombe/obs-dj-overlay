@@ -26,7 +26,7 @@ const parseRecords = jsonObject => {
         .filter(object => object.artist !== undefined && object.title !== undefined && object.cover !== undefined)
 }
 
-const CrateAdmin = () => {
+const CrateAdmin = ({setArtist, setTitle, setCover}) => {
 
     const [crateEntries, setCrateEntries] = useState([])
     const [importString, setImportString] = useState("")
@@ -45,6 +45,12 @@ const CrateAdmin = () => {
         setCrateEntries([])
     }
 
+    const exportRowValues = record => {
+        setArtist(record.artist)
+        setTitle(record.title)
+        setCover(record.cover)
+    }
+
     return (
         <Grid container spacing={2} direction="column" alignItems="stretch" className={styles.Crate}>
             <Grid item xs={12}>
@@ -58,7 +64,7 @@ const CrateAdmin = () => {
                         </TableHead>
                         <TableBody>
                             {crateEntries.map(record =>
-                                <TableRow key={record.id} title="record">
+                                <TableRow key={record.id} title="record" data-id={record.id} onDoubleClick={() => exportRowValues(record)}>
                                     <TableCell>{record.artist}</TableCell>
                                     <TableCell>{record.title}</TableCell>
                                     <TableCell style={{display: 'none'}}>{record.cover}</TableCell>
