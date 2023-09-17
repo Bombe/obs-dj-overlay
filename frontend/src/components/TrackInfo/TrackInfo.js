@@ -1,5 +1,5 @@
 import React, {useContext} from "react"
-import OverlayContext from "../Overlay"
+import {OverlayContext} from "../OverlayInfoContext"
 import "./TrackInfo.css"
 
 const TrackInfo = () => {
@@ -7,16 +7,20 @@ const TrackInfo = () => {
 
     return (overlayInfo.track && (overlayInfo.track.artist || overlayInfo.track.title)) ? (
         <div className="TrackInfo">
-            {overlayInfo.track.number ?
-                <div className="Number">{overlayInfo.track.number}</div>
+            {overlayInfo.track.cover ?
+                <div className="Cover"><img alt="" src={overlayInfo.track.cover} title="cover-image"/></div>
                 : <></>
             }
-            <div className="Artist">{overlayInfo.track.artist}</div>
-            <div className="Title">{overlayInfo.track.title}</div>
+            {overlayInfo.track.number ?
+                <div className="Number" title="track-number">{overlayInfo.track.number}</div>
+                : <></>
+            }
+            <div className="Artist" title="artist">{overlayInfo.track.artist}</div>
+            <div className="Title" title="title">{overlayInfo.track.title}</div>
             {overlayInfo.lastTrack.artist !== "" && overlayInfo.lastTrack.title !== "" ?
                 <div className="LastTrack">
-                    <div className="LastArtist">{overlayInfo.lastTrack.artist}</div>
-                    <div className="LastTitle">{overlayInfo.lastTrack.title}</div>
+                    <div className="LastArtist" title="last-artist">{overlayInfo.lastTrack.artist}</div>
+                    <div className="LastTitle" title="last-title">{overlayInfo.lastTrack.title}</div>
                 </div>
                 : <></>
             }

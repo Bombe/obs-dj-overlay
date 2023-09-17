@@ -14,26 +14,33 @@ import SelectOnFocusTextField from "../../selectOnFocus"
 
 import styles from "./TrackAdmin.module.css"
 
-const TrackAdmin = () => {
+const TrackAdmin = ({artistState, titleState, coverState}) => {
+
+    const overriddenArtistState = useState("")
+    const overriddenTitleState = useState("")
+    const overriddenCoverState = useState("")
 
     const overlayService = useContext(OverlayServiceContext)
     const [trackNumber, setTrackNumber] = useState(0)
     const [direction, setDirection] = useState("+1")
-    const [trackArtist, setTrackArtist] = useState("")
-    const [trackTitle, setTrackTitle] = useState("")
+    const [trackArtist, setTrackArtist] = artistState || overriddenArtistState
+    const [trackTitle, setTrackTitle] = titleState || overriddenTitleState
+    const [trackCover, setTrackCover] = coverState || overriddenCoverState
     const [originalTrackNumber, setOriginalTrackNumber] = useState(0)
     const [originalTrackArtist, setOriginalTrackArtist] = useState("")
     const [originalTrackTitle, setOriginalTrackTitle] = useState("")
+    const [originalTrackCover, setOriginalTrackCover] = useState("")
 
     const setFilteredTrackNumber = (value) => {
         setTrackNumber(parseInt(value.toString().replace(/[^0-9]/, "")) || 0)
     }
 
     const sendTrackInfo = (event) => {
-        overlayService.setTrackInfo(trackNumber, trackArtist, trackTitle)
+        overlayService.setTrackInfo(trackNumber, trackArtist, trackTitle, trackCover)
         setOriginalTrackNumber(trackNumber)
         setOriginalTrackArtist(trackArtist)
         setOriginalTrackTitle(trackTitle)
+        setOriginalTrackCover(trackCover)
         if (trackNumber) {
             setTrackNumber(trackNumber + parseInt(direction, 10))
         }
@@ -42,6 +49,7 @@ const TrackAdmin = () => {
 
     const [trackArtistField, focusTrackArtist] = useFocus()
     const [trackTitleField, focusTrackTitle] = useFocus()
+    const [trackCoverField, focusTrackCover] = useFocus()
 
     const restoreTrackInfo = () => {
         overlayService.get()
@@ -49,15 +57,21 @@ const TrackAdmin = () => {
                 setTrackNumber(overlayInfo.track.number)
                 setTrackArtist(overlayInfo.track.artist)
                 setTrackTitle(overlayInfo.track.title)
+                setTrackCover(overlayInfo.track.cover)
                 setDirection(overlayInfo.track.direction === "down" ? "-1" : "+1")
                 setOriginalTrackNumber(overlayInfo.track.number)
                 setOriginalTrackArtist(overlayInfo.track.artist)
                 setOriginalTrackTitle(overlayInfo.track.title)
+                setOriginalTrackCover(overlayInfo.track.cover)
             })
     }
 
     const amendCurrentTrack = () => {
-        overlayService.amendCurrentTrack(trackNumber, trackArtist, trackTitle)
+        overlayService.amendCurrentTrack(trackNumber, trackArtist, trackTitle, trackCover)
+        setOriginalTrackNumber(trackNumber)
+        setOriginalTrackArtist(trackArtist)
+        setOriginalTrackTitle(trackTitle)
+        setOriginalTrackCover(trackCover)
     }
 
     const resetLastTrack = () => {
@@ -97,7 +111,11 @@ const TrackAdmin = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <SelectOnFocusTextField id="track-title-input" inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setTrackTitle)}
-                                            onKeyPress={onEnter(blur, true)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
+                                            onKeyPress={onEnter(focusTrackCover, true)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <SelectOnFocusTextField id="track-cover-input" inputRef={trackCoverField} label="The cover of the track" variant="filled" value={trackCover} onChange={onValueEventRun(setTrackCover)}
+                                            onKeyPress={onEnter(blur, true)} fullWidth={true} error={trackCover !== originalTrackCover}/>
                 </Grid>
                 <Grid item xs={12}>
                     <Box display="flex" alignItems="center">

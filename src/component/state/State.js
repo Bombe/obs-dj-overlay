@@ -1,6 +1,7 @@
 const defaultState = {
     track: {
         number: 0,
+        cover: "",
         artist: "",
         title: "",
         direction: "up"
@@ -20,42 +21,39 @@ const defaultState = {
 }
 
 let state = {...defaultState}
-let currentTrack = {}
-let lastTrack = {}
+let currentTrack = defaultState.track
+let lastTrack = defaultState.lastTrack
 
 module.exports = history => ({
-    currentState: () => ({...state, lastTrack: {number: lastTrack.number || 0, artist: lastTrack.artist || "", title: lastTrack.title || ""}}),
+    currentState: () => ({...state, track: currentTrack, lastTrack: {number: lastTrack.number || 0, artist: lastTrack.artist || "", title: lastTrack.title || ""}}),
     setShowInfo: (title, subtitle, nextShow) => {
         state.show.title = title
         state.show.subtitle = subtitle
         state.show.nextShow = nextShow
     },
-    setTrackInfo: (number = 0, artist = "", title = "", amend = false) => {
+    setTrackInfo: (number = 0, artist = "", title = "", amend = false, cover = "") => {
         if (amend) {
             history.amend(artist, title)
         } else {
             if ((artist !== "") && (title !== "")) {
-                if ((number === 0) && (state.track.number !== 0)) {
-                    if (state.track.direction === "up") {
-                        number = state.track.number + 1
+                if ((number === 0) && (currentTrack.number !== 0)) {
+                    if (currentTrack.direction === "up") {
+                        number = currentTrack.number + 1
                     } else {
-                        number = state.track.number - 1
+                        number = currentTrack.number - 1
                     }
                 }
             }
             lastTrack = currentTrack
             history.add(artist, title)
         }
-        currentTrack = {number, artist, title}
-        state.track.number = number
-        state.track.artist = artist
-        state.track.title = title
+        currentTrack = {...currentTrack, number, cover, artist, title}
     },
     setTrackNumberDirection: (direction = "up") => {
         if (direction === "down") {
-            state.track.direction = "down"
+            currentTrack.direction = "down"
         } else {
-            state.track.direction = "up"
+            currentTrack.direction = "up"
         }
     },
     resetLastTrack: () => {

@@ -1,0 +1,17 @@
+.Crate {
+    padding: 1em;
+}
+
+.Table {
+    max-height: 300px;
+}
+
+.Artist {
+}
+
+.Title {
+}
+
+.Cover {
+    display: none;
+}

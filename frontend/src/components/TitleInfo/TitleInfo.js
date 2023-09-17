@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 
-import OverlayContext from "../Overlay";
+import {OverlayContext} from "../OverlayInfoContext";
 
 import "./TitleInfo.css";
 

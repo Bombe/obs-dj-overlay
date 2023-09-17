@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
@@ -9,10 +9,15 @@ import ShowAdmin from "../show"
 import TrackAdmin from "../track"
 import TwitchAdmin from "../twitch"
 import HistoryAdmin from "../history"
+import CrateAdmin from "../crate"
 
 import styles from "./AdminSection.module.css"
 
 const AdminSection = () => {
+
+    const [artist, setArtist] = useState("")
+    const [title, setTitle] = useState("")
+    const [cover, setCover] = useState("")
 
     return (
         <Box className={styles.AdminSection}>
@@ -25,7 +30,12 @@ const AdminSection = () => {
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
                     <Group title="Track">
-                      <TrackAdmin/>
+                      <TrackAdmin artistState={[artist, setArtist]} titleState={[title, setTitle]} coverState={[cover, setCover]}/>
+                    </Group>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={4}>
+                    <Group title="Crate">
+                      <CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover}/>
                     </Group>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>

@@ -1,6 +1,7 @@
 const defaultOverlayInfo = {
     track: {
         number: 0,
+        cover: "",
         artist: "",
         title: "",
         direction: "up"
@@ -29,6 +30,7 @@ const OverlayService = {
             .then(json => ({
                 track: {
                     number: json.track.number,
+                    cover: json.track.cover,
                     artist: json.track.artist,
                     title: json.track.title,
                     direction: json.track.direction
@@ -51,14 +53,14 @@ const OverlayService = {
     setShowInfo: (title, subtitle, nextShow) =>
         fetch("/overlay/show", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({title, subtitle, nextShow}), mode: "same-origin"}),
 
-    setTrackInfo: (number, artist, title) =>
-        fetch("/overlay/track", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({number, artist, title}), mode: "same-origin"}),
+    setTrackInfo: (number, artist, title, cover) =>
+        fetch("/overlay/track", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({number, artist, title, cover}), mode: "same-origin"}),
 
     setTrackNumberDirection: (direction = "up") =>
         fetch("/overlay/trackNumberDirection", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify(direction)}),
 
-    amendCurrentTrack: (number, artist, title) =>
-        fetch("/overlay/track", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({number, artist, title, amend: true}), mode: "same-origin"}),
+    amendCurrentTrack: (number, artist, title, cover) =>
+        fetch("/overlay/track", {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({number, artist, title, amend: true, cover}), mode: "same-origin"}),
 
     resetLastTrack: () =>
         fetch("/overlay/lastTrack", { method: "DELETE" }),
