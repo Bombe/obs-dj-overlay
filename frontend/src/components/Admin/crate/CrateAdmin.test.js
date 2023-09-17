@@ -106,4 +106,13 @@ describe('The Crate Admin', () => {
         expect(Array.from(document.body.querySelectorAll('[title="record"]')).map(element => ({id: element.getAttribute('data-id')}))).to.be.deep.eql([{id: 'A1'}, {id: 'B1'}, {id: 'C1'}, {id: 'D1'}, {id: 'F1'}])
     });
 
+    it('should sort by both artist and name', () => {
+        render(<CrateAdmin/>)
+        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"D1","artist":"D","title":"D","cover":"Cover"},{"id":"D2","artist":"D","title":"B","cover":"Cover"}]')
+        userEvent.click(screen.getByRole('button', {name: /import/i}))
+        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"D3","artist":"D","title":"C","cover":"Cover"}]')
+        userEvent.click(screen.getByRole('button', {name: /import/i}))
+        expect(Array.from(document.body.querySelectorAll('[title="record"]')).map(element => ({id: element.getAttribute('data-id')}))).to.be.deep.eql([{id: 'D2'}, {id: 'D3'}, {id: 'D1'}])
+    });
+
 });

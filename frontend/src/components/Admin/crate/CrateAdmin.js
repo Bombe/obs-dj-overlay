@@ -26,6 +26,14 @@ const parseRecords = jsonObject => {
         .filter(object => object.artist !== undefined && object.title !== undefined && object.cover !== undefined)
 }
 
+const sortRecords = (left, right) => {
+    const artistComparison = left.artist.toLowerCase().localeCompare(right.artist.toLowerCase())
+    if (artistComparison !== 0) {
+        return artistComparison
+    }
+    return left.title.toLowerCase().localeCompare(right.title.toLowerCase())
+}
+
 const CrateAdmin = ({setArtist, setTitle, setCover}) => {
 
     const [crateEntries, setCrateEntries] = useState([])
@@ -36,13 +44,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
             const parsedImport = JSON.parse(importString)
             const parsedRecords = parseRecords(parsedImport)
             const allEntries = [...crateEntries, ...parsedRecords]
-            allEntries.sort((left, right) => {
-                const artistComparison = left.artist.toLowerCase().localeCompare(right.artist)
-                if (artistComparison !== 0) {
-                    return artistComparison
-                }
-                return 0;
-            })
+            allEntries.sort(sortRecords)
             setCrateEntries(allEntries)
             setImportString("")
         } catch (SyntaxError) {
