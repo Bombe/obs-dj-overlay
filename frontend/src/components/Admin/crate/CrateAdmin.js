@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
 import TextField from "@material-ui/core/TextField";
 import {Delete, PlaylistAdd} from "@material-ui/icons";
+import * as uuid from "uuid";
 
 import {onValueEventRun} from "../../../utils/event";
 
@@ -20,7 +21,7 @@ const parseRecords = jsonObject => {
     }
     return jsonObject
         .map(object =>
-            ({artist: object.artist, title: object.title, cover: object.cover})
+            ({id: object.id || uuid.v4(), artist: object.artist, title: object.title, cover: object.cover})
         )
         .filter(object => object.artist !== undefined && object.title !== undefined && object.cover !== undefined)
 }
@@ -56,8 +57,8 @@ const CrateAdmin = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {crateEntries.map((record, index) =>
-                                <TableRow key={index} title="record">
+                            {crateEntries.map(record =>
+                                <TableRow key={record.id} title="record">
                                     <TableCell>{record.artist}</TableCell>
                                     <TableCell>{record.title}</TableCell>
                                     <TableCell style={{display: 'none'}}>{record.cover}</TableCell>
