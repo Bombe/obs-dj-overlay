@@ -22,6 +22,23 @@ describe('The Track Administration', () => {
         expect(screen.getByLabelText(/cover/i)).to.exist
     });
 
+    it('should send all entered data to overlay service', () => {
+        let capturedValues
+        const capturingOverlayService = {
+            ...overlayService,
+            setTrackInfo: (number, artist, title, cover) => {
+                capturedValues = {number, artist, title, cover}
+            }
+        }
+        render(<WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService>)
+        userEvent.type(screen.getByLabelText(/number/i), '12')
+        userEvent.type(screen.getByLabelText(/artist/i), 'Artist')
+        userEvent.type(screen.getByLabelText(/title/i), 'Title')
+        userEvent.type(screen.getByLabelText(/cover/i), 'Cover')
+        userEvent.click(screen.getByRole('button', {name: /update/i}))
+        expect(capturedValues).to.deep.eql({number: 12, artist: 'Artist', title: 'Title', cover: 'Cover'})
+    });
+
     it('should have a button labeled “reset last track”', () => {
         render(<WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService>)
         expect(screen.getByText(/reset last track/i)).to.exist
