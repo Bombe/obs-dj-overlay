@@ -35,7 +35,8 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
         try {
             const parsedImport = JSON.parse(importString)
             const parsedRecords = parseRecords(parsedImport)
-            setCrateEntries(parsedRecords)
+            const allEntries = [...crateEntries, ...parsedRecords]
+            setCrateEntries(allEntries)
             setImportString("")
         } catch (SyntaxError) {
         }

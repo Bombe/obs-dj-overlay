@@ -56,6 +56,15 @@ describe('The Crate Admin', () => {
         expect(screen.queryAllByTitle('record')).to.have.lengthOf(2)
     });
 
+    it('should add imported tracks to existing tracks', () => {
+        render(<CrateAdmin/>)
+        userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","title":"Title","cover":"Cover"}]')
+        userEvent.click(screen.getByRole('button', {name: /import/i}))
+        userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist 2","title":"Title 2","cover":"Cover 2"}]')
+        userEvent.click(screen.getByRole('button', {name: /import/i}))
+        expect(screen.queryAllByTitle('record')).to.have.lengthOf(2)
+    });
+
     it('should have a button to clear the crates', () => {
         render(<CrateAdmin/>)
         expect(screen.getByRole('button', {name: /clear/i})).to.exist
