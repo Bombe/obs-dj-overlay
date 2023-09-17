@@ -10,6 +10,7 @@ import {TrackAdmin} from "./track/TrackAdmin"
 import {CrateAdmin} from "./crate/CrateAdmin";
 import {TwitchAdmin} from "./twitch/TwitchAdmin"
 import WithOverlayService from "../OverlayServiceContext";
+import WithCrateService from "../CrateServiceContext";
 
 const Admin = () => {
 
@@ -21,31 +22,33 @@ const Admin = () => {
 
     return (
         <WithOverlayService>
-            <Router>
-                <Switch>
-                    <Route path={`${path}/embed/show`}>
-                        <ShowAdmin/>
-                    </Route>
-                    <Route path={`${path}/embed/track`}>
-                        <TrackAdmin artistState={[artist, setArtist]} titleState={[title, setTitle]} coverState={[cover, setCover]}/>
-                    </Route>
-                    <Route path={`${path}/embed/crate`}>
-                        <CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover}/>
-                    </Route>
-                    <Route path={`${path}/embed/message`}>
-                        <MessageAdmin/>
-                    </Route>
-                    <Route path={`${path}/embed/twitch`}>
-                        <TwitchAdmin/>
-                    </Route>
-                    <Route exact path={path}>
-                        <Sources>
-                            <AdminSection/>
-                            <Status/>
-                        </Sources>
-                    </Route>
-                </Switch>
-            </Router>
+            <WithCrateService>
+                <Router>
+                    <Switch>
+                        <Route path={`${path}/embed/show`}>
+                            <ShowAdmin/>
+                        </Route>
+                        <Route path={`${path}/embed/track`}>
+                            <TrackAdmin artistState={[artist, setArtist]} titleState={[title, setTitle]} coverState={[cover, setCover]}/>
+                        </Route>
+                        <Route path={`${path}/embed/crate`}>
+                            <CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover}/>
+                        </Route>
+                        <Route path={`${path}/embed/message`}>
+                            <MessageAdmin/>
+                        </Route>
+                        <Route path={`${path}/embed/twitch`}>
+                            <TwitchAdmin/>
+                        </Route>
+                        <Route exact path={path}>
+                            <Sources>
+                                <AdminSection/>
+                                <Status/>
+                            </Sources>
+                        </Route>
+                    </Switch>
+                </Router>
+            </WithCrateService>
         </WithOverlayService>
     )
 
