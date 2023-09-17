@@ -9,6 +9,7 @@ import ShowAdmin from "../show"
 import TrackAdmin from "../track"
 import TwitchAdmin from "../twitch"
 import HistoryAdmin from "../history"
+import CrateAdmin from "../crate"
 
 import styles from "./AdminSection.module.css"
 
@@ -26,6 +27,11 @@ const AdminSection = () => {
                 <Grid item xs={12} sm={6} lg={4}>
                     <Group title="Track">
                       <TrackAdmin/>
+                    </Group>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={4}>
+                    <Group title="Crate">
+                      <CrateAdmin/>
                     </Group>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>

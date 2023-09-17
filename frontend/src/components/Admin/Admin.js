@@ -7,6 +7,7 @@ import {MessageAdmin} from "./message/MessageAdmin"
 import {ShowAdmin} from "./show/ShowAdmin"
 import {Status} from "./status"
 import {TrackAdmin} from "./track/TrackAdmin"
+import {CrateAdmin} from "./crate/CrateAdmin";
 import {TwitchAdmin} from "./twitch/TwitchAdmin"
 import WithOverlayService from "../OverlayServiceContext";
 
@@ -23,6 +24,9 @@ const Admin = () => {
                     </Route>
                     <Route path={`${path}/embed/track`}>
                         <TrackAdmin/>
+                    </Route>
+                    <Route path={`${path}/embed/crate`}>
+                        <CrateAdmin/>
                     </Route>
                     <Route path={`${path}/embed/message`}>
                         <MessageAdmin/>
