@@ -90,4 +90,20 @@ describe('The Crate Admin', () => {
         expect(calledSetters).to.be.deep.eql({artist: 'Artist 2', title: 'Title 2', cover: 'Cover 2'})
     });
 
+    it('should sort entries on importing', () => {
+        render(<CrateAdmin/>)
+        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"D1","artist":"D","title":"D","cover":"Cover"},{"id":"B1","artist":"B","title":"B","cover":"Cover 2"}]')
+        userEvent.click(screen.getByRole('button', {name: /import/i}))
+        expect(Array.from(document.body.querySelectorAll('[title="record"]')).map(element => ({id: element.getAttribute('data-id')}))).to.be.deep.eql([{id: 'B1'}, {id: 'D1'}])
+    });
+
+    it('should keep all entries sorted', () => {
+        render(<CrateAdmin/>)
+        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"D1","artist":"D","title":"D","cover":"Cover"},{"id":"B1","artist":"B","title":"B","cover":"Cover 2"}]')
+        userEvent.click(screen.getByRole('button', {name: /import/i}))
+        userEvent.type(screen.getByLabelText(/import/i), '[{"id":"C1","artist":"C","title":"C","cover":"Cover"},{"id":"A1","artist":"A","title":"A","cover":"Cover 2"},{"id":"F1","artist":"F","title":"F","cover":"Cover 2"}]')
+        userEvent.click(screen.getByRole('button', {name: /import/i}))
+        expect(Array.from(document.body.querySelectorAll('[title="record"]')).map(element => ({id: element.getAttribute('data-id')}))).to.be.deep.eql([{id: 'A1'}, {id: 'B1'}, {id: 'C1'}, {id: 'D1'}, {id: 'F1'}])
+    });
+
 });

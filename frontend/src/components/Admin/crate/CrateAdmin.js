@@ -36,6 +36,13 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
             const parsedImport = JSON.parse(importString)
             const parsedRecords = parseRecords(parsedImport)
             const allEntries = [...crateEntries, ...parsedRecords]
+            allEntries.sort((left, right) => {
+                const artistComparison = left.artist.toLowerCase().localeCompare(right.artist)
+                if (artistComparison !== 0) {
+                    return artistComparison
+                }
+                return 0;
+            })
             setCrateEntries(allEntries)
             setImportString("")
         } catch (SyntaxError) {
@@ -65,7 +72,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
                         </TableHead>
                         <TableBody>
                             {crateEntries.map(record =>
-                                <TableRow key={record.id} title="record" data-id={record.id} onDoubleClick={() => exportRowValues(record)}>
+                                <TableRow key={record.id} title="record" data-id={record.id} data-artist={record.artist} data-title={record.title} data-cover={record.cover} onDoubleClick={() => exportRowValues(record)}>
                                     <TableCell>{record.artist}</TableCell>
                                     <TableCell>{record.title}</TableCell>
                                     <TableCell style={{display: 'none'}}>{record.cover}</TableCell>
