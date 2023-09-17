@@ -125,6 +125,35 @@ describe('The Crate Admin', () => {
         expect(resetCalled).to.be.true
     });
 
+    it('should have a reload button', async () => {
+        await act(async () => render(<WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService>))
+        expect(screen.getByRole('button', {name: /reload/i})).to.exist
+    });
+
+    it('should reload the crate if the reload button is pressed', async () => {
+        const tracks = [
+            {artist: 'Artist 1', title: 'Title 1', cover: ''}, {artist: 'Artist 2', title: 'Title 2', cover: ''},
+            {artist: 'Artist 3', title: 'Title 3', cover: ''}, {artist: 'Artist 4', title: 'Title 4', cover: ''}, {artist: 'Artist 5', title: 'Title 5', cover: ''},
+        ]
+        let firstAccess = true
+        const crateService = {
+            ...defaultCrateService,
+            getRecords: () => {
+                if (firstAccess) {
+                    firstAccess = false
+                    return createRecordResponse(tracks.slice(0, 2))
+                }
+                return createRecordResponse(tracks.slice(2))
+            }
+        }
+        await act(async () => {
+            render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
+            userEvent.click(screen.getByRole('button', {name: /reload/i}))
+        })
+        expect(Array.from(document.body.querySelectorAll("[title='record']")).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')})))
+            .to.be.deep.eql([{artist: 'Artist 3', title: 'Title 3'}, {artist: 'Artist 4', title: 'Title 4'}, {artist: 'Artist 5', title: 'Title 5'}])
+    });
+
     it('should call given setters if a row is clicked', async () => {
         let calledSetters = {}
         const setArtist = artist => calledSetters = {...calledSetters, artist}

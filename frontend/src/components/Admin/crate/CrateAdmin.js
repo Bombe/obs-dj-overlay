@@ -8,7 +8,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
 import TextField from "@material-ui/core/TextField";
-import {Delete, PlaylistAdd} from "@material-ui/icons";
+import {Delete, PlaylistAdd, Refresh} from "@material-ui/icons";
 import * as uuid from "uuid";
 
 import {onValueEventRun} from "../../../utils/event";
@@ -90,6 +90,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
                 <Box display="flex">
                     <Box flexGrow={1}><TextField id="import-string" label="Import" fullWidth={true} value={importString} onChange={onValueEventRun(setImportString)}></TextField></Box>
                     <Box paddingLeft="16px"><Button onClick={importFromInputField} variant="contained" startIcon={<PlaylistAdd/>}>Import</Button></Box>
+                    <Box paddingLeft="16px"><Button onClick={reloadCrate} variant="contained" startIcon={<Refresh/>}>Reload</Button></Box>
                     <Box paddingLeft="16px"><Button onClick={clearCrate} variant="contained" startIcon={<Delete/>}>Clear</Button></Box>
                 </Box>
             </Grid>
