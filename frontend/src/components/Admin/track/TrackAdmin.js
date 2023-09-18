@@ -128,10 +128,10 @@ const TrackAdmin = ({artistState, titleState, coverState}) => {
                             <Button type="reset" variant="contained" fullWidth={true} onClick={amendCurrentTrack} startIcon={<Edit/>}>Amend</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
-                            <Button type="reset" variant="contained" fullWidth={true} onClick={resetLastTrack} startIcon={<Delete/>}>Reset</Button>
+                            <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} startIcon={<Refresh/>}>Reload</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
-                            <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} startIcon={<Refresh/>}>Reload</Button>
+                            <Button type="reset" variant="contained" fullWidth={true} onClick={resetLastTrack} startIcon={<Delete/>}>Reset</Button>
                         </Box>
                     </Box>
                 </Grid>
