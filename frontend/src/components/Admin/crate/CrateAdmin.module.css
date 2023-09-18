@@ -6,10 +6,13 @@
     max-height: 300px;
 }
 
-.Artist {
+.LoadButtonCell {
 }
 
-.Title {
+.ArtistCell {
+}
+
+.TitleCell {
 }
 
 .Cover {

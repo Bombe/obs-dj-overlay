@@ -75,7 +75,9 @@ const TrackAdmin = ({artistState, titleState, coverState}) => {
     }
 
     const resetLastTrack = () => {
+        overlayService.setTrackInfo(0, '', '', '')
         overlayService.resetLastTrack()
+        restoreTrackInfo()
     }
 
     const flipDirection = (value) => {
@@ -126,10 +128,10 @@ const TrackAdmin = ({artistState, titleState, coverState}) => {
                             <Button type="reset" variant="contained" fullWidth={true} onClick={amendCurrentTrack} startIcon={<Edit/>}>Amend</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
-                            <Button type="reset" variant="contained" fullWidth={true} onClick={resetLastTrack} startIcon={<Delete/>}>Reset Last Track</Button>
+                            <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} startIcon={<Refresh/>}>Reload</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
-                            <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} startIcon={<Refresh/>}>Reload</Button>
+                            <Button type="reset" variant="contained" fullWidth={true} onClick={resetLastTrack} startIcon={<Delete/>}>Reset</Button>
                         </Box>
                     </Box>
                 </Grid>

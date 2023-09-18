@@ -1,4 +1,4 @@
-import {render, screen} from "@testing-library/react"
+import {act, render, screen} from "@testing-library/react"
 import userEvent from "@testing-library/user-event";
 import React from "react"
 import {expect} from "chai"
@@ -39,19 +39,52 @@ describe('The Track Administration', () => {
         expect(capturedValues).to.deep.eql({number: 12, artist: 'Artist', title: 'Title', cover: 'Cover'})
     });
 
-    it('should have a button labeled “reset last track”', () => {
+    it('should have a button labeled “reset”', () => {
         render(<WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService>)
-        expect(screen.getByText(/reset last track/i)).to.exist
+        expect(screen.getByText(/reset/i)).to.exist
     });
 
-    it('should reset the last track on the overlay service', () => {
-        let lastTrackReset = false
-        const resettingOverlayService = { ...overlayService,
-            resetLastTrack: () => lastTrackReset = true
+    it('should reset the last track when reset button is pressed', () => {
+        let resetLastTrackCalled = false
+        const capturingOverlayService = {
+            ...overlayService, resetLastTrack: () => resetLastTrackCalled = true, setTrackInfo: () => {
+            }
         }
-        render(<WithOverlayService overlayService={resettingOverlayService}><TrackAdmin/></WithOverlayService>)
-        screen.getByText(/reset last track/i).click()
-        expect(lastTrackReset).to.be.true
+        render(<WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService>)
+        userEvent.click(screen.getByText(/reset/i))
+        expect(resetLastTrackCalled).to.be.true
+    });
+
+    it('should clear the current track when reset button is pressed', () => {
+        let capturedSetter = {}
+        const capturingOverlayService = {
+            ...overlayService, resetLastTrack: () => {
+            }, setTrackInfo: (number, artist, title, cover) => capturedSetter = {number, artist, title, cover}
+        }
+        render(<WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService>)
+        userEvent.click(screen.getByText(/reset/i))
+        expect(capturedSetter).to.deep.eql({number: 0, artist: '', title: '', cover: ''})
+    });
+
+    it('should clear the input fields when reset button is pressed', async () => {
+        const capturingOverlayService = {
+            ...overlayService,
+            get: () => Promise.resolve({track: {number: 0, artist: '', title: '', cover: ''}}),
+            resetLastTrack: () => {},
+            setTrackInfo: () => {}
+        }
+        await act(async () => {
+            render(<WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService>)
+            await userEvent.type(screen.getByLabelText(/number/i), "12")
+            await userEvent.type(screen.getByLabelText(/artist/i), "artist")
+            await userEvent.type(screen.getByLabelText(/title/i), "title")
+            await userEvent.type(screen.getByLabelText(/cover/i), "cover")
+            userEvent.click(screen.getByText(/reset/i))
+        })
+        expect(screen.getByLabelText(/number/i).value).to.eql('0')
+        expect(screen.getByLabelText(/artist/i).value).to.eql('')
+        expect(screen.getByLabelText(/title/i).value).to.eql('')
+        expect(screen.getByLabelText(/cover/i).value).to.eql('')
     });
 
     it('should have a button labeled “amend”', () => {

@@ -1,5 +1,6 @@
 import React from "react"
 import {act, render, screen} from "@testing-library/react";
+import {within} from '@testing-library/dom'
 import userEvent from "@testing-library/user-event";
 import {expect} from 'chai'
 
@@ -21,7 +22,7 @@ describe('The Crate Admin', () => {
 
     it('should load the crate from the service', async () => {
         const crateService = {...defaultCrateService, getRecords: () => createRecordResponse([createRecord('Artist', 'Title', 'Cover')])}
-        await act(async () => await render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
         expect(screen.queryAllByTitle("record")).to.have.lengthOf(1)
     });
 
@@ -32,7 +33,7 @@ describe('The Crate Admin', () => {
                 createRecord('C', 'E', ''), createRecord('B', 'X'), createRecord('A', 'F', '')
             ])
         }
-        await act(async () => await render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
         const ids = new Set(Array.from(document.body.querySelectorAll("[title='record']")).map(element => element.getAttribute('data-id')))
         expect(ids).to.have.lengthOf(6)
     });
@@ -44,7 +45,7 @@ describe('The Crate Admin', () => {
                 createRecord('C', 'E', ''), createRecord('B', 'X'), createRecord('A', 'F', '')
             ])
         }
-        await act(async () => await render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
         expect(Array.from(document.body.querySelectorAll("[title='record']")).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')}))).to.be.deep.eql([
             {artist: 'A', title: 'F'}, {artist: 'B', title: 'E'}, {artist: 'B', title: 'X'}, {artist: 'C', title: 'E'}, {artist: 'C', title: 'F'}, {artist: 'F', title: 'A'}
         ])
@@ -105,12 +106,12 @@ describe('The Crate Admin', () => {
         expect(screen.getByLabelText(/import/i).value).to.be.eql('[{"artist":"Artist","tit')
     });
 
-    it('should have a button to clear the crates', async () => {
+    it('should have a button to reset the crates', async () => {
         await act(async () => render(<WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService>))
-        expect(screen.getByRole('button', {name: /clear/i})).to.exist
+        expect(screen.getByRole('button', {name: /reset/i})).to.exist
     });
 
-    it('should tell the crate service to reset the crate when clear button is pressed', async () => {
+    it('should tell the crate service to reset the crate when reset button is pressed', async () => {
         let resetCalled = false
         const crateService = {
             ...defaultCrateService, reset: () => {
@@ -120,7 +121,7 @@ describe('The Crate Admin', () => {
         }
         await act(async () => {
             render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
-            userEvent.click(screen.getByRole('button', {name: /clear/i}))
+            userEvent.click(screen.getByRole('button', {name: /reset/i}))
         })
         expect(resetCalled).to.be.true
     });
@@ -154,15 +155,33 @@ describe('The Crate Admin', () => {
             .to.be.deep.eql([{artist: 'Artist 3', title: 'Title 3'}, {artist: 'Artist 4', title: 'Title 4'}, {artist: 'Artist 5', title: 'Title 5'}])
     });
 
-    it('should call given setters if a row is clicked', async () => {
+    it('should have a button labeled “load” in each row of the table', async () => {
+        const crateService = {
+            ...defaultCrateService, getRecords: () => createRecordResponse([
+                createRecord('C', 'F', ''), createRecord('B', 'E', ''), createRecord('F', 'A', '')
+            ])
+        }
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
+        const rows = Array.from(document.body.querySelectorAll("[title='record']"))
+        expect(within(rows.at(0)).getByRole('button', {title: /load/i})).to.exist
+        expect(within(rows.at(1)).getByRole('button', {title: /load/i})).to.exist
+        expect(within(rows.at(2)).getByRole('button', {title: /load/i})).to.exist
+    });
+
+    it('should call the provided setters when a load button is clicked', async () => {
         let calledSetters = {}
         const setArtist = artist => calledSetters = {...calledSetters, artist}
         const setTitle = title => calledSetters = {...calledSetters, title}
         const setCover = cover => calledSetters = {...calledSetters, cover}
-        const crateService = {...defaultCrateService, getRecords: () => createRecordResponse([{id: "id1", artist: "Artist", title: "Title", cover: "Cover"}, {id: "id2", artist: "Artist 2", title: "Title 2", cover: "Cover 2"}])}
+        const crateService = {
+            ...defaultCrateService, getRecords: () => createRecordResponse([
+                createRecord('C', 'F', 'B'), createRecord('B', 'E', 'C'), createRecord('F', 'A', 'D')
+            ])
+        }
         await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover}/></WithCrateService>))
-        userEvent.dblClick(document.body.querySelector('[title="record"][data-id="id2"]'))
-        expect(calledSetters).to.be.deep.eql({artist: 'Artist 2', title: 'Title 2', cover: 'Cover 2'})
+        const rows = Array.from(document.body.querySelectorAll("[title='record']"))
+        userEvent.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
+        expect(calledSetters).to.deep.eql({artist: 'C', title: 'F', cover: 'B'})
     });
 
 });
