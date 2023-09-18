@@ -6,9 +6,10 @@ import TableHead from "@material-ui/core/TableHead";
 import {TableBody, TableRow} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import TableCell from "@material-ui/core/TableCell";
 import TextField from "@material-ui/core/TextField";
-import {Delete, PlaylistAdd, Refresh} from "@material-ui/icons";
+import {Delete, PlaylistAdd, Refresh, Reply} from "@material-ui/icons";
 import * as uuid from "uuid";
 
 import {onValueEventRun} from "../../../utils/event";
@@ -71,15 +72,17 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
                     <Table size="small">
                         <TableHead>
                             <TableRow>
+                                <TableCell/>
                                 <TableCell>Artist</TableCell>
                                 <TableCell>Title</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {crateEntries.map(record =>
-                                <TableRow key={record.id} title="record" data-id={record.id} data-artist={record.artist} data-title={record.title} data-cover={record.cover} onDoubleClick={() => exportRowValues(record)}>
-                                    <TableCell>{record.artist}</TableCell>
-                                    <TableCell>{record.title}</TableCell>
+                                <TableRow key={record.id} title="record" data-id={record.id} data-artist={record.artist} data-title={record.title} data-cover={record.cover}>
+                                    <TableCell className={styles.LoadButtonCell} padding='none' ><IconButton size='small' onClick={() => exportRowValues(record)} title='Load'><Reply/></IconButton></TableCell>
+                                    <TableCell className={styles.ArtistCell}>{record.artist}</TableCell>
+                                    <TableCell className={styles.TitleCell}>{record.title}</TableCell>
                                 </TableRow>
                             )}
                         </TableBody>

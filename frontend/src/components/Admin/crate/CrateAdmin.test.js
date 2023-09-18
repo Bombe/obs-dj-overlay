@@ -1,5 +1,6 @@
 import React from "react"
 import {act, render, screen} from "@testing-library/react";
+import {within} from '@testing-library/dom'
 import userEvent from "@testing-library/user-event";
 import {expect} from 'chai'
 
@@ -154,15 +155,33 @@ describe('The Crate Admin', () => {
             .to.be.deep.eql([{artist: 'Artist 3', title: 'Title 3'}, {artist: 'Artist 4', title: 'Title 4'}, {artist: 'Artist 5', title: 'Title 5'}])
     });
 
-    it('should call given setters if a row is clicked', async () => {
+    it('should have a button labeled “load” in each row of the table', async () => {
+        const crateService = {
+            ...defaultCrateService, getRecords: () => createRecordResponse([
+                createRecord('C', 'F', ''), createRecord('B', 'E', ''), createRecord('F', 'A', '')
+            ])
+        }
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
+        const rows = Array.from(document.body.querySelectorAll("[title='record']"))
+        expect(within(rows.at(0)).getByRole('button', {title: /load/i})).to.exist
+        expect(within(rows.at(1)).getByRole('button', {title: /load/i})).to.exist
+        expect(within(rows.at(2)).getByRole('button', {title: /load/i})).to.exist
+    });
+
+    it('should call the provided setters when a load button is clicked', async () => {
         let calledSetters = {}
         const setArtist = artist => calledSetters = {...calledSetters, artist}
         const setTitle = title => calledSetters = {...calledSetters, title}
         const setCover = cover => calledSetters = {...calledSetters, cover}
-        const crateService = {...defaultCrateService, getRecords: () => createRecordResponse([{id: "id1", artist: "Artist", title: "Title", cover: "Cover"}, {id: "id2", artist: "Artist 2", title: "Title 2", cover: "Cover 2"}])}
+        const crateService = {
+            ...defaultCrateService, getRecords: () => createRecordResponse([
+                createRecord('C', 'F', 'B'), createRecord('B', 'E', 'C'), createRecord('F', 'A', 'D')
+            ])
+        }
         await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover}/></WithCrateService>))
-        userEvent.dblClick(document.body.querySelector('[title="record"][data-id="id2"]'))
-        expect(calledSetters).to.be.deep.eql({artist: 'Artist 2', title: 'Title 2', cover: 'Cover 2'})
+        const rows = Array.from(document.body.querySelectorAll("[title='record']"))
+        userEvent.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
+        expect(calledSetters).to.deep.eql({artist: 'C', title: 'F', cover: 'B'})
     });
 
 });
