@@ -21,7 +21,7 @@ describe('The Crate Admin', () => {
 
     it('should load the crate from the service', async () => {
         const crateService = {...defaultCrateService, getRecords: () => createRecordResponse([createRecord('Artist', 'Title', 'Cover')])}
-        await act(async () => await render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
         expect(screen.queryAllByTitle("record")).to.have.lengthOf(1)
     });
 
@@ -32,7 +32,7 @@ describe('The Crate Admin', () => {
                 createRecord('C', 'E', ''), createRecord('B', 'X'), createRecord('A', 'F', '')
             ])
         }
-        await act(async () => await render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
         const ids = new Set(Array.from(document.body.querySelectorAll("[title='record']")).map(element => element.getAttribute('data-id')))
         expect(ids).to.have.lengthOf(6)
     });
@@ -44,7 +44,7 @@ describe('The Crate Admin', () => {
                 createRecord('C', 'E', ''), createRecord('B', 'X'), createRecord('A', 'F', '')
             ])
         }
-        await act(async () => await render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
         expect(Array.from(document.body.querySelectorAll("[title='record']")).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')}))).to.be.deep.eql([
             {artist: 'A', title: 'F'}, {artist: 'B', title: 'E'}, {artist: 'B', title: 'X'}, {artist: 'C', title: 'E'}, {artist: 'C', title: 'F'}, {artist: 'F', title: 'A'}
         ])
