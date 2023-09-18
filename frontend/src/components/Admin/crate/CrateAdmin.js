@@ -94,7 +94,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
                     <Box flexGrow={1}><TextField id="import-string" label="Import" fullWidth={true} value={importString} onChange={onValueEventRun(setImportString)}></TextField></Box>
                     <Box paddingLeft="16px"><Button onClick={importFromInputField} variant="contained" startIcon={<PlaylistAdd/>}>Import</Button></Box>
                     <Box paddingLeft="16px"><Button onClick={reloadCrate} variant="contained" startIcon={<Refresh/>}>Reload</Button></Box>
-                    <Box paddingLeft="16px"><Button onClick={clearCrate} variant="contained" startIcon={<Delete/>}>Clear</Button></Box>
+                    <Box paddingLeft="16px"><Button onClick={clearCrate} variant="contained" startIcon={<Delete/>}>Reset</Button></Box>
                 </Box>
             </Grid>
         </Grid>

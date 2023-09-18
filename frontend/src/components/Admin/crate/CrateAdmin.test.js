@@ -106,12 +106,12 @@ describe('The Crate Admin', () => {
         expect(screen.getByLabelText(/import/i).value).to.be.eql('[{"artist":"Artist","tit')
     });
 
-    it('should have a button to clear the crates', async () => {
+    it('should have a button to reset the crates', async () => {
         await act(async () => render(<WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService>))
-        expect(screen.getByRole('button', {name: /clear/i})).to.exist
+        expect(screen.getByRole('button', {name: /reset/i})).to.exist
     });
 
-    it('should tell the crate service to reset the crate when clear button is pressed', async () => {
+    it('should tell the crate service to reset the crate when reset button is pressed', async () => {
         let resetCalled = false
         const crateService = {
             ...defaultCrateService, reset: () => {
@@ -121,7 +121,7 @@ describe('The Crate Admin', () => {
         }
         await act(async () => {
             render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
-            userEvent.click(screen.getByRole('button', {name: /clear/i}))
+            userEvent.click(screen.getByRole('button', {name: /reset/i}))
         })
         expect(resetCalled).to.be.true
     });
