@@ -24,11 +24,6 @@ const AdminSection = () => {
             <Typography variant="h3">Admin Interface</Typography>
             <Grid className={styles.Inputs} container spacing={3}>
                 <Grid item xs={12} sm={6} lg={4}>
-                    <Group title="Show" expanded={false}>
-                        <ShowAdmin/>
-                    </Group>
-                </Grid>
-                <Grid item xs={12} sm={6} lg={4}>
                     <Group title="Track">
                       <TrackAdmin artistState={[artist, setArtist]} titleState={[title, setTitle]} coverState={[cover, setCover]}/>
                     </Group>
@@ -41,6 +36,11 @@ const AdminSection = () => {
                 <Grid item xs={12} sm={6} lg={4}>
                     <Group title="Message">
                         <MessageAdmin/>
+                    </Group>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={4}>
+                    <Group title="Show" expanded={false}>
+                        <ShowAdmin/>
                     </Group>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
