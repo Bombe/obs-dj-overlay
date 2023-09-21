@@ -11,7 +11,7 @@ const Sources = (props) => {
     const updateSources = useCallback(() => {
         sourcesService.get()
             .then(sources => setSources({...sources, loaded: true}))
-    }, [sourcesService])
+    }, [])
 
     useEffect(() => {
         const timerHandler = setInterval(updateSources, 1000)
