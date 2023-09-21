@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from "react";
 
-import {OverlayContext} from "../OverlayInfoContext/";
+import {OverlayInfoContext} from "../../context/overlayInfo";
 
 import "./Message.css";
 
@@ -8,7 +8,7 @@ const fromPx = (withPx) => withPx.replace("px", "")
 
 const Message = () => {
 
-    const overlayInfo = useContext(OverlayContext)
+    const overlayInfo = useContext(OverlayInfoContext)
 
     useEffect(() => {
         if (overlayInfo.message) {

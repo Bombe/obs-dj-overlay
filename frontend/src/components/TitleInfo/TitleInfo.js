@@ -1,12 +1,12 @@
 import React, {useContext} from "react";
 
-import {OverlayContext} from "../OverlayInfoContext";
+import {OverlayInfoContext} from "../../context/overlayInfo";
 
 import "./TitleInfo.css";
 
 const TitleInfo = () => {
 
-    const overlayInfo = useContext(OverlayContext);
+    const overlayInfo = useContext(OverlayInfoContext);
 
     return (overlayInfo.show && (overlayInfo.show.title || overlayInfo.show.subtitle)) ? (
         <div className="TitleInfo">

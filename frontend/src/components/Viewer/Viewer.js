@@ -1,7 +1,7 @@
 import React from "react"
 
 import TrackInfo from "../TrackInfo"
-import WithOverlayInfo from "../OverlayInfoContext"
+import WithOverlayInfo from "../../context/overlayInfo"
 import NextShow from "../NextShow"
 import TwitchInfo from "../TwitchInfo"
 import Clock from "../Clock"

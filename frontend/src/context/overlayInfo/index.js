@@ -1,3 +1,1 @@
-import WithOverlayInfo, {OverlayContext} from "./WithOverlayInfo";
-
-export {WithOverlayInfo as default, OverlayContext};
+export {WithOverlayInfo as default, OverlayInfoContext} from "./OverlayInfoContext"
