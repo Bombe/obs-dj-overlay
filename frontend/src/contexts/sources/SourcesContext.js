@@ -1,30 +1,35 @@
 import React, {createContext, useCallback, useContext, useEffect, useState} from "react"
 
-import sourcesService from "../../../../services/sources"
+import {SourcesServiceContext} from '../sourcesService'
 
 const SourcesContext = createContext({loaded: false})
 
-const Sources = (props) => {
+const WithSources = (props) => {
+
+    const sourcesService = useContext(SourcesServiceContext)
 
     const [sources, setSources] = useState(useContext(SourcesContext))
 
     const updateSources = useCallback(() => {
         sourcesService.get()
             .then(sources => setSources({...sources, loaded: true}))
-    }, [])
+    }, [sourcesService])
 
     useEffect(() => {
+        if (props.sources) {
+            return
+        }
         const timerHandler = setInterval(updateSources, 1000)
         updateSources()
         return () => clearTimeout(timerHandler)
-    }, [updateSources])
+    }, [props.sources, updateSources])
 
     return (
-        <SourcesContext.Provider value={sources}>
+        <SourcesContext.Provider value={props.sources || sources}>
             {props.children}
         </SourcesContext.Provider>
     )
 
 }
 
-export {Sources as default, SourcesContext}
+export {SourcesContext, WithSources}

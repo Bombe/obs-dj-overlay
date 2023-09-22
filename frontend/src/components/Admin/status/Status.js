@@ -3,7 +3,7 @@ import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import {makeStyles} from "@material-ui/core/styles"
 
-import {SourcesContext} from "../context/sources"
+import {SourcesContext} from "../../../contexts/sources"
 import RuntimeService from "../../../services/runtime"
 
 import styles from "./Status.module.css"
