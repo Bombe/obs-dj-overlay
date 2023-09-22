@@ -10,7 +10,7 @@ import {TrackAdmin} from "./track/TrackAdmin"
 import {CrateAdmin} from "./crate/CrateAdmin";
 import {TwitchAdmin} from "./twitch/TwitchAdmin"
 import WithOverlayService from "../../contexts/overlayService";
-import WithCrateService from "../CrateServiceContext";
+import WithCrateService from "../../contexts/crateService";
 
 const Admin = () => {
 

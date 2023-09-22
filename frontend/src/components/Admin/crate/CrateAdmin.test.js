@@ -4,7 +4,7 @@ import {within} from '@testing-library/dom'
 import userEvent from "@testing-library/user-event";
 import {expect} from 'chai'
 
-import WithCrateService from "../../CrateServiceContext";
+import WithCrateService from "../../../contexts/crateService";
 import {CrateAdmin} from './CrateAdmin'
 
 describe('The Crate Admin', () => {

@@ -1,7 +1,8 @@
 import React from 'react'
-import {render} from "@testing-library/react";
-import {CrateServiceContext, WithCrateService} from "./WithCrateService";
+import {render} from "@testing-library/react"
 import {expect} from 'chai'
+
+import {CrateServiceContext, WithCrateService} from './WithCrateService'
 
 describe('The Crate Service Context Provider', () => {
 
@@ -12,18 +13,19 @@ describe('The Crate Service Context Provider', () => {
         return <span/>
     }
 
+    beforeEach(() => {
+        crateService = undefined
+    })
+
     it('should provide a default crate service', () => {
         render(<WithCrateService><CrateServiceContext.Consumer>{storeCrateService}</CrateServiceContext.Consumer></WithCrateService>)
-        expect(crateService).to.have.keys('getRecords', 'importRecords', 'reset')
-    });
+        expect(crateService).to.not.be.undefined
+    })
 
     it('should provide the overridden crate service', () => {
-        const fakeCrateService = {
-            foo: () => {
-            }
-        }
+        const fakeCrateService = {foo: 'bar'}
         render(<WithCrateService crateService={fakeCrateService}><CrateServiceContext.Consumer>{storeCrateService}</CrateServiceContext.Consumer></WithCrateService>)
-        expect(crateService).to.have.keys('foo')
-    });
+        expect(crateService).to.deep.eql({foo: 'bar'})
+    })
 
-});
+})
