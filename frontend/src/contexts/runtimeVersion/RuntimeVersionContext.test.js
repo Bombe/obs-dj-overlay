@@ -2,7 +2,7 @@ import React from 'react'
 import {expect} from 'chai'
 import {act, render} from '@testing-library/react'
 
-import WithRuntimeService from '../../components/RuntimeServiceContext'
+import WithRuntimeService from '../runtimeService'
 
 import {RuntimeVersionContext, WithRuntimeVersion} from './RuntimeVersionContext'
 

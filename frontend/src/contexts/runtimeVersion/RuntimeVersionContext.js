@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react'
 
-import {RuntimeServiceContext} from '../../components/RuntimeServiceContext'
+import {RuntimeServiceContext} from '../runtimeService'
 
 const RuntimeVersionContext = createContext({name: '', hash: ''})
 
