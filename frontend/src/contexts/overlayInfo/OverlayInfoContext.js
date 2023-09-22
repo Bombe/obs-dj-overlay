@@ -1,7 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from 'react'
 
 import defaultOverlayService from '../../services/overlay'
-import {OverlayServiceContext} from '../../components/OverlayServiceContext'
+import {OverlayServiceContext} from '../overlayService'
 
 const OverlayInfoContext = createContext(defaultOverlayService.defaultValue())
 

@@ -9,7 +9,7 @@ import TitleInfo from "../TitleInfo"
 import Message from "../Message"
 
 import "./Viewer.css"
-import WithOverlayService from "../OverlayServiceContext";
+import WithOverlayService from "../../contexts/overlayService";
 
 const Viewer = () => {
     return (

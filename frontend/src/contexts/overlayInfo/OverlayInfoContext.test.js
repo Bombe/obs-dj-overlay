@@ -2,7 +2,7 @@ import React from 'react'
 import {act, render} from '@testing-library/react'
 import {expect} from 'chai'
 
-import WithOverlayService from '../../components/OverlayServiceContext'
+import WithOverlayService from '../overlayService'
 
 import {OverlayInfoContext, WithOverlayInfo} from './OverlayInfoContext'
 
