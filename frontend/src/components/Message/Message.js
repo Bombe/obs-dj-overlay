@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from "react";
 
-import {OverlayInfoContext} from "../../context/overlayInfo";
+import {OverlayInfoContext} from "../../contexts/overlayInfo";
 
 import "./Message.css";
 

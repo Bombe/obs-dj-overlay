@@ -1,5 +1,5 @@
 import React, {useContext} from "react"
-import {OverlayInfoContext} from "../../context/overlayInfo"
+import {OverlayInfoContext} from "../../contexts/overlayInfo"
 import "./TrackInfo.css"
 
 const TrackInfo = () => {
