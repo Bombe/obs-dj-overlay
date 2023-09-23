@@ -18,6 +18,7 @@ import styles from './TrackSearch.module.css'
 
 const NoBorderTooltip = withStyles(() => ({
     tooltip: {
+        maxWidth: '500px',
         backgroundColor: 'inherit',
         border: 'none',
     },
@@ -75,7 +76,7 @@ const TrackSearch = ({setArtist, setTitle, setCover, scrollToTrack})  => {
                                     <TableCell className={styles.ButtonCell} padding='none'><IconButton size='small' onClick={() => { exportRowValues(result); setTerms('')} }><Reply/></IconButton></TableCell>
                                     <TableCell className={styles.ArtistCell} title='artist'>{mergeArtists(result.artists)}</TableCell>
                                     <TableCell className={styles.TitleCell} title='title'>{mergeTitleAndMix(result.title, result.mix)}</TableCell>
-                                    <TableCell className={styles.CoverCell}><NoBorderTooltip title={<img alt='Cover' src={result.cover} style={{maxWidth: '500px'}}/>}><img alt='Cover' src={result.cover}/></NoBorderTooltip></TableCell>
+                                    <TableCell className={styles.CoverCell}><NoBorderTooltip title={<Box style={{display: 'flex', flexDirection: 'column'}}><img alt='Cover' src={result.cover}/></Box>} placement='left'><img alt='Cover' src={result.cover}/></NoBorderTooltip></TableCell>
                                 </TableRow>
                             )}
                         </TableBody>
