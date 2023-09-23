@@ -10,6 +10,7 @@ import TrackAdmin from "../track"
 import TwitchAdmin from "../twitch"
 import HistoryAdmin from "../history"
 import CrateAdmin from "../crate"
+import TrackSearch from '../search'
 
 import styles from "./AdminSection.module.css"
 
@@ -26,6 +27,11 @@ const AdminSection = () => {
                 <Grid item xs={12} sm={6} lg={4}>
                     <Group title="Track">
                       <TrackAdmin artistState={[artist, setArtist]} titleState={[title, setTitle]} coverState={[cover, setCover]}/>
+                    </Group>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={4}>
+                    <Group title="Search">
+                      <TrackSearch setArtist={setArtist} setTitle={setTitle} setCover={setCover}/>
                     </Group>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
