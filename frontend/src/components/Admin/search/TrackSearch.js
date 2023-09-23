@@ -23,7 +23,7 @@ const NoBorderTooltip = withStyles(() => ({
     },
 }))(Tooltip);
 
-const TrackSearch = ({setArtist, setTitle, setCover})  => {
+const TrackSearch = ({setArtist, setTitle, setCover, scrollToTrack})  => {
 
     const searchService = useContext(SearchServiceContext)
 
@@ -43,6 +43,7 @@ const TrackSearch = ({setArtist, setTitle, setCover})  => {
         setArtist(mergeArtists(record.artists))
         setTitle(mergeTitleAndMix(record.title, record.mix))
         setCover(record.cover)
+        scrollToTrack()
     }
 
     return <div className={styles.Search}>

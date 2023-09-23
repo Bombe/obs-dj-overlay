@@ -21,7 +21,7 @@ const sortRecords = (left, right) =>
     left.artist.toLowerCase().localeCompare(right.artist.toLowerCase()) ||
     left.title.toLowerCase().localeCompare(right.title.toLowerCase())
 
-const CrateAdmin = ({setArtist, setTitle, setCover}) => {
+const CrateAdmin = ({setArtist, setTitle, setCover, scrollToTrack}) => {
 
     const crateService = useContext(CrateServiceContext)
     const [crateEntries, setCrateEntries] = useState([])
@@ -59,6 +59,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
         setArtist(record.artist)
         setTitle(record.title)
         setCover(record.cover)
+        scrollToTrack()
     }
 
     useEffect(() => {

@@ -75,7 +75,7 @@ describe('The Track Search', () => {
         const setTitle = title => calledSetters = {...calledSetters, title}
         const setCover = cover => calledSetters = {...calledSetters, cover}
         await act(async () => {
-            render(<WithSearchService searchService={searchService}><TrackSearch setArtist={setArtist} setTitle={setTitle} setCover={setCover}/></WithSearchService>)
+            render(<WithSearchService searchService={searchService}><TrackSearch setArtist={setArtist} setTitle={setTitle} setCover={setCover} scrollToTrack={() => {}}/></WithSearchService>)
             userEvent.click(screen.getByRole('button', {name: /search/i}))
         })
         const button = within(screen.queryAllByTestId('row').at(1)).getByRole('button')
@@ -86,13 +86,26 @@ describe('The Track Search', () => {
     it('should clear the input field when one of the buttons is clicked', async () => {
         const searchService = {search: terms => Promise.resolve([track1, track2])}
         await act(async () => {
-            render(<WithSearchService searchService={searchService}><TrackSearch setArtist={() => {}} setTitle={() => {}} setCover={() => {}}/></WithSearchService>)
+            render(<WithSearchService searchService={searchService}><TrackSearch setArtist={() => {}} setTitle={() => {}} setCover={() => {}} scrollToTrack={() => {}}/></WithSearchService>)
             await userEvent.type(screen.getByLabelText(/terms/i), 'some search terms')
             userEvent.click(screen.getByRole('button', {name: /search/i}))
         })
         const button = within(screen.queryAllByTestId('row').at(1)).getByRole('button')
         userEvent.click(button)
         expect(screen.getByLabelText(/terms/i).value).to.be.empty
+    })
+
+    it('should call the scroll-to-track function when one of the buttons is clicked', async () => {
+        let scrollToTrackCalled = false
+        const searchService = {search: terms => Promise.resolve([track1, track2])}
+        await act(async () => {
+            render(<WithSearchService searchService={searchService}><TrackSearch setArtist={() => {}} setTitle={() => {}} setCover={() => {}} scrollToTrack={() => scrollToTrackCalled = true}/></WithSearchService>)
+            await userEvent.type(screen.getByLabelText(/terms/i), 'some search terms')
+            userEvent.click(screen.getByRole('button', {name: /search/i}))
+        })
+        const button = within(screen.queryAllByTestId('row').at(1)).getByRole('button')
+        userEvent.click(button)
+        expect(scrollToTrackCalled).to.be.true
     })
 
 })
