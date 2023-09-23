@@ -91,7 +91,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover, scrollToTrack}) => {
                 </TableContainer>
             </Grid>
             <Grid item xs={12}>
-                <Box display="flex">
+                <Box display="flex" alignItems='center'>
                     <Box flexGrow={1}><TextField id="import-string" label="Import" fullWidth={true} value={importString} onChange={onValueEventRun(setImportString)}></TextField></Box>
                     <Box paddingLeft="16px"><Button onClick={importFromInputField} variant="contained" startIcon={<PlaylistAdd/>}>Import</Button></Box>
                     <Box paddingLeft="16px"><Button onClick={reloadCrate} variant="contained" startIcon={<Refresh/>}>Reload</Button></Box>
