@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import TableHead from '@material-ui/core/TableHead'
 import TableCell from '@material-ui/core/TableCell'
 import Table from '@material-ui/core/Table'
-import {TableBody, TableRow} from '@material-ui/core'
+import {TableBody, TableRow, Tooltip, withStyles} from '@material-ui/core'
 import TableContainer from '@material-ui/core/TableContainer'
 import IconButton from '@material-ui/core/IconButton'
 
@@ -15,6 +15,13 @@ import {onEnter, onValueEventRun} from '../../../utils/event'
 import {SearchServiceContext} from '../../../contexts/searchService'
 
 import styles from './TrackSearch.module.css'
+
+const NoBorderTooltip = withStyles(() => ({
+    tooltip: {
+        backgroundColor: 'inherit',
+        border: 'none',
+    },
+}))(Tooltip);
 
 const TrackSearch = ({setArtist, setTitle, setCover})  => {
 
@@ -67,7 +74,7 @@ const TrackSearch = ({setArtist, setTitle, setCover})  => {
                                     <TableCell className={styles.ButtonCell} padding='none'><IconButton size='small' onClick={() => { exportRowValues(result); setTerms('')} }><Reply/></IconButton></TableCell>
                                     <TableCell className={styles.ArtistCell} title='artist'>{mergeArtists(result.artists)}</TableCell>
                                     <TableCell className={styles.TitleCell} title='title'>{mergeTitleAndMix(result.title, result.mix)}</TableCell>
-                                    <TableCell className={styles.CoverCell}><img alt='Cover' src={result.cover}/></TableCell>
+                                    <TableCell className={styles.CoverCell}><NoBorderTooltip title={<img alt='Cover' src={result.cover} style={{maxWidth: '500px'}}/>}><img alt='Cover' src={result.cover}/></NoBorderTooltip></TableCell>
                                 </TableRow>
                             )}
                         </TableBody>
