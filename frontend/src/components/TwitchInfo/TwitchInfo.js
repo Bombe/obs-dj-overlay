@@ -1,12 +1,14 @@
 import React, {useContext, useEffect, useState} from "react";
-import TwitchClient from 'twitch';
+import {AppTokenAuthProvider} from '@twurple/auth'
+import {ApiClient} from '@twurple/api'
 import config from "../../utils/config";
 import {TwitchGlitchPurple} from "../Logo/";
 import {OverlayInfoContext} from "../../contexts/overlayInfo";
 import "./TwitchInfo.css";
 
 const hasTwitchConfig = (config && config.twitch && config.twitch.clientId && config.twitch.clientSecret);
-const twitchClient = hasTwitchConfig ? TwitchClient.withClientCredentials(config.twitch.clientId, config.twitch.clientSecret) : null;
+const authProvider = new AppTokenAuthProvider(config.twitch.clientId, config.twitch.clientSecret)
+const apiClient = new ApiClient({authProvider})
 
 const TwitchInfo = () => {
 
@@ -17,7 +19,7 @@ const TwitchInfo = () => {
     useEffect(() => {
         const getUserInfo = () => {
             if (overlayInfo.twitchUserName) {
-                twitchClient.helix.streams.getStreamByUserName(overlayInfo.twitchUserName)
+                apiClient.streams.getStreamByUserName(overlayInfo.twitchUserName)
                     .then(stream => {
                         setViewers(stream.viewers)
                         setMaxViewers(m => stream.viewers ? Math.max(stream.viewers, m) : 0)
