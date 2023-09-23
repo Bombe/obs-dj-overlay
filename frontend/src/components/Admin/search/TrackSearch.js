@@ -7,22 +7,15 @@ import Grid from '@material-ui/core/Grid'
 import TableHead from '@material-ui/core/TableHead'
 import TableCell from '@material-ui/core/TableCell'
 import Table from '@material-ui/core/Table'
-import {TableBody, TableRow, Tooltip, withStyles} from '@material-ui/core'
+import {TableBody, TableRow} from '@material-ui/core'
 import TableContainer from '@material-ui/core/TableContainer'
 import IconButton from '@material-ui/core/IconButton'
 
 import {onEnter, onValueEventRun} from '../../../utils/event'
 import {SearchServiceContext} from '../../../contexts/searchService'
+import NoBorderTooltip from '../../custom/NoBorderTooltip'
 
 import styles from './TrackSearch.module.css'
-
-const NoBorderTooltip = withStyles(() => ({
-    tooltip: {
-        maxWidth: '500px',
-        backgroundColor: 'inherit',
-        border: 'none',
-    },
-}))(Tooltip);
 
 const TrackSearch = ({setArtist, setTitle, setCover, scrollToTrack})  => {
 
