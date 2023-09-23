@@ -1,16 +1,17 @@
 import React, {useState} from "react"
 import {BrowserRouter as Router, Route, Switch, useRouteMatch} from "react-router-dom"
 
-import {Sources} from "./context/sources"
-import AdminSection from "./main"
-import {MessageAdmin} from "./message/MessageAdmin"
-import {ShowAdmin} from "./show/ShowAdmin"
-import {Status} from "./status"
-import {TrackAdmin} from "./track/TrackAdmin"
-import {CrateAdmin} from "./crate/CrateAdmin";
-import {TwitchAdmin} from "./twitch/TwitchAdmin"
-import WithOverlayService from "../OverlayServiceContext";
-import WithCrateService from "../CrateServiceContext";
+import WithSourcesService from '../../contexts/sourcesService'
+import WithSources from '../../contexts/sources'
+import AdminSection from './main'
+import {MessageAdmin} from './message/MessageAdmin'
+import {ShowAdmin} from './show/ShowAdmin'
+import {Status} from './status'
+import {TrackAdmin} from './track/TrackAdmin'
+import {CrateAdmin} from './crate/CrateAdmin'
+import {TwitchAdmin} from './twitch/TwitchAdmin'
+import WithOverlayService from '../../contexts/overlayService'
+import WithCrateService from '../../contexts/crateService'
 
 const Admin = () => {
 
@@ -41,10 +42,12 @@ const Admin = () => {
                             <TwitchAdmin/>
                         </Route>
                         <Route exact path={path}>
-                            <Sources>
-                                <AdminSection/>
-                                <Status/>
-                            </Sources>
+                            <WithSourcesService>
+                                <WithSources>
+                                    <AdminSection/>
+                                    <Status/>
+                                </WithSources>
+                            </WithSourcesService>
                         </Route>
                     </Switch>
                 </Router>

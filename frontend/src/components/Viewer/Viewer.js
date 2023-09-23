@@ -1,7 +1,7 @@
 import React from "react"
 
 import TrackInfo from "../TrackInfo"
-import WithOverlayInfo from "../OverlayInfoContext"
+import WithOverlayInfo from "../../contexts/overlayInfo"
 import NextShow from "../NextShow"
 import TwitchInfo from "../TwitchInfo"
 import Clock from "../Clock"
@@ -9,7 +9,7 @@ import TitleInfo from "../TitleInfo"
 import Message from "../Message"
 
 import "./Viewer.css"
-import WithOverlayService from "../OverlayServiceContext";
+import WithOverlayService from "../../contexts/overlayService";
 
 const Viewer = () => {
     return (

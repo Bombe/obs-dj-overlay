@@ -3,7 +3,7 @@ import React from 'react'
 import {expect} from 'chai'
 
 import TrackInfo from '.'
-import WithOverlayInfo from '../OverlayInfoContext';
+import WithOverlayInfo from '../../contexts/overlayInfo';
 
 describe('The Track Info element', () => {
 

@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import React from "react"
 import {expect} from "chai"
 
-import WithOverlayService from "../../OverlayServiceContext"
+import WithOverlayService from "../../../contexts/overlayService"
 import TrackAdmin from "./"
 
 describe('The Track Administration', () => {

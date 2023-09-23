@@ -1,9 +1,9 @@
 import React, {useContext} from "react"
-import {OverlayContext} from "../OverlayInfoContext"
+import {OverlayInfoContext} from "../../contexts/overlayInfo"
 import "./TrackInfo.css"
 
 const TrackInfo = () => {
-    const overlayInfo = useContext(OverlayContext)
+    const overlayInfo = useContext(OverlayInfoContext)
 
     return (overlayInfo.track && (overlayInfo.track.artist || overlayInfo.track.title)) ? (
         <div className="TrackInfo">

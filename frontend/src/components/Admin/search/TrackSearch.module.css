@@ -1,12 +1,12 @@
-.Crate {
+.Search {
     padding: 1em;
 }
 
 .Table {
-    max-height: 300px;
+    height: 300px;
 }
 
-.LoadButtonCell {
+.ButtonCell {
 }
 
 .ArtistCell {

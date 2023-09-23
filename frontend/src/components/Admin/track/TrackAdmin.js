@@ -9,7 +9,7 @@ import Grid from "@material-ui/core/Grid"
 
 import {blur, onEnter, onValueEventRun} from "../../../utils/event"
 import useFocus from "../../../utils/focus"
-import {OverlayServiceContext} from "../../OverlayServiceContext"
+import {OverlayServiceContext} from "../../../contexts/overlayService"
 import SelectOnFocusTextField from "../../selectOnFocus"
 
 import styles from "./TrackAdmin.module.css"

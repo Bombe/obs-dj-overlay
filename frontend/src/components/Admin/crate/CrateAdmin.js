@@ -13,7 +13,8 @@ import {Delete, PlaylistAdd, Refresh, Reply} from "@material-ui/icons";
 import * as uuid from "uuid";
 
 import {onValueEventRun} from "../../../utils/event";
-import {CrateServiceContext} from "../../CrateServiceContext";
+import {CrateServiceContext} from "../../../contexts/crateService";
+import NoBorderTooltip from '../../custom/NoBorderTooltip'
 
 import styles from "./CrateAdmin.module.css"
 
@@ -21,7 +22,7 @@ const sortRecords = (left, right) =>
     left.artist.toLowerCase().localeCompare(right.artist.toLowerCase()) ||
     left.title.toLowerCase().localeCompare(right.title.toLowerCase())
 
-const CrateAdmin = ({setArtist, setTitle, setCover}) => {
+const CrateAdmin = ({setArtist, setTitle, setCover, scrollToTrack}) => {
 
     const crateService = useContext(CrateServiceContext)
     const [crateEntries, setCrateEntries] = useState([])
@@ -59,6 +60,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
         setArtist(record.artist)
         setTitle(record.title)
         setCover(record.cover)
+        scrollToTrack()
     }
 
     useEffect(() => {
@@ -75,6 +77,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
                                 <TableCell/>
                                 <TableCell>Artist</TableCell>
                                 <TableCell>Title</TableCell>
+                                <TableCell>Cover</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -83,6 +86,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
                                     <TableCell className={styles.LoadButtonCell} padding='none' ><IconButton size='small' onClick={() => exportRowValues(record)} title='Load'><Reply/></IconButton></TableCell>
                                     <TableCell className={styles.ArtistCell}>{record.artist}</TableCell>
                                     <TableCell className={styles.TitleCell}>{record.title}</TableCell>
+                                    <TableCell className={styles.CoverCell}><NoBorderTooltip title={<Box style={{display: 'flex', flexDirection: 'column'}}><img alt='Cover' src={record.cover}/></Box>} placement='left'><img alt='Cover' src={record.cover}/></NoBorderTooltip></TableCell>
                                 </TableRow>
                             )}
                         </TableBody>
@@ -90,8 +94,8 @@ const CrateAdmin = ({setArtist, setTitle, setCover}) => {
                 </TableContainer>
             </Grid>
             <Grid item xs={12}>
-                <Box display="flex">
-                    <Box flexGrow={1}><TextField id="import-string" label="Import" fullWidth={true} value={importString} onChange={onValueEventRun(setImportString)}></TextField></Box>
+                <Box display="flex" alignItems='center'>
+                    <Box flexGrow={1}><TextField id="import-string" label="Import" variant='filled' fullWidth={true} value={importString} onChange={onValueEventRun(setImportString)}/></Box>
                     <Box paddingLeft="16px"><Button onClick={importFromInputField} variant="contained" startIcon={<PlaylistAdd/>}>Import</Button></Box>
                     <Box paddingLeft="16px"><Button onClick={reloadCrate} variant="contained" startIcon={<Refresh/>}>Reload</Button></Box>
                     <Box paddingLeft="16px"><Button onClick={clearCrate} variant="contained" startIcon={<Delete/>}>Reset</Button></Box>

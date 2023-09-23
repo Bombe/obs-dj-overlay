@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import TwitchClient from 'twitch';
 import config from "../../utils/config";
 import {TwitchGlitchPurple} from "../Logo/";
-import {OverlayContext} from "../OverlayInfoContext";
+import {OverlayInfoContext} from "../../contexts/overlayInfo";
 import "./TwitchInfo.css";
 
 const hasTwitchConfig = (config && config.twitch && config.twitch.clientId && config.twitch.clientSecret);
@@ -10,7 +10,7 @@ const twitchClient = hasTwitchConfig ? TwitchClient.withClientCredentials(config
 
 const TwitchInfo = () => {
 
-    const overlayInfo = useContext(OverlayContext);
+    const overlayInfo = useContext(OverlayInfoContext);
     const [maxViewers, setMaxViewers] = useState(0)
     const [viewers, setViewers] = useState(null);
 

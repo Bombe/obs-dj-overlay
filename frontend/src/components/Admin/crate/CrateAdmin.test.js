@@ -4,7 +4,7 @@ import {within} from '@testing-library/dom'
 import userEvent from "@testing-library/user-event";
 import {expect} from 'chai'
 
-import WithCrateService from "../../CrateServiceContext";
+import WithCrateService from "../../../contexts/crateService";
 import {CrateAdmin} from './CrateAdmin'
 
 describe('The Crate Admin', () => {
@@ -178,10 +178,23 @@ describe('The Crate Admin', () => {
                 createRecord('C', 'F', 'B'), createRecord('B', 'E', 'C'), createRecord('F', 'A', 'D')
             ])
         }
-        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover}/></WithCrateService>))
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover} scrollToTrack={() => {}}/></WithCrateService>))
         const rows = Array.from(document.body.querySelectorAll("[title='record']"))
         userEvent.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
         expect(calledSetters).to.deep.eql({artist: 'C', title: 'F', cover: 'B'})
+    });
+
+    it('should call the provided scroll function when a load button is clicked', async () => {
+        let scrollToTrackCalled = false
+        const crateService = {
+            ...defaultCrateService, getRecords: () => createRecordResponse([
+                createRecord('C', 'F', 'B'), createRecord('B', 'E', 'C'), createRecord('F', 'A', 'D')
+            ])
+        }
+        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin setArtist={() => {}} setTitle={() => {}} setCover={() => {}} scrollToTrack={() => scrollToTrackCalled = true}/></WithCrateService>))
+        const rows = Array.from(document.body.querySelectorAll("[title='record']"))
+        userEvent.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
+        expect(scrollToTrackCalled).to.be.true
     });
 
 });
