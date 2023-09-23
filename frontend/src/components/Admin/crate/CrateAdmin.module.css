@@ -15,6 +15,12 @@
 .TitleCell {
 }
 
-.Cover {
-    display: none;
+.CoverCell {
+    padding: 0 !important;
+    padding-top: 8px !important;
+}
+
+.CoverCell img {
+    max-width: 4em;
+    max-height: 4em;
 }
