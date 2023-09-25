@@ -89,7 +89,7 @@ const TrackAdmin = ({artistState, titleState, coverState}) => {
         }
     }
 
-    useEffect(restoreTrackInfo, [])
+    useEffect(restoreTrackInfo, [overlayService, setTrackNumber, setTrackArtist, setTrackTitle, setTrackCover, setOriginalTrackNumber, setOriginalTrackArtist, setOriginalTrackTitle, setOriginalTrackCover])
 
     return (
         <form onSubmit={sendTrackInfo} className={styles.Track}>
