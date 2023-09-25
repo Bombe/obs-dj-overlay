@@ -18,4 +18,11 @@ describe("The Crate Component", () => {
         expect(crate.getRecords()).to.be.eql([])
     })
 
+    it('should deduplicate its entries', () => {
+        crate.addRecord("Artist A", "Title A", "img:a")
+        crate.addRecord("Artist B", "Title B", "img:b")
+        crate.addRecord("Artist A", "Title A", "img:a")
+        expect(crate.getRecords()).to.be.eql([{index: 0, artist: "Artist A", title: "Title A", cover: "img:a"}, {index: 1, artist: "Artist B", title: "Title B", cover: "img:b"}])
+    })
+
 })

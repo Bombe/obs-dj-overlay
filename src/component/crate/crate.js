@@ -6,7 +6,9 @@ const crate = {
     getRecords: () => records.map((record, index) => ({...record, index})),
 
     addRecord: (artist, title, cover) => {
-        records.push({artist, title, cover})
+        if (!records.some(value => (value.artist === artist) && (value.title === title) && (value.cover === cover))) {
+            records.push({artist, title, cover})
+        }
     },
 
     reset: () => {
