@@ -4,7 +4,7 @@
   "description": "Backend for the obs-dj-overlay software",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --recursive 'src/**/*.test.js'",
+    "test": "mocha --recursive --watch 'src/**/*.test.js'",
     "start": "node src/app.js",
     "version": "node src/version.js"
   },
