@@ -1,13 +1,34 @@
 const fetch = require('node-fetch')
+const {JSDOM} = require('jsdom')
 
-const beatportSearchUrl = 'https://www.beatport.com/_next/data/6dFTaaSXmiS3bdOu9Dsk6/en/search.json'
+let currentSentryId = 'unknown'
+const beatportSearchUrl = 'https://www.beatport.com/_next/data/{sentryId}/en/search.json'
+
+const getBeatportSearchUrl = terms => {
+    const url = new URL(beatportSearchUrl.replace('{sentryId}', currentSentryId))
+    url.searchParams.append('q', terms)
+    return url
+}
+
+const updateCurrentSentryIdFromHtmlPage = htmlText => {
+    const htmlPage = new JSDOM(htmlText)
+    const nextData = JSON.parse(htmlPage.window.document.querySelector(`[id='__NEXT_DATA__']`).textContent)
+    currentSentryId = nextData.buildId
+}
 
 const searchService = {
 
     search: (terms) => {
-        const url = new URL(beatportSearchUrl)
-        url.searchParams.append('q', terms)
+        const url = getBeatportSearchUrl(terms)
         return fetch(url.href)
+            .then(response => {
+                if (response.status == 404) {
+                    return response.text()
+                        .then(updateCurrentSentryIdFromHtmlPage)
+                        .then(() => fetch(getBeatportSearchUrl(terms).href))
+                }
+                return response
+            })
             .then(response => {
                 if (response.status !== 200) {
                     return Promise.reject()
