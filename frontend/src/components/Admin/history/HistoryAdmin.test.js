@@ -1,6 +1,7 @@
 import {act, render, screen} from '@testing-library/react'
 import {expect} from 'chai'
 
+import {user} from '../../../utils/tests'
 import {HistoryAdmin} from './HistoryAdmin'
 import WithHistoryService from '../../../contexts/historyService'
 
@@ -27,7 +28,7 @@ describe('The History Admin', () => {
         await act(async () => render(<WithHistoryService historyService={testHistoryService}><HistoryAdmin/></WithHistoryService>))
         expect(document.querySelectorAll('table tbody tr')).to.have.lengthOf(0)
         results = [{time: 0, artist: 'A', title: '1'}, {time: 1, artist: 'B', title: '2'}]
-        await act(async() => screen.getByRole('button', {name: /reload/i}).click())
+        await user.click(screen.getByRole('button', {name: /reload/i}))
         expect(document.querySelectorAll('table tbody tr')).to.have.lengthOf(2)
     })
 
@@ -39,10 +40,8 @@ describe('The History Admin', () => {
     it('should reset the entries when the reset button is pressed', async () => {
         let resetCalled = false
         const testHistoryService = {...emptyHistoryService, reset: () => resetCalled = true}
-        await act(async () => {
-            render(<WithHistoryService historyService={testHistoryService}><HistoryAdmin/></WithHistoryService>)
-            screen.getByRole('button', {name: /reset/i}).click()
-        })
+        render(<WithHistoryService historyService={testHistoryService}><HistoryAdmin/></WithHistoryService>)
+        await user.click(screen.getByRole('button', {name: /reset/i}))
         expect(resetCalled).to.be.true
     })
 

@@ -1,9 +1,9 @@
 import React from "react"
 import {act, render, screen} from "@testing-library/react";
 import {within} from '@testing-library/dom'
-import userEvent from "@testing-library/user-event";
 import {expect} from 'chai'
 
+import {user} from '../../../utils/tests'
 import WithCrateService from "../../../contexts/crateService";
 import {CrateAdmin} from './CrateAdmin'
 
@@ -64,8 +64,8 @@ describe('The Crate Admin', () => {
     it('should not import anything if input field does not contain anything', async () => {
         let importCalled = false
         const crateService = {...defaultCrateService, importRecords: () => importCalled = true}
-        await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>))
-        userEvent.click(screen.getByRole('button', {name: /import/i}))
+        render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
+        await user.click(screen.getByRole('button', {name: /import/i}))
         expect(importCalled).to.be.false
     });
 
@@ -79,30 +79,24 @@ describe('The Crate Admin', () => {
                 return defaultCrateService.importRecords()
             },
         }
-        await act(async () => {
-            render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
-            await userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","title":"Title","cover":"Cover"}]')
-            userEvent.click(screen.getByRole('button', {name: /import/i}))
-        })
+        render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
+        await user.type(screen.getByLabelText(/import/i), '[[{{"artist":"Artist","title":"Title","cover":"Cover"}]')
+        await user.click(screen.getByRole('button', {name: /import/i}))
         expect(screen.queryAllByTitle('record')).to.have.lengthOf(1)
     });
 
     it('should clear the input field after successful importing', async () => {
-        await act(async () => {
-            render(<WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService>)
-            await userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","title":"Title","cover":"Cover"}]')
-            userEvent.click(screen.getByRole('button', {name: /import/i}))
-        })
+        render(<WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService>)
+        await user.type(screen.getByLabelText(/import/i), '[[{{"artist":"Artist","title":"Title","cover":"Cover"}]')
+        await user.click(screen.getByRole('button', {name: /import/i}))
         expect(screen.getByLabelText(/import/i).value).to.be.empty
     });
 
     it('should not clear the input field after unsuccessful importing', async () => {
         const crateService = {...defaultCrateService, importRecords: () => createStatusResponse(400)}
-        await act(async () => {
-            render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
-            await userEvent.type(screen.getByLabelText(/import/i), '[{"artist":"Artist","tit')
-            userEvent.click(screen.getByRole('button', {name: /import/i}))
-        })
+        render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
+        await user.type(screen.getByLabelText(/import/i), '[[{{"artist":"Artist","tit')
+        await user.click(screen.getByRole('button', {name: /import/i}))
         expect(screen.getByLabelText(/import/i).value).to.be.eql('[{"artist":"Artist","tit')
     });
 
@@ -119,10 +113,8 @@ describe('The Crate Admin', () => {
                 return Promise.resolve()
             }
         }
-        await act(async () => {
-            render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
-            userEvent.click(screen.getByRole('button', {name: /reset/i}))
-        })
+        render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
+        await user.click(screen.getByRole('button', {name: /reset/i}))
         expect(resetCalled).to.be.true
     });
 
@@ -147,10 +139,8 @@ describe('The Crate Admin', () => {
                 return createRecordResponse(tracks.slice(2))
             }
         }
-        await act(async () => {
-            render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
-            userEvent.click(screen.getByRole('button', {name: /reload/i}))
-        })
+        render(<WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService>)
+        await user.click(screen.getByRole('button', {name: /reload/i}))
         expect(Array.from(document.body.querySelectorAll("[title='record']")).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')})))
             .to.be.deep.eql([{artist: 'Artist 3', title: 'Title 3'}, {artist: 'Artist 4', title: 'Title 4'}, {artist: 'Artist 5', title: 'Title 5'}])
     });
@@ -180,7 +170,7 @@ describe('The Crate Admin', () => {
         }
         await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover} scrollToTrack={() => {}}/></WithCrateService>))
         const rows = Array.from(document.body.querySelectorAll("[title='record']"))
-        userEvent.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
+        await user.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
         expect(calledSetters).to.deep.eql({artist: 'C', title: 'F', cover: 'B'})
     });
 
@@ -193,7 +183,7 @@ describe('The Crate Admin', () => {
         }
         await act(async () => render(<WithCrateService crateService={crateService}><CrateAdmin setArtist={() => {}} setTitle={() => {}} setCover={() => {}} scrollToTrack={() => scrollToTrackCalled = true}/></WithCrateService>))
         const rows = Array.from(document.body.querySelectorAll("[title='record']"))
-        userEvent.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
+        await user.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
         expect(scrollToTrackCalled).to.be.true
     });
 
