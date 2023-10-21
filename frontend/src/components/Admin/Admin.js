@@ -12,6 +12,7 @@ import {CrateAdmin} from './crate/CrateAdmin'
 import {TwitchAdmin} from './twitch/TwitchAdmin'
 import WithOverlayService from '../../contexts/overlayService'
 import WithCrateService from '../../contexts/crateService'
+import WithHistoryService from '../../contexts/historyService'
 
 const Admin = () => {
 
@@ -42,12 +43,14 @@ const Admin = () => {
                             <TwitchAdmin/>
                         </Route>
                         <Route exact path={path}>
-                            <WithSourcesService>
-                                <WithSources>
-                                    <AdminSection/>
-                                    <Status/>
-                                </WithSources>
-                            </WithSourcesService>
+                            <WithHistoryService>
+                                <WithSourcesService>
+                                    <WithSources>
+                                        <AdminSection/>
+                                        <Status/>
+                                    </WithSources>
+                                </WithSourcesService>
+                            </WithHistoryService>
                         </Route>
                     </Switch>
                 </Router>
