@@ -91,7 +91,9 @@ const CrateAdmin = ({setArtist, setTitle, setCover, scrollToTrack}) => {
     const processSearchResults = useCallback(results => results.map(result => ({ artist: mergeArtists(result.artists), title: mergeTitleAndMix(result.title, result.mix), cover: result.cover })), [])
 
     const handleSearchTerms = useCallback(() => {
-        if (displayedCrateEntries.length === 1) {
+        if (searchString === '') {
+            reloadCrate()
+        } else if (displayedCrateEntries.length === 1) {
             exportRowValues(displayedCrateEntries.at(0))
             setSearchString('')
         } else if (displayedCrateEntries.length === 0) {
@@ -101,7 +103,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover, scrollToTrack}) => {
                 .then(setCrateEntries)
                 .then(() => setSearchString(''))
         }
-    }, [displayedCrateEntries, exportRowValues, processSearchResults, searchService, searchString, setCrateEntries, setSearchString])
+    }, [displayedCrateEntries, exportRowValues, processSearchResults, reloadCrate, searchService, searchString, setCrateEntries, setSearchString])
 
     return (
         <Grid container spacing={2} direction="column" alignItems="stretch" className={styles.Crate}>

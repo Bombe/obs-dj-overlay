@@ -190,6 +190,22 @@ describe('The Crate Admin', () => {
         expect(screen.getByLabelText(/search/i).value).to.be.empty
     })
 
+    it('should reload the crate if entry is pressed in an empty search field after the search', async () => {
+        const crateService = prepareCrateService([
+            {artist: 'ABC', title: 'def', cover: ''}, {artist: 'DEF', title: 'ghi', cover: ''}, {artist: 'GHI', title: 'jkl', cover: ''}
+        ])
+        const searchService = {
+            search: () => {
+                return Promise.resolve([{artists: ['A', 'B'], title: 'XYZ', mix: 'Test Mix', cover: 'img:a'}])
+            }
+        }
+        render(<WithCrateService crateService={crateService}><WithSearchService searchService={searchService}><CrateAdmin setArtist={doNothing} setTitle={doNothing} setCover={doNothing} scrollToTrack={doNothing}/></WithSearchService></WithCrateService>)
+        await user.type(screen.getByLabelText(/search/i), 'xyz{Enter}')
+        await user.type(screen.getByLabelText(/search/i), '{Enter}')
+        const shownRecords = Array.from(document.body.querySelectorAll('[title=\'record\']')).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')}))
+        expect(shownRecords).to.be.deep.eql([{artist: 'ABC', title: 'def'}, {artist: 'DEF', title: 'ghi'}, {artist: 'GHI', title: 'jkl'}])
+    })
+
     it('should have a button labeled "import"', async () => {
         await act(async () => render(<WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService>))
         expect(screen.getByRole('button', {name: /import/i})).to.exist
