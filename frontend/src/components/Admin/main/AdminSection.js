@@ -38,13 +38,13 @@ const AdminSection = () => {
                     </div>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
-                    <Group title="Search">
-                      <TrackSearch setArtist={setArtist} setTitle={setTitle} setCover={setCover} scrollToTrack={scrollToTrackSection}/>
+                    <Group title="Crate">
+                      <CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover} scrollToTrack={scrollToTrackSection}/>
                     </Group>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
-                    <Group title="Crate">
-                      <CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover} scrollToTrack={scrollToTrackSection}/>
+                    <Group title="Search">
+                      <TrackSearch setArtist={setArtist} setTitle={setTitle} setCover={setCover} scrollToTrack={scrollToTrackSection}/>
                     </Group>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
