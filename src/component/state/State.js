@@ -43,9 +43,9 @@ module.exports = history => ({
                         number = currentTrack.number - 1
                     }
                 }
+                lastTrack = currentTrack
+                history.add(artist, title)
             }
-            lastTrack = currentTrack
-            history.add(artist, title)
         }
         currentTrack = {...currentTrack, number, cover, artist, title}
     },

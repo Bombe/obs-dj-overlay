@@ -178,4 +178,10 @@ describe("The History", () => {
         expect(amendedTitle).to.eql("Title")
     })
 
+    it('should not be updated when an empty track was set', () => {
+        state.setTrackInfo(0, '', '')
+        expect(setArtist).to.be.undefined
+        expect(setTitle).to.be.undefined
+    })
+
 })

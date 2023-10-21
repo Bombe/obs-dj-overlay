@@ -44,4 +44,9 @@ describe("The History Component", () => {
         ])
     })
 
+    it('should not add empty track if empty track is being set', () => {
+        history.amend('', '')
+        expect(history.entries()).to.be.empty
+    })
+
 })
