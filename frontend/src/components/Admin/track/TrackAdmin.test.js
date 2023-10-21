@@ -4,6 +4,7 @@ import {expect} from "chai"
 
 import {user} from '../../../utils/tests'
 import WithOverlayService from "../../../contexts/overlayService"
+import WithTrack from '../../../contexts/track'
 import TrackAdmin from "./"
 
 describe('The Track Administration', () => {
@@ -13,12 +14,12 @@ describe('The Track Administration', () => {
     }
 
     it('has a text field labeled "number of the track"', () => {
-        render(<WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService>)
+        render(<WithTrack><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         expect(screen.getByLabelText(/the number of the track/i)).to.exist
     })
 
     it('should have a field labeled "cover"', () => {
-        render(<WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService>)
+        render(<WithTrack><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         expect(screen.getByLabelText(/cover/i)).to.exist
     });
 
@@ -30,7 +31,7 @@ describe('The Track Administration', () => {
                 capturedValues = {number, artist, title, cover}
             }
         }
-        render(<WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService>)
+        render(<WithTrack><WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         await user.type(screen.getByLabelText(/number/i), '12')
         await user.type(screen.getByLabelText(/artist/i), 'Artist')
         await user.type(screen.getByLabelText(/title/i), 'Title')
@@ -40,7 +41,7 @@ describe('The Track Administration', () => {
     });
 
     it('should have a button labeled “reset”', () => {
-        render(<WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService>)
+        render(<WithTrack><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         expect(screen.getByText(/reset/i)).to.exist
     });
 
@@ -50,7 +51,7 @@ describe('The Track Administration', () => {
             ...overlayService, resetLastTrack: () => resetLastTrackCalled = true, setTrackInfo: () => {
             }
         }
-        render(<WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService>)
+        render(<WithTrack><WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         await user.click(screen.getByText(/reset/i))
         expect(resetLastTrackCalled).to.be.true
     });
@@ -61,7 +62,7 @@ describe('The Track Administration', () => {
             ...overlayService, resetLastTrack: () => {
             }, setTrackInfo: (number, artist, title, cover) => capturedSetter = {number, artist, title, cover}
         }
-        render(<WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService>)
+        render(<WithTrack><WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         await user.click(screen.getByText(/reset/i))
         expect(capturedSetter).to.deep.eql({number: 0, artist: '', title: '', cover: ''})
     });
@@ -73,7 +74,7 @@ describe('The Track Administration', () => {
             resetLastTrack: () => {},
             setTrackInfo: () => {}
         }
-        render(<WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService>)
+        render(<WithTrack><WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         await user.type(screen.getByLabelText(/number/i), "12")
         await user.type(screen.getByLabelText(/artist/i), "artist")
         await user.type(screen.getByLabelText(/title/i), "title")
@@ -86,7 +87,7 @@ describe('The Track Administration', () => {
     });
 
     it('should have a button labeled “amend”', () => {
-        render(<WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService>)
+        render(<WithTrack><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         expect(screen.getByText(/amend/i)).to.exist
     });
 
@@ -98,7 +99,7 @@ describe('The Track Administration', () => {
                 capturedValues = {number, artist, title, cover}
             }
         }
-        render(<WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService>)
+        render(<WithTrack><WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         await user.type(screen.getByLabelText(/number/i), '12')
         await user.type(screen.getByLabelText(/artist/i), 'Artist')
         await user.type(screen.getByLabelText(/title/i), 'Title')
@@ -106,5 +107,12 @@ describe('The Track Administration', () => {
         await user.click(screen.getByRole('button', {name: /amend/i}))
         expect(capturedValues).to.deep.eql({number: 12, artist: 'Artist', title: 'Title', cover: 'Cover'})
     });
+
+    it('should use the values from the track context', () => {
+        render(<WithTrack track={{artist: 'Artist', title: 'Title', cover: 'Cover'}}><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
+        expect(screen.getByLabelText(/artist/i).value).to.eql('Artist')
+        expect(screen.getByLabelText(/title/i).value).to.eql('Title')
+        expect(screen.getByLabelText(/cover/i).value).to.eql('Cover')
+    })
 
 })
