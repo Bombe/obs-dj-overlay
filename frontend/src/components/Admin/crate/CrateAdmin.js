@@ -15,6 +15,7 @@ import * as uuid from "uuid";
 import {onEnter, onValueEventRun} from '../../../utils/event'
 import {CrateServiceContext} from "../../../contexts/crateService";
 import {SearchServiceContext} from '../../../contexts/searchService'
+import {TrackContext} from '../../../contexts/track'
 import NoBorderTooltip from '../../custom/NoBorderTooltip'
 
 import styles from "./CrateAdmin.module.css"
@@ -23,10 +24,11 @@ const sortRecords = (left, right) =>
     left.artist.toLowerCase().localeCompare(right.artist.toLowerCase()) ||
     left.title.toLowerCase().localeCompare(right.title.toLowerCase())
 
-const CrateAdmin = ({setArtist, setTitle, setCover, scrollToTrack}) => {
+const CrateAdmin = ({scrollToTrack}) => {
 
     const crateService = useContext(CrateServiceContext)
     const searchService = useContext(SearchServiceContext)
+    const { setArtist, setTitle, setCover } = useContext(TrackContext)
     const [searchString, setSearchString] = useState('')
     const [crateEntries, setCrateEntries] = useState([])
     const [displayedCrateEntries, setDisplayedCrateEntries] = useState([])

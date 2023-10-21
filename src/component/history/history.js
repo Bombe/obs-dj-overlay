@@ -6,7 +6,9 @@ const history = clock => ({
     },
     entries: () => entries,
     add: (artist, title) => {
-        entries.push({artist, title, time: clock.time()})
+        if ((artist !== '') && (title !== '')) {
+            entries.push({artist, title, time: clock.time()})
+        }
     },
     amend: (artist, title) => {
         if (entries.length === 0) {

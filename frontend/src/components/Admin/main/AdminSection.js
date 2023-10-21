@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react"
+import React, {useRef} from "react"
 import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
@@ -15,10 +15,6 @@ import styles from "./AdminSection.module.css"
 
 const AdminSection = () => {
 
-    const [artist, setArtist] = useState("")
-    const [title, setTitle] = useState("")
-    const [cover, setCover] = useState("")
-
     const trackSectionReference = useRef(null)
 
     const scrollToTrackSection = () => {
@@ -32,13 +28,13 @@ const AdminSection = () => {
                 <Grid item xs={12} sm={6} lg={4}>
                     <div ref={trackSectionReference}>
                         <Group title="Track">
-                          <TrackAdmin artistState={[artist, setArtist]} titleState={[title, setTitle]} coverState={[cover, setCover]}/>
+                            <TrackAdmin/>
                         </Group>
                     </div>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
                     <Group title="Crate">
-                      <CrateAdmin setArtist={setArtist} setTitle={setTitle} setCover={setCover} scrollToTrack={scrollToTrackSection}/>
+                        <CrateAdmin scrollToTrack={scrollToTrackSection}/>
                     </Group>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>

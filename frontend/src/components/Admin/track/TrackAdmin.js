@@ -10,22 +10,17 @@ import Grid from "@material-ui/core/Grid"
 import {blur, onEnter, onValueEventRun} from "../../../utils/event"
 import useFocus from "../../../utils/focus"
 import {OverlayServiceContext} from "../../../contexts/overlayService"
+import {TrackContext} from '../../../contexts/track'
 import SelectOnFocusTextField from "../../selectOnFocus"
 
 import styles from "./TrackAdmin.module.css"
 
-const TrackAdmin = ({artistState, titleState, coverState}) => {
-
-    const overriddenArtistState = useState("")
-    const overriddenTitleState = useState("")
-    const overriddenCoverState = useState("")
+const TrackAdmin = () => {
 
     const overlayService = useContext(OverlayServiceContext)
+    const { artist: trackArtist, title: trackTitle, cover: trackCover, setArtist: setTrackArtist, setTitle: setTrackTitle, setCover: setTrackCover } = useContext(TrackContext)
     const [trackNumber, setTrackNumber] = useState(0)
     const [direction, setDirection] = useState("+1")
-    const [trackArtist, setTrackArtist] = artistState || overriddenArtistState
-    const [trackTitle, setTrackTitle] = titleState || overriddenTitleState
-    const [trackCover, setTrackCover] = coverState || overriddenCoverState
     const [originalTrackNumber, setOriginalTrackNumber] = useState(0)
     const [originalTrackArtist, setOriginalTrackArtist] = useState("")
     const [originalTrackTitle, setOriginalTrackTitle] = useState("")
