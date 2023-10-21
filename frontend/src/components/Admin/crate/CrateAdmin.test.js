@@ -5,6 +5,7 @@ import {expect} from 'chai'
 
 import {doNothing, user} from '../../../utils/tests'
 import WithCrateService from '../../../contexts/crateService'
+import WithSearchService from '../../../contexts/searchService'
 import {CrateAdmin} from './CrateAdmin'
 
 describe('The Crate Admin', () => {
@@ -141,6 +142,51 @@ describe('The Crate Admin', () => {
         ])
         render(<WithCrateService crateService={crateService}><CrateAdmin setArtist={doNothing} setTitle={doNothing} setCover={doNothing} scrollToTrack={doNothing}/></WithCrateService>)
         await user.type(screen.getByLabelText(/search/i), 'a{Enter}')
+        expect(screen.getByLabelText(/search/i).value).to.be.empty
+    })
+
+    it('should use the search service if enter is pressed when there are no matches in crate', async () => {
+        const crateService = prepareCrateService([
+            {artist: 'ABC', title: 'def', cover: ''}, {artist: 'DEF', title: 'ghi', cover: ''}, {artist: 'GHI', title: 'jkl', cover: ''}
+        ])
+        let providedTerms
+        const searchService = {
+            search: terms => {
+                providedTerms = terms
+                return Promise.resolve([])
+            }
+        }
+        render(<WithCrateService crateService={crateService}><WithSearchService searchService={searchService}><CrateAdmin setArtist={doNothing} setTitle={doNothing} setCover={doNothing} scrollToTrack={doNothing}/></WithSearchService></WithCrateService>)
+        await user.type(screen.getByLabelText(/search/i), 'xyz{Enter}')
+        expect(providedTerms).to.be.eql(['xyz'])
+    })
+
+    it('should process the search results and display them', async () => {
+        const crateService = prepareCrateService([
+            {artist: 'ABC', title: 'def', cover: ''}, {artist: 'DEF', title: 'ghi', cover: ''}, {artist: 'GHI', title: 'jkl', cover: ''}
+        ])
+        const searchService = {
+            search: () => {
+                return Promise.resolve([{artists: ['A', 'B'], title: 'XYZ', mix: 'Test Mix', cover: 'img:a'}])
+            }
+        }
+        render(<WithCrateService crateService={crateService}><WithSearchService searchService={searchService}><CrateAdmin setArtist={doNothing} setTitle={doNothing} setCover={doNothing} scrollToTrack={doNothing}/></WithSearchService></WithCrateService>)
+        await user.type(screen.getByLabelText(/search/i), 'xyz{Enter}')
+        const shownRecords = Array.from(document.body.querySelectorAll('[title=\'record\']')).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')}))
+        expect(shownRecords).to.be.eql([{artist: 'A, B', title: 'XYZ (Test Mix)'}])
+    })
+
+    it('should clear the search field after search results are shown', async () => {
+        const crateService = prepareCrateService([
+            {artist: 'ABC', title: 'def', cover: ''}, {artist: 'DEF', title: 'ghi', cover: ''}, {artist: 'GHI', title: 'jkl', cover: ''}
+        ])
+        const searchService = {
+            search: () => {
+                return Promise.resolve([{artists: ['A', 'B'], title: 'XYZ', mix: 'Test Mix', cover: 'img:a'}])
+            }
+        }
+        render(<WithCrateService crateService={crateService}><WithSearchService searchService={searchService}><CrateAdmin setArtist={doNothing} setTitle={doNothing} setCover={doNothing} scrollToTrack={doNothing}/></WithSearchService></WithCrateService>)
+        await user.type(screen.getByLabelText(/search/i), 'xyz{Enter}')
         expect(screen.getByLabelText(/search/i).value).to.be.empty
     })
 

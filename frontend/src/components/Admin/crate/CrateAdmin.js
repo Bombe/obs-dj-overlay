@@ -14,6 +14,7 @@ import * as uuid from "uuid";
 
 import {onEnter, onValueEventRun} from '../../../utils/event'
 import {CrateServiceContext} from "../../../contexts/crateService";
+import {SearchServiceContext} from '../../../contexts/searchService'
 import NoBorderTooltip from '../../custom/NoBorderTooltip'
 
 import styles from "./CrateAdmin.module.css"
@@ -25,10 +26,13 @@ const sortRecords = (left, right) =>
 const CrateAdmin = ({setArtist, setTitle, setCover, scrollToTrack}) => {
 
     const crateService = useContext(CrateServiceContext)
+    const searchService = useContext(SearchServiceContext)
     const [searchString, setSearchString] = useState('')
     const [crateEntries, setCrateEntries] = useState([])
     const [displayedCrateEntries, setDisplayedCrateEntries] = useState([])
     const [importString, setImportString] = useState("")
+
+    const addRandomIdIfNoneExists = records => records.map(record => ({...record, id: record.id || uuid.v4()}))
 
     const reloadCrate = useCallback(() => {
         crateService.getRecords()
@@ -37,7 +41,7 @@ const CrateAdmin = ({setArtist, setTitle, setCover, scrollToTrack}) => {
                 records.sort(sortRecords)
                 return records
             })
-            .then(records => records.map(record => ({...record, id: record.id || uuid.v4()})))
+            .then(addRandomIdIfNoneExists)
             .then(records => setCrateEntries(records))
     }, [crateService])
 
@@ -82,18 +86,28 @@ const CrateAdmin = ({setArtist, setTitle, setCover, scrollToTrack}) => {
         setDisplayedCrateEntries(getEntriesMatchingSearchTerms(searchString))
     }, [getEntriesMatchingSearchTerms, setDisplayedCrateEntries, searchString])
 
-    const exportTrackIfSingleMatch = useCallback(() => {
+    const mergeArtists = artists => artists.join(', ')
+    const mergeTitleAndMix = (title, mix) => title + (mix ? ' (' + mix + ')' : '')
+    const processSearchResults = useCallback(results => results.map(result => ({ artist: mergeArtists(result.artists), title: mergeTitleAndMix(result.title, result.mix), cover: result.cover })), [])
+
+    const handleSearchTerms = useCallback(() => {
         if (displayedCrateEntries.length === 1) {
             exportRowValues(displayedCrateEntries.at(0))
             setSearchString('')
+        } else if (displayedCrateEntries.length === 0) {
+            searchService.search(searchString.split(/ +/))
+                .then(processSearchResults)
+                .then(addRandomIdIfNoneExists)
+                .then(setCrateEntries)
+                .then(() => setSearchString(''))
         }
-    }, [displayedCrateEntries, exportRowValues, setSearchString])
+    }, [displayedCrateEntries, exportRowValues, processSearchResults, searchService, searchString, setCrateEntries, setSearchString])
 
     return (
         <Grid container spacing={2} direction="column" alignItems="stretch" className={styles.Crate}>
             <Grid item xs={12}>
                 <Box display="flex" alignItems='center'>
-                    <Box flexGrow={1}><TextField id="search-string" label="Search" variant='filled' fullWidth={true} value={searchString} onChange={onValueEventRun(setSearchString)} onKeyPress={onEnter(exportTrackIfSingleMatch, true)}/></Box>
+                    <Box flexGrow={1}><TextField id="search-string" label="Search" variant='filled' fullWidth={true} value={searchString} onChange={onValueEventRun(setSearchString)} onKeyPress={onEnter(handleSearchTerms, true)}/></Box>
                     <Box paddingLeft="16px"><Button onClick={() => {}} variant="contained" startIcon={<Search/>}>Search</Button></Box>
                 </Box>
             </Grid>
