@@ -1,7 +1,17 @@
 import userEvent from '@testing-library/user-event'
 
-const user = userEvent.setup();
+const user = userEvent.setup()
 
-const doNothing = () => {}
+const doNothing = () => {
+}
 
-export {doNothing, user}
+const contextCapture = () => {
+    let providedValue
+    const storeProvidedValue = value => {
+        providedValue = value
+        return <></>
+    }
+    return {value: () => providedValue, capture: storeProvidedValue}
+}
+
+export {contextCapture, doNothing, user}
