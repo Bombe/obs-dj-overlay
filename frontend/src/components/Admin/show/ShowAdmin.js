@@ -1,18 +1,19 @@
 import Box from "@material-ui/core/Box"
 import {DoneAll, Undo} from "@material-ui/icons"
-import React, {useEffect, useState} from "react"
+import React, {useContext, useEffect, useState} from 'react'
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 
 import {blur, onEnter, onValueEventRun} from "../../../utils/event"
 import useFocus from "../../../utils/focus"
-import overlayService from "../../../services/overlay"
+import {OverlayServiceContext} from '../../../contexts/overlayService'
 import SelectOnFocusTextField from "../../selectOnFocus"
 
 import styles from "./ShowAdmin.module.css"
 
 const ShowAdmin = () => {
 
+    const overlayService = useContext(OverlayServiceContext)
     const [showTitle, setShowTitle] = useState("")
     const [showSubtitle, setShowSubtitle] = useState("")
     const [nextShow, setNextShow] = useState("")
@@ -49,21 +50,21 @@ const ShowAdmin = () => {
                 setOriginalShowSubtitle(overlayInfo.show.subtitle)
                 setOriginalNextShow(overlayInfo.show.nextShow)
             })
-    }, [])
+    }, [overlayService, setShowTitle, setShowSubtitle, setNextShow, setOriginalShowTitle, setOriginalShowSubtitle, setOriginalNextShow])
 
     return (
         <form onSubmit={sendShowInfo} className={styles.Show}>
             <Grid container spacing={2} direction="column" alignItems="stretch">
                 <Grid item xs={12}>
-                    <SelectOnFocusTextField label="The title of the show" variant="filled" value={showTitle} onChange={onValueEventRun(setShowTitle)} onKeyPress={onEnter(focusShowSubtitle, true)}
+                    <SelectOnFocusTextField id={'show-title'} label="The title of the show" variant="filled" value={showTitle} onChange={onValueEventRun(setShowTitle)} onKeyPress={onEnter(focusShowSubtitle, true)}
                                             fullWidth={true} error={(originalShowTitle !== showTitle)}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <SelectOnFocusTextField inputRef={showSubtitleField} label="The subtitle of the show" variant="filled" value={showSubtitle} onChange={onValueEventRun(setShowSubtitle)}
+                    <SelectOnFocusTextField id={'show-subtitle'} inputRef={showSubtitleField} label="The subtitle of the show" variant="filled" value={showSubtitle} onChange={onValueEventRun(setShowSubtitle)}
                                             onKeyPress={onEnter(focusNextShow, true)} fullWidth={true} error={(originalShowSubtitle !== showSubtitle)}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <SelectOnFocusTextField inputRef={nextShowField} label="Announcement for the next show" variant="filled" value={nextShow} onChange={onValueEventRun(setNextShow)}
+                    <SelectOnFocusTextField id={'show-announcement'} inputRef={nextShowField} label="Announcement for the next show" variant="filled" value={nextShow} onChange={onValueEventRun(setNextShow)}
                                             onKeyPress={onEnter(blur, false)} fullWidth={true} error={(originalNextShow !== nextShow)}/>
                 </Grid>
                 <Grid item xs={12}>
