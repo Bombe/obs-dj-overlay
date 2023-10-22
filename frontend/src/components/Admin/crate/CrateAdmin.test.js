@@ -36,6 +36,10 @@ describe('The Crate Admin', () => {
         }
     }
 
+    const getDisplayedRecords = () => Array.from(document.body.querySelectorAll('[title=\'record\']'))
+    const extractDataId = element => element.getAttribute('data-id')
+    const extractArtistAndTitle = element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')})
+
     it('should load the crate from the service', async () => {
         const crateService = prepareCrateService([createRecord('Artist', 'Title', 'Cover')])
         await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>))
@@ -48,7 +52,7 @@ describe('The Crate Admin', () => {
             createRecord('C', 'E', ''), createRecord('B', 'X'), createRecord('A', 'F', '')
         ])
         await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        const ids = new Set(Array.from(document.body.querySelectorAll('[title=\'record\']')).map(element => element.getAttribute('data-id')))
+        const ids = new Set(getDisplayedRecords().map(extractDataId))
         expect(ids).to.have.lengthOf(6)
     })
 
@@ -58,7 +62,7 @@ describe('The Crate Admin', () => {
             createRecord('C', 'E', ''), createRecord('B', 'X'), createRecord('A', 'F', '')
         ])
         await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        expect(Array.from(document.body.querySelectorAll('[title=\'record\']')).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')}))).to.be.deep.eql([
+        expect(getDisplayedRecords().map(extractArtistAndTitle)).to.be.deep.eql([
             {artist: 'A', title: 'F'}, {artist: 'B', title: 'E'}, {artist: 'B', title: 'X'}, {artist: 'C', title: 'E'}, {artist: 'C', title: 'F'}, {artist: 'F', title: 'A'}
         ])
     })
@@ -80,7 +84,7 @@ describe('The Crate Admin', () => {
         ])
         render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>)
         await user.type(screen.getByLabelText(/search/i), 'a')
-        const shownRecords = Array.from(document.body.querySelectorAll('[title=\'record\']')).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')}))
+        const shownRecords = getDisplayedRecords().map(extractArtistAndTitle)
         expect(shownRecords).to.be.deep.eql([
             {artist: 'ABC', title: 'def'}, {artist: 'JKL', title: 'abc'}
         ])
@@ -93,7 +97,7 @@ describe('The Crate Admin', () => {
         ])
         render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>)
         await user.type(screen.getByLabelText(/search/i), 'ab jk')
-        const shownRecords = Array.from(document.body.querySelectorAll('[title=\'record\']')).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')}))
+        const shownRecords = getDisplayedRecords().map(extractArtistAndTitle)
         expect(shownRecords).to.be.deep.eql([
             {artist: 'JKL', title: 'abc'}
         ])
@@ -107,7 +111,7 @@ describe('The Crate Admin', () => {
         render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>)
         await user.type(screen.getByLabelText(/search/i), 'a')
         await user.click(screen.getByRole('button', {name: /reload/i}))
-        const shownRecords = Array.from(document.body.querySelectorAll('[title=\'record\']')).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')}))
+        const shownRecords = getDisplayedRecords().map(extractArtistAndTitle)
         expect(shownRecords).to.be.deep.eql([{artist: 'JKL', title: 'abc'}])
     })
 
@@ -173,7 +177,7 @@ describe('The Crate Admin', () => {
         }
         render(<WithTrack><WithCrateService crateService={crateService}><WithSearchService searchService={searchService}><CrateAdmin scrollToTrack={doNothing}/></WithSearchService></WithCrateService></WithTrack>)
         await user.type(screen.getByLabelText(/search/i), 'xyz{Enter}')
-        const shownRecords = Array.from(document.body.querySelectorAll('[title=\'record\']')).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')}))
+        const shownRecords = getDisplayedRecords().map(extractArtistAndTitle)
         expect(shownRecords).to.be.eql([{artist: 'A, B', title: 'XYZ (Test Mix)'}])
     })
 
@@ -203,7 +207,7 @@ describe('The Crate Admin', () => {
         render(<WithTrack><WithCrateService crateService={crateService}><WithSearchService searchService={searchService}><CrateAdmin scrollToTrack={doNothing}/></WithSearchService></WithCrateService></WithTrack>)
         await user.type(screen.getByLabelText(/search/i), 'xyz{Enter}')
         await user.type(screen.getByLabelText(/search/i), '{Enter}')
-        const shownRecords = Array.from(document.body.querySelectorAll('[title=\'record\']')).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')}))
+        const shownRecords = getDisplayedRecords().map(extractArtistAndTitle)
         expect(shownRecords).to.be.deep.eql([{artist: 'ABC', title: 'def'}, {artist: 'DEF', title: 'ghi'}, {artist: 'GHI', title: 'jkl'}])
     })
 
@@ -286,7 +290,7 @@ describe('The Crate Admin', () => {
         )
         render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>)
         await user.click(screen.getByRole('button', {name: /reload/i}))
-        expect(Array.from(document.body.querySelectorAll('[title=\'record\']')).map(element => ({artist: element.getAttribute('data-artist'), title: element.getAttribute('data-title')})))
+        expect(getDisplayedRecords().map(extractArtistAndTitle))
             .to.be.deep.eql([{artist: 'Artist 3', title: 'Title 3'}, {artist: 'Artist 4', title: 'Title 4'}, {artist: 'Artist 5', title: 'Title 5'}])
     })
 
@@ -295,7 +299,7 @@ describe('The Crate Admin', () => {
             createRecord('C', 'F', ''), createRecord('B', 'E', ''), createRecord('F', 'A', '')
         ])
         await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        const rows = Array.from(document.body.querySelectorAll('[title=\'record\']'))
+        const rows = getDisplayedRecords()
         expect(within(rows.at(0)).getByRole('button', {title: /load/i})).to.exist
         expect(within(rows.at(1)).getByRole('button', {title: /load/i})).to.exist
         expect(within(rows.at(2)).getByRole('button', {title: /load/i})).to.exist
@@ -310,7 +314,7 @@ describe('The Crate Admin', () => {
             createRecord('C', 'F', 'B'), createRecord('B', 'E', 'C'), createRecord('F', 'A', 'D')
         ])
         await act(async () => render(<WithTrack track={{setArtist, setTitle, setCover}}><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>))
-        const rows = Array.from(document.body.querySelectorAll('[title=\'record\']'))
+        const rows = getDisplayedRecords()
         await user.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
         expect(calledSetters).to.deep.eql({artist: 'C', title: 'F', cover: 'B'})
     })
@@ -321,7 +325,7 @@ describe('The Crate Admin', () => {
             createRecord('C', 'F', 'B'), createRecord('B', 'E', 'C'), createRecord('F', 'A', 'D')
         ])
         await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={() => scrollToTrackCalled = true}/></WithCrateService></WithTrack>))
-        const rows = Array.from(document.body.querySelectorAll('[title=\'record\']'))
+        const rows = getDisplayedRecords()
         await user.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
         expect(scrollToTrackCalled).to.be.true
     })

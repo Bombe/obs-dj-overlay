@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react"
+import {useContext, useEffect, useState} from 'react'
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import {Delete, DoneAll, Undo} from "@material-ui/icons"
 
+import {OverlayServiceContext} from '../../../contexts/overlayService'
 import {onValueEventRun} from "../../../utils/event"
-import overlayService from "../../../services/overlay"
 import SelectOnFocusTextField from "../../selectOnFocus"
 
 import styles from "./MessageAdmin.module.css"
@@ -19,6 +19,7 @@ const textAreaEnterHandler = (action) => (event) => {
 
 const MessageAdmin = () => {
 
+    const overlayService = useContext(OverlayServiceContext)
     const [message, setMessage] = useState("")
     const [originalMessage, setOriginalMessage] = useState("")
 
@@ -45,13 +46,13 @@ const MessageAdmin = () => {
                 setMessage(overlayInfo.message)
                 setOriginalMessage(overlayInfo.message)
             })
-    }, [])
+    }, [overlayService, setMessage, setOriginalMessage])
 
     return (
         <form onSubmit={sendMessage} className={styles.Message}>
             <Grid container spacing={2} direction="column" alignItems="stretch">
                 <Grid item xs={12}>
-                    <SelectOnFocusTextField label="A message to display" variant="filled" value={message} onChange={onValueEventRun(setMessage)} onKeyPress={textAreaEnterHandler(sendMessage)}
+                    <SelectOnFocusTextField id={'message'} label="A message to display" variant="filled" value={message} onChange={onValueEventRun(setMessage)} onKeyUp={textAreaEnterHandler(sendMessage)}
                                             fullWidth={true} multiline={true} minRows={6} helperText="Press Ctrl-Enter to submit!" error={message !== originalMessage}/>
                 </Grid>
                 <Grid item xs={12}>
