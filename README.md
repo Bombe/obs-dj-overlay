@@ -14,11 +14,9 @@ of a playlist with timestamps suitable for copy & paste into
 
 ![Screenshot of the admin interface](images/admin-interface.png)
 
-This screenshot shows most of obs-dj-overlay’s features in
-action. There are input fields for everything you can change during
-runtime, all panels are collapsible, and to the right of that there’s a
-preview of the rendered overlay, the current stream on Twitch and
- the Twitch chat (not shown here).
+This screenshot shows most of obs-dj-overlay’s features in action. There are
+input fields for everything you can change during runtime, and all panels are
+collapsible.
 
 The different sections in the admin interface are independent
 from one another, i.e. you can change track info without at
