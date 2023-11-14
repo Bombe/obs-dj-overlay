@@ -195,6 +195,12 @@ describe('The Crate Admin', () => {
         expect(screen.getByLabelText(/search/i).value).to.be.empty
     })
 
+    it('should clear the search field when escape is pressed in non-empty input field', async () => {
+        render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>)
+        await user.type(screen.getByLabelText(/search/i), 'xyz{Escape}')
+        expect(screen.getByLabelText(/search/i).value).to.be.empty
+    })
+
     it('should reload the crate if enter is pressed in an empty search field after the search', async () => {
         const crateService = prepareCrateService([
             {artist: 'ABC', title: 'def', cover: ''}, {artist: 'DEF', title: 'ghi', cover: ''}, {artist: 'GHI', title: 'jkl', cover: ''}

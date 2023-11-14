@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import {Delete, PlaylistAdd, Refresh, Reply, Search} from '@material-ui/icons'
 import * as uuid from "uuid";
 
-import {onEnter, onValueEventRun} from '../../../utils/event'
+import {compose, onEnter, onEscape, onValueEventRun} from '../../../utils/event'
 import {CrateServiceContext} from "../../../contexts/crateService";
 import {SearchServiceContext} from '../../../contexts/searchService'
 import {TrackContext} from '../../../contexts/track'
@@ -111,7 +111,7 @@ const CrateAdmin = ({scrollToTrack}) => {
         <Grid container spacing={2} direction="column" alignItems="stretch" className={styles.Crate}>
             <Grid item xs={12}>
                 <Box display="flex" alignItems='center'>
-                    <Box flexGrow={1}><TextField id="search-string" label="Search" variant='filled' fullWidth={true} value={searchString} onChange={onValueEventRun(setSearchString)} onKeyPress={onEnter(handleSearchTerms, true)}/></Box>
+                    <Box flexGrow={1}><TextField id="search-string" label="Search" variant='filled' fullWidth={true} value={searchString} onChange={onValueEventRun(setSearchString)} onKeyUp={compose(onEscape(event => setSearchString("")), onEnter(handleSearchTerms, true))}/></Box>
                     <Box paddingLeft="16px"><Button onClick={() => {}} variant="contained" startIcon={<Search/>}>Search</Button></Box>
                 </Box>
             </Grid>
