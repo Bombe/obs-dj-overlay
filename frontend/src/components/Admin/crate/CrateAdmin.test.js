@@ -195,7 +195,7 @@ describe('The Crate Admin', () => {
         expect(screen.getByLabelText(/search/i).value).to.be.empty
     })
 
-    it('should reload the crate if entry is pressed in an empty search field after the search', async () => {
+    it('should reload the crate if enter is pressed in an empty search field after the search', async () => {
         const crateService = prepareCrateService([
             {artist: 'ABC', title: 'def', cover: ''}, {artist: 'DEF', title: 'ghi', cover: ''}, {artist: 'GHI', title: 'jkl', cover: ''}
         ])
