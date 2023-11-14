@@ -195,7 +195,13 @@ describe('The Crate Admin', () => {
         expect(screen.getByLabelText(/search/i).value).to.be.empty
     })
 
-    it('should reload the crate if entry is pressed in an empty search field after the search', async () => {
+    it('should clear the search field when escape is pressed in non-empty input field', async () => {
+        render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>)
+        await user.type(screen.getByLabelText(/search/i), 'xyz{Escape}')
+        expect(screen.getByLabelText(/search/i).value).to.be.empty
+    })
+
+    it('should reload the crate if enter is pressed in an empty search field after the search', async () => {
         const crateService = prepareCrateService([
             {artist: 'ABC', title: 'def', cover: ''}, {artist: 'DEF', title: 'ghi', cover: ''}, {artist: 'GHI', title: 'jkl', cover: ''}
         ])
@@ -242,6 +248,21 @@ describe('The Crate Admin', () => {
         render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>)
         await user.type(screen.getByLabelText(/import/i), '[[{{"artist":"Artist","title":"Title","cover":"Cover"}]')
         await user.click(screen.getByRole('button', {name: /import/i}))
+        expect(screen.queryAllByTitle('record')).to.have.lengthOf(1)
+    })
+
+    it('should start the import when enter is pressed in the input field', async () => {
+        let importedTrack = []
+        const crateService = {
+            ...defaultCrateService,
+            getRecords: () => createRecordResponse(importedTrack),
+            importRecords: string => {
+                importedTrack = JSON.parse(string)
+                return defaultCrateService.importRecords()
+            },
+        }
+        render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await user.type(screen.getByLabelText(/import/i), '[[{{"artist":"Artist","title":"Title","cover":"Cover"}]{Enter}')
         expect(screen.queryAllByTitle('record')).to.have.lengthOf(1)
     })
 
