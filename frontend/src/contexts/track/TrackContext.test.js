@@ -51,6 +51,12 @@ describe('The Track Context', () => {
         expect(context.value().title).to.eql('Title')
     })
 
+    it('should handle several phrases in parentheses correctly', async () => {
+        render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
+        await act(async() => context.value().setTitle('Title (Words) (More Words)'))
+        expect(context.value().title).to.eql('Title (Words) (More Words)')
+    })
+
     it('should set the cover', async () => {
         render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
         await act(async () => context.value().setCover('cover-image'))
