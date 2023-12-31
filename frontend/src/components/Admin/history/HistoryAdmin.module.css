@@ -9,3 +9,11 @@
 .ExportDialog {
     padding: 1em;
 }
+
+.ResetButton.ResetButton { /* increase the specificity to override MuiButton’s styling. */
+    background-color: red;
+}
+
+.ResetButton.ResetButton:hover {
+    background-color: hsl(0, 100%, 46%);
+}
