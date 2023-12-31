@@ -59,7 +59,7 @@ const MessageAdmin = () => {
                     <Box display="flex" alignItems="center">
                         <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
                         <Box style={{paddingLeft: "16px"}}>
-                            <Button variant="contained" fullWidth={true} onClick={clearMessage} disabled={messageIsClear} startIcon={<Delete/>}>Clear</Button>
+                            <Button variant="contained" fullWidth={true} onClick={clearMessage} disabled={messageIsClear} startIcon={<Delete/>} className={styles.ResetButton}>Clear</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
                             <Button type="reset" variant="contained" fullWidth={true} onClick={restoreMessage} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>

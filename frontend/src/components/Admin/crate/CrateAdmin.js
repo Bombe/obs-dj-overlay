@@ -143,7 +143,7 @@ const CrateAdmin = ({scrollToTrack}) => {
                     <Box flexGrow={1}><TextField id="import-string" label="Import" variant='filled' fullWidth={true} value={importString} onChange={onValueEventRun(setImportString)} onKeyUp={onEnter(importFromInputField, true)}/></Box>
                     <Box paddingLeft="16px"><Button onClick={importFromInputField} variant="contained" startIcon={<PlaylistAdd/>}>Import</Button></Box>
                     <Box paddingLeft="16px"><Button onClick={reloadCrate} variant="contained" startIcon={<Refresh/>}>Reload</Button></Box>
-                    <Box paddingLeft="16px"><Button onClick={clearCrate} variant="contained" startIcon={<Delete/>}>Reset</Button></Box>
+                    <Box paddingLeft="16px"><Button onClick={clearCrate} variant="contained" startIcon={<Delete/>} className={styles.ResetButton}>Reset</Button></Box>
                 </Box>
             </Grid>
         </Grid>

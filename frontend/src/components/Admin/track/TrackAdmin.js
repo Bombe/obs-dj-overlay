@@ -126,7 +126,7 @@ const TrackAdmin = () => {
                             <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} startIcon={<Refresh/>}>Reload</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
-                            <Button type="reset" variant="contained" fullWidth={true} onClick={resetLastTrack} startIcon={<Delete/>}>Reset</Button>
+                            <Button type="reset" variant="contained" fullWidth={true} onClick={resetLastTrack} startIcon={<Delete/>} className={styles.ResetButton}>Reset</Button>
                         </Box>
                     </Box>
                 </Grid>
