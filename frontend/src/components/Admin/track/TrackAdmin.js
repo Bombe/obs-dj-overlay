@@ -1,5 +1,5 @@
 import {Delete, DoneAll, Edit, Refresh} from "@material-ui/icons"
-import React, {useContext, useEffect, useState} from "react"
+import React, {useCallback, useContext, useEffect, useState} from 'react'
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Radio from "@material-ui/core/Radio"
 import RadioGroup from "@material-ui/core/RadioGroup"
@@ -84,6 +84,8 @@ const TrackAdmin = () => {
         }
     }
 
+    const setUncleanedTrackTitle = useCallback(title => setTrackTitle(title, false), [setTrackTitle])
+
     useEffect(restoreTrackInfo, [overlayService, setTrackNumber, setTrackArtist, setTrackTitle, setTrackCover, setOriginalTrackNumber, setOriginalTrackArtist, setOriginalTrackTitle, setOriginalTrackCover])
 
     return (
@@ -107,7 +109,7 @@ const TrackAdmin = () => {
                                             onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true} error={trackArtist !== originalTrackArtist}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <SelectOnFocusTextField id="track-title-input" inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setTrackTitle)}
+                    <SelectOnFocusTextField id="track-title-input" inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setUncleanedTrackTitle)}
                                             onKeyPress={onEnter(focusTrackCover, true)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
                 </Grid>
                 <Grid item xs={12}>

@@ -115,4 +115,17 @@ describe('The Track Administration', () => {
         expect(screen.getByLabelText(/cover/i).value).to.eql('Cover')
     })
 
+    it('should disable cleaning when editing the title', async () => {
+        let receivedTitle
+        let receivedCleaningFlag
+        const setTitle = (title, cleaningFlag) => {
+            receivedTitle = title
+            receivedCleaningFlag = cleaningFlag
+        }
+        render(<WithTrack track={{setTitle}}><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
+        await user.type(screen.getByLabelText(/title/i), 'Title (')
+        expect(receivedTitle).to.be.eql('Title (')
+        expect(receivedCleaningFlag).to.be.eql(false)
+    })
+
 })
