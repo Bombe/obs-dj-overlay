@@ -33,21 +33,33 @@ describe('The Track Context', () => {
         expect(context.value().title).to.eql('Title')
     })
 
-    it('should combine a title and a mix name if given as two string parameters', async () => {
+    it('should clean the title if the cleanTitle flag is not given', async () => {
         render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
-        await act(async () => context.value().setTitle('Title', 'Test Mix'))
-        expect(context.value().title).to.eql('Title (Test Mix)')
+        await act(async () => context.value().setTitle('Title (Original Mix)'))
+        expect(context.value().title).to.eql('Title')
+    })
+
+    it('should clean the title if the cleanTitle flag is true', async () => {
+        render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
+        await act(async () => context.value().setTitle('Title (Original Mix)', true))
+        expect(context.value().title).to.eql('Title')
+    })
+
+    it('should not clean the title if the cleanTitle flag is false', async () => {
+        render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
+        await act(async () => context.value().setTitle('Title (Original Mix)', false))
+        expect(context.value().title).to.eql('Title (Original Mix)')
     })
 
     it('should not include original mixes in the title', async () => {
         render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
-        await act(async () => context.value().setTitle('Title', 'Original Mix'))
+        await act(async () => context.value().setTitle('Title (Original Mix)'))
         expect(context.value().title).to.eql('Title')
     })
 
     it('should not include extended mixes in the title', async () => {
         render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
-        await act(async () => context.value().setTitle('Title', 'Extended Mix'))
+        await act(async () => context.value().setTitle('Title (Extended Mix)'))
         expect(context.value().title).to.eql('Title')
     })
 

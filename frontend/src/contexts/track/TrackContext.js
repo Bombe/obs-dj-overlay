@@ -31,12 +31,8 @@ const WithTrack = props => {
         }
     }, [setArtistState])
 
-    const setTitle = useCallback((givenTitle, mixName) => {
-        let title = givenTitle
-        if (mixName !== undefined) {
-            title += ` (${mixName})`
-        }
-        setTitleState(cleanTitle(title))
+    const setTitle = useCallback((title, cleanTitleFlag = true) => {
+        setTitleState(cleanTitleFlag ? cleanTitle(title) : title)
     }, [setTitleState])
 
     const setCover = useCallback(cover => {
