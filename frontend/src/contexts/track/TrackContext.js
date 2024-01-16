@@ -10,9 +10,12 @@ const cleanMixName = mixName => {
     return mixName
 }
 
+const removeFeaturing = title =>
+    title.split(/ feat\./)[0]
+
 const cleanTitle = title => {
     const trackParts = title.split(/\)? \(|\)$/)
-    return trackParts.at(0) + trackParts.slice(1).map(cleanMixName).filter(n => n !== undefined).filter(n => n !== '').map(s => ` (${s})`).join('')
+    return removeFeaturing(trackParts.at(0)) + trackParts.slice(1).map(cleanMixName).filter(n => n !== undefined).filter(n => n !== '').map(s => ` (${s})`).join('')
 }
 
 const TrackContext = createContext(undefined)
