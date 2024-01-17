@@ -75,6 +75,12 @@ describe('The Track Context', () => {
         expect(context.value().title).to.eql('Title (More Words)')
     })
 
+    it('should remove “featuring” from track names when it is in parens', async () => {
+        render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
+        await act(async () => context.value().setTitle('Title (feat. Another Artist) (More Words)'))
+        expect(context.value().title).to.eql('Title (More Words)')
+    })
+
     it('should set the cover', async () => {
         render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
         await act(async () => context.value().setCover('cover-image'))
