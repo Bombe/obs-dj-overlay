@@ -1,13 +1,13 @@
 import {createContext, useCallback, useState} from 'react'
 
 const cleanMixName = mixName => {
-    if (mixName.toLowerCase() === 'original mix') {
-        return undefined
+    const words = mixName.split(/ +/)
+        .filter(word => !/^extended$/i.test(word))
+        .filter(word => !/^original$/i.test(word))
+    if ((words.length == 1) && /^(re)?mix$/i.test(words[0])) {
+        return '';
     }
-    if (mixName.toLowerCase() === 'extended mix') {
-        return undefined
-    }
-    return mixName
+    return words.join(' ')
 }
 
 const removeFeaturing = title =>
