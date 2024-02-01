@@ -90,7 +90,7 @@ describe('The Crate Admin', () => {
         ])
     })
 
-    it('should can search for multiple words', async () => {
+    it('can search for multiple words', async () => {
         const crateService = prepareCrateService([
             {artist: 'ABC', title: 'def', cover: ''}, {artist: 'DEF', title: 'ghi', cover: ''},
             {artist: 'GHI', title: 'jkl', cover: ''}, {artist: 'JKL', title: 'abc', cover: ''}
