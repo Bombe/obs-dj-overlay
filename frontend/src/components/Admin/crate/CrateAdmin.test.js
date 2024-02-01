@@ -90,6 +90,17 @@ describe('The Crate Admin', () => {
         ])
     })
 
+    it('should find tracks with question marks', async () => {
+        const crateService = prepareCrateService([
+            {artist: 'ABC', title: 'def?', cover: ''}, {artist: 'DEF', title: 'ghi', cover: ''},
+            {artist: 'GHI', title: 'jkl', cover: ''}, {artist: 'JKL', title: 'abc', cover: ''}
+        ])
+        render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await user.type(screen.getByLabelText(/search/i), '?')
+        const shownRecords = getDisplayedRecords().map(extractArtistAndTitle)
+        expect(shownRecords).to.be.deep.eql([{artist: 'ABC', title: 'def?'}])
+    })
+
     it('can search for multiple words', async () => {
         const crateService = prepareCrateService([
             {artist: 'ABC', title: 'def', cover: ''}, {artist: 'DEF', title: 'ghi', cover: ''},

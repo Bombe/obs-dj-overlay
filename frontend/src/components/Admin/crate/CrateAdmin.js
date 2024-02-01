@@ -75,8 +75,11 @@ const CrateAdmin = ({scrollToTrack}) => {
         reloadCrate()
     }, [reloadCrate])
 
+    // shamelessly stolen from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+    const escapeRegExp = string => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
     const entryMatchesSearchTerm = (entry, searchTerm) => {
-        const regExp = new RegExp(searchTerm, 'i')
+        const regExp = new RegExp(escapeRegExp(searchTerm), 'i')
         return entry.artist.match(regExp) || entry.title.match(regExp)
     }
 
