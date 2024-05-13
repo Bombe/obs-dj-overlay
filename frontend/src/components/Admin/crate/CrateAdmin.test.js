@@ -351,6 +351,17 @@ describe('The Crate Admin', () => {
         expect(calledSetters).to.deep.eql({artist: 'C', title: 'F', cover: 'B'})
     })
 
+    it('should clear the search field when a load button is clicked', async () => {
+        const crateService = prepareCrateService([
+            createRecord('C', 'F', 'B'), createRecord('B', 'E', 'C'), createRecord('F', 'A', 'D')
+        ])
+        await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>))
+        await user.type(screen.getByLabelText(/search/i), 'f')
+        const rows = getDisplayedRecords()
+        await user.click(within(rows.at(1)).getByRole('button', { title: /load/i }))
+        expect(screen.getByLabelText(/search/i).value).to.be.empty
+    })
+
     it('should call the provided scroll function when a load button is clicked', async () => {
         let scrollToTrackCalled = false
         const crateService = prepareCrateService([

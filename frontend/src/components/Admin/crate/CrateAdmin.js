@@ -69,7 +69,8 @@ const CrateAdmin = ({scrollToTrack}) => {
         setTitle(record.title)
         setCover(record.cover)
         scrollToTrack()
-    }, [setArtist, setTitle, setCover, scrollToTrack])
+        setSearchString('')
+    }, [setArtist, setTitle, setCover, setSearchString, scrollToTrack])
 
     useEffect(() => {
         reloadCrate()
@@ -100,7 +101,6 @@ const CrateAdmin = ({scrollToTrack}) => {
             reloadCrate()
         } else if (displayedCrateEntries.length === 1) {
             exportRowValues(displayedCrateEntries.at(0))
-            setSearchString('')
         } else if (displayedCrateEntries.length === 0) {
             searchService.search(searchString.split(/ +/))
                 .then(processSearchResults)
