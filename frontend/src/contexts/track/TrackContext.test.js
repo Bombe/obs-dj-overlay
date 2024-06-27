@@ -81,6 +81,12 @@ describe('The Track Context', () => {
         expect(context.value().title).to.eql('Title (Words) (More Words)')
     })
 
+    it('should handle phrases in square brackets the same as phrases in parens', async () => {
+        render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
+        await act(async() => context.value().setTitle('Title [Words] (More Words) [Extended Mix]'))
+        expect(context.value().title).to.eql('Title (Words) (More Words)')
+    })
+
     it('should remove “featuring” from track names', async () => {
         render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
         await act(async () => context.value().setTitle('Title feat. Another Artist (More Words)'))
