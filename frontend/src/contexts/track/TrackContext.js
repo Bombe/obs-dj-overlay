@@ -14,7 +14,7 @@ const removeFeaturing = title =>
     title.split(/(^| )feat\./)[0]
 
 const cleanTitle = title => {
-    const trackParts = title.split(/[\]\)]? [\[\(]|[\]\)]$/)
+    const trackParts = title.split(/[\])]? [[(]|[\])]$/)
     return removeFeaturing(trackParts.at(0)) + trackParts.slice(1).map(removeFeaturing).map(cleanMixName).filter(n => n !== undefined).filter(n => n !== '').map(s => ` (${s})`).join('')
 }
 
