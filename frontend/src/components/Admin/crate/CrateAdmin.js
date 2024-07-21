@@ -76,15 +76,15 @@ const CrateAdmin = ({scrollToTrack}) => {
         reloadCrate()
     }, [reloadCrate])
 
-    // shamelessly stolen from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-    const escapeRegExp = string => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-    const entryMatchesSearchTerm = (entry, searchTerm) => {
-        const regExp = new RegExp(escapeRegExp(searchTerm), 'i')
-        return entry.artist.match(regExp) || entry.title.match(regExp)
-    }
-
     const getEntriesMatchingSearchTerms = useCallback(searchTerms => {
+        // shamelessly stolen from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+        const escapeRegExp = string => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+        const entryMatchesSearchTerm = (entry, searchTerm) => {
+            const regExp = new RegExp(escapeRegExp(searchTerm), 'i')
+            return entry.artist.match(regExp) || entry.title.match(regExp)
+        }
+
         return searchTerms.split(/ +/).reduce((matches, term) => matches.filter(entry => entryMatchesSearchTerm(entry, term)), crateEntries)
     }, [crateEntries])
 
