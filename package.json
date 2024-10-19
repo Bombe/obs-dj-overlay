@@ -14,7 +14,7 @@
     "mocha": "^10.2.0"
   },
   "dependencies": {
-    "express": "^4.19.2",
+    "express": "^4.21.1",
     "jsdom": "^22.1.0",
     "node-fetch": "^2.7.0",
     "uuid": "^8.3.0"
