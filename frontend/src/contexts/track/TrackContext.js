@@ -4,7 +4,7 @@ const cleanMixName = mixName => {
     const words = mixName.split(/ +/)
         .filter(word => !/^extended$/i.test(word))
         .filter(word => !/^original$/i.test(word))
-    if ((words.length === 1) && /^(re)?mix$/i.test(words[0])) {
+    if ((words.length === 1) && /^((re)?mix|version)$/i.test(words[0])) {
         return '';
     }
     return words.join(' ')

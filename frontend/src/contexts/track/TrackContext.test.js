@@ -57,6 +57,12 @@ describe('The Track Context', () => {
         expect(context.value().title).to.eql('Title')
     })
 
+    it('should not include original version in the title', async () => {
+        render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
+        await act(async () => context.value().setTitle('Title (Original Version)'))
+        expect(context.value().title).to.eql('Title')
+    })
+
     it('should not include original mixes in the title when that’s combined with an artist', async () => {
         render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
         await act(async () => context.value().setTitle('Title (Awesome Artist Original Remix)'))
@@ -66,6 +72,12 @@ describe('The Track Context', () => {
     it('should not include extended mixes in the title', async () => {
         render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
         await act(async () => context.value().setTitle('Title (Extended Mix)'))
+        expect(context.value().title).to.eql('Title')
+    })
+
+    it('should not include extended version in the title', async () => {
+        render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
+        await act(async () => context.value().setTitle('Title (Extended Version)'))
         expect(context.value().title).to.eql('Title')
     })
 
