@@ -35,7 +35,8 @@ const WithTrack = props => {
     }, [setArtistState])
 
     const cleanArtist = useCallback(() => {
-        const splitArtists = artistState.split(',').map(artist => artist.trim())
+        const cleanQuotes = string => string.replaceAll('\'', '’').replaceAll('"', '”')
+        const splitArtists = artistState.split(',').map(artist => artist.trim()).map(cleanQuotes)
         splitArtists.sort((a, b) => a.localeCompare(b))
         setArtistState(splitArtists.join(', '))
     }, [artistState, setArtistState])

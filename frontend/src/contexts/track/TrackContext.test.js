@@ -124,6 +124,20 @@ describe('The Track Context', () => {
         expect(context.value().artist).to.eql('Artist A, Artist B, Artist C')
     })
 
+    it('should replace single apostrophes with typographic quotes when cleaning artists', async () => {
+        render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
+        await act(async () => context.value().setArtist('Artist O\'Artist'))
+        await act(async () => context.value().cleanArtist())
+        expect(context.value().artist).to.eql('Artist O’Artist')
+    })
+
+    it('should replace single double quotes with typographic quotes when cleaning artists', async () => {
+        render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
+        await act(async () => context.value().setArtist('The 4" Artist'))
+        await act(async () => context.value().cleanArtist())
+        expect(context.value().artist).to.eql('The 4” Artist')
+    })
+
     it('should provide the given track state', () => {
         render(<WithTrack track={{track: 'foo'}}><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
         expect(context.value()).to.be.eql({track: 'foo'})
