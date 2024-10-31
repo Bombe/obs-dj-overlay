@@ -34,6 +34,12 @@ const WithTrack = props => {
         }
     }, [setArtistState])
 
+    const cleanArtist = useCallback(() => {
+        const splitArtists = artistState.split(',').map(artist => artist.trim())
+        splitArtists.sort((a, b) => a.localeCompare(b))
+        setArtistState(splitArtists.join(', '))
+    }, [artistState, setArtistState])
+
     const setTitle = useCallback((title, cleanTitleFlag = true) => {
         setTitleState(cleanTitleFlag ? cleanTitle(title) : title)
     }, [setTitleState])
@@ -42,7 +48,7 @@ const WithTrack = props => {
         setCoverState(cover)
     }, [setCoverState])
 
-    return <TrackContext.Provider value={props.track || {artist: artistState, title: titleState, cover: coverState, setArtist, setTitle, setCover}}>{props.children}</TrackContext.Provider>
+    return <TrackContext.Provider value={props.track || {artist: artistState, title: titleState, cover: coverState, setArtist, setTitle, setCover, cleanArtist}}>{props.children}</TrackContext.Provider>
 }
 
 export {TrackContext, WithTrack}

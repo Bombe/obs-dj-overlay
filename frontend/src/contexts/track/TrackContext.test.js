@@ -117,6 +117,13 @@ describe('The Track Context', () => {
         expect(context.value().cover).to.eql('cover-image')
     })
 
+    it('should sort artists alphabetically when cleaning artists', async () => {
+        render(<WithTrack><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
+        await act(async () => context.value().setArtist('Artist C, Artist A, Artist B'))
+        await act(async () => context.value().cleanArtist())
+        expect(context.value().artist).to.eql('Artist A, Artist B, Artist C')
+    })
+
     it('should provide the given track state', () => {
         render(<WithTrack track={{track: 'foo'}}><TrackContext.Consumer>{context.capture}</TrackContext.Consumer></WithTrack>)
         expect(context.value()).to.be.eql({track: 'foo'})
