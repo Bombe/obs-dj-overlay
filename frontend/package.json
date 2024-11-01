@@ -34,7 +34,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -53,6 +52,7 @@
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.22.11",
     "chai": "^4.3.8",
+    "http-proxy-middleware": "^3.0.3",
     "msw": "^1.2.5"
   },
   "msw": {
