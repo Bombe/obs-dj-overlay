@@ -18,6 +18,8 @@ const cleanTitle = title => {
     return removeFeaturing(trackParts.at(0)) + trackParts.slice(1).map(removeFeaturing).map(cleanMixName).filter(n => n !== undefined).filter(n => n !== '').map(s => ` (${s})`).join('')
 }
 
+const cleanQuotes = string => string.replaceAll('\'', '’').replaceAll('"', '”')
+
 const TrackContext = createContext(undefined)
 
 const WithTrack = props => {
@@ -33,8 +35,6 @@ const WithTrack = props => {
             setArtistState(givenArtist)
         }
     }, [setArtistState])
-
-    const cleanQuotes = string => string.replaceAll('\'', '’').replaceAll('"', '”')
 
     const cleanArtist = useCallback(() => {
         const splitArtists = artistState.split(',').map(artist => artist.trim()).map(cleanQuotes)
