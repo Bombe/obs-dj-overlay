@@ -18,7 +18,7 @@ import styles from './TrackAdmin.module.css'
 const TrackAdmin = () => {
 
     const overlayService = useContext(OverlayServiceContext)
-    const { artist: trackArtist, title: trackTitle, cover: trackCover, setArtist: setTrackArtist, setTitle: setTrackTitle, setCover: setTrackCover, cleanTitle } = useContext(TrackContext)
+    const { artist: trackArtist, title: trackTitle, cover: trackCover, setArtist: setTrackArtist, setTitle: setTrackTitle, setCover: setTrackCover, cleanArtist, cleanTitle } = useContext(TrackContext)
     const [trackNumber, setTrackNumber] = useState(0)
     const [direction, setDirection] = useState("+1")
     const [originalTrackNumber, setOriginalTrackNumber] = useState(0)
@@ -105,8 +105,13 @@ const TrackAdmin = () => {
                     </RadioGroup>
                 </Grid>
                 <Grid item xs={12}>
-                    <SelectOnFocusTextField id="track-artist-input" inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist} onChange={onValueEventRun(setTrackArtist)}
+                    <Box display="flex">
+                        <SelectOnFocusTextField id="track-artist-input" inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist} onChange={onValueEventRun(setTrackArtist)}
                                             onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true} error={trackArtist !== originalTrackArtist}/>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button variant="contained" aria-label="Clean Artist" onClick={cleanArtist} style={{height: "100%"}}><Healing/></Button>
+                        </Box>
+                    </Box>
                 </Grid>
                 <Grid item xs={12}>
                     <Box display="flex" alignItems="stretch">

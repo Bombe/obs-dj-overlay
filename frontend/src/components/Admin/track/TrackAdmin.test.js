@@ -36,7 +36,7 @@ describe('The Track Administration', () => {
         }
         render(<WithTrack><WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         await user.type(screen.getByLabelText(/number/i), '12')
-        await user.type(screen.getByLabelText(/artist/i), 'Artist')
+        await user.type(screen.getByLabelText(/artist of the track/i), 'Artist')
         await user.type(screen.getByLabelText(/title of the track/i), 'Title')
         await user.type(screen.getByLabelText(/cover/i), 'Cover')
         await user.click(screen.getByRole('button', {name: /update/i}))
@@ -81,12 +81,12 @@ describe('The Track Administration', () => {
         }
         render(<WithTrack><WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         await user.type(screen.getByLabelText(/number/i), '12')
-        await user.type(screen.getByLabelText(/artist/i), 'artist')
+        await user.type(screen.getByLabelText(/artist of the track/i), 'artist')
         await user.type(screen.getByLabelText(/title of the track/i), 'title')
         await user.type(screen.getByLabelText(/cover/i), 'cover')
         await user.click(screen.getByText(/reset/i))
         expect(screen.getByLabelText(/number/i).value).to.eql('0')
-        expect(screen.getByLabelText(/artist/i).value).to.eql('')
+        expect(screen.getByLabelText(/artist of the track/i).value).to.eql('')
         expect(screen.getByLabelText(/title of the track/i).value).to.eql('')
         expect(screen.getByLabelText(/cover/i).value).to.eql('')
     })
@@ -106,7 +106,7 @@ describe('The Track Administration', () => {
         }
         render(<WithTrack><WithOverlayService overlayService={capturingOverlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
         await user.type(screen.getByLabelText(/number/i), '12')
-        await user.type(screen.getByLabelText(/artist/i), 'Artist')
+        await user.type(screen.getByLabelText(/artist of the track/i), 'Artist')
         await user.type(screen.getByLabelText(/title of the track/i), 'Title')
         await user.type(screen.getByLabelText(/cover/i), 'Cover')
         await user.click(screen.getByRole('button', {name: /amend/i}))
@@ -115,7 +115,7 @@ describe('The Track Administration', () => {
 
     it('should use the values from the track context', () => {
         render(<WithTrack track={{artist: 'Artist', title: 'Title', cover: 'Cover'}}><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
-        expect(screen.getByLabelText(/artist/i).value).to.eql('Artist')
+        expect(screen.getByLabelText(/artist of the track/i).value).to.eql('Artist')
         expect(screen.getByLabelText(/title of the track/i).value).to.eql('Title')
         expect(screen.getByLabelText(/cover/i).value).to.eql('Cover')
     })
@@ -141,6 +141,16 @@ describe('The Track Administration', () => {
         await user.type(screen.getByLabelText(/title of the track/i), 'Title O\' Track')
         await user.click(screen.getByLabelText(/clean title/i))
         expect(cleanTitleCalled).to.eql(true)
+    })
+
+    it('should clean the artist when the “clean artist” button is pressed', async () => {
+        let cleanArtistCalled
+        const cleanArtist = () => cleanArtistCalled = true
+        const setArtist = () => {}
+        render(<WithTrack track={{ artist: 'Artist', title: 'Title', cover: 'Cover', setArtist, cleanArtist }}><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
+        await user.type(screen.getByLabelText(/artist of the track/i), 'Artist O\' Track')
+        await user.click(screen.getByLabelText(/clean artist/i))
+        expect(cleanArtistCalled).to.eql(true)
     })
 
 })
