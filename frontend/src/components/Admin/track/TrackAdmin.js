@@ -1,24 +1,24 @@
-import {Delete, DoneAll, Edit, Refresh} from "@material-ui/icons"
-import React, {useCallback, useContext, useEffect, useState} from 'react'
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Radio from "@material-ui/core/Radio"
-import RadioGroup from "@material-ui/core/RadioGroup"
-import Box from "@material-ui/core/Box"
-import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
+import { Delete, DoneAll, Edit, Healing, Refresh } from '@material-ui/icons'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 
-import {blur, onEnter, onValueEventRun} from "../../../utils/event"
-import useFocus from "../../../utils/focus"
-import {OverlayServiceContext} from "../../../contexts/overlayService"
-import {TrackContext} from '../../../contexts/track'
-import SelectOnFocusTextField from "../../selectOnFocus"
+import { blur, onEnter, onValueEventRun } from '../../../utils/event'
+import useFocus from '../../../utils/focus'
+import { OverlayServiceContext } from '../../../contexts/overlayService'
+import { TrackContext } from '../../../contexts/track'
+import SelectOnFocusTextField from '../../selectOnFocus'
 
-import styles from "./TrackAdmin.module.css"
+import styles from './TrackAdmin.module.css'
 
 const TrackAdmin = () => {
 
     const overlayService = useContext(OverlayServiceContext)
-    const { artist: trackArtist, title: trackTitle, cover: trackCover, setArtist: setTrackArtist, setTitle: setTrackTitle, setCover: setTrackCover } = useContext(TrackContext)
+    const { artist: trackArtist, title: trackTitle, cover: trackCover, setArtist: setTrackArtist, setTitle: setTrackTitle, setCover: setTrackCover, cleanTitle } = useContext(TrackContext)
     const [trackNumber, setTrackNumber] = useState(0)
     const [direction, setDirection] = useState("+1")
     const [originalTrackNumber, setOriginalTrackNumber] = useState(0)
@@ -109,8 +109,13 @@ const TrackAdmin = () => {
                                             onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true} error={trackArtist !== originalTrackArtist}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <SelectOnFocusTextField id="track-title-input" inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setUncleanedTrackTitle)}
-                                            onKeyPress={onEnter(focusTrackCover, true)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
+                    <Box display="flex" alignItems="stretch">
+                        <SelectOnFocusTextField id="track-title-input" inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setUncleanedTrackTitle)}
+                                                onKeyPress={onEnter(focusTrackCover, true)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button variant="contained" aria-label="Clean Title" onClick={cleanTitle} style={{height: "100%"}}><Healing/></Button>
+                        </Box>
+                    </Box>
                 </Grid>
                 <Grid item xs={12}>
                     <SelectOnFocusTextField id="track-cover-input" inputRef={trackCoverField} label="The cover of the track" variant="filled" value={trackCover} onChange={onValueEventRun(setTrackCover)}
