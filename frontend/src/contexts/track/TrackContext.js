@@ -34,8 +34,9 @@ const WithTrack = props => {
         }
     }, [setArtistState])
 
+    const cleanQuotes = string => string.replaceAll('\'', '’').replaceAll('"', '”')
+
     const cleanArtist = useCallback(() => {
-        const cleanQuotes = string => string.replaceAll('\'', '’').replaceAll('"', '”')
         const splitArtists = artistState.split(',').map(artist => artist.trim()).map(cleanQuotes)
         splitArtists.sort((a, b) => a.localeCompare(b))
         setArtistState(splitArtists.join(', '))
@@ -45,11 +46,16 @@ const WithTrack = props => {
         setTitleState(cleanTitleFlag ? cleanTitle(title) : title)
     }, [setTitleState])
 
+    const cleanTitleExternal = useCallback(() => {
+        const cleanedTitle = cleanQuotes(titleState)
+        setTitleState(cleanedTitle)
+    }, [titleState, setTitleState])
+
     const setCover = useCallback(cover => {
         setCoverState(cover)
     }, [setCoverState])
 
-    return <TrackContext.Provider value={props.track || {artist: artistState, title: titleState, cover: coverState, setArtist, setTitle, setCover, cleanArtist}}>{props.children}</TrackContext.Provider>
+    return <TrackContext.Provider value={props.track || {artist: artistState, title: titleState, cover: coverState, setArtist, setTitle, setCover, cleanArtist, cleanTitle: cleanTitleExternal}}>{props.children}</TrackContext.Provider>
 }
 
 export {TrackContext, WithTrack}
