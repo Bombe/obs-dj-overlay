@@ -114,7 +114,7 @@ const TrackAdmin = () => {
                     </Box>
                 </Grid>
                 <Grid item xs={12}>
-                    <Box display="flex" alignItems="stretch">
+                    <Box display="flex">
                         <SelectOnFocusTextField id="track-title-input" inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setUncleanedTrackTitle)}
                                                 onKeyPress={onEnter(focusTrackCover, true)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
                         <Box style={{paddingLeft: "16px"}}>
