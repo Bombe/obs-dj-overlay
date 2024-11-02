@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
 import { expect } from 'chai'
 
@@ -16,14 +16,14 @@ describe('The Track Administration', () => {
         }),
     }
 
-    it('has a text field labeled "number of the track"', () => {
+    it('has a text field labeled "number of the track"', async () => {
         render(<WithTrack><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
-        expect(screen.getByLabelText(/the number of the track/i)).to.exist
+        await waitFor(() => expect(screen.getByLabelText(/the number of the track/i)).to.exist)
     })
 
-    it('should have a field labeled "cover"', () => {
+    it('should have a field labeled "cover"', async () => {
         render(<WithTrack><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
-        expect(screen.getByLabelText(/cover/i)).to.exist
+        await waitFor(() => expect(screen.getByLabelText(/cover/i)).to.exist)
     })
 
     it('should send all entered data to overlay service', async () => {
@@ -43,9 +43,9 @@ describe('The Track Administration', () => {
         expect(capturedValues).to.deep.eql({number: 12, artist: 'Artist', title: 'Title', cover: 'Cover'})
     })
 
-    it('should have a button labeled “reset”', () => {
+    it('should have a button labeled “reset”', async () => {
         render(<WithTrack><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
-        expect(screen.getByText(/reset/i)).to.exist
+        await waitFor(() => expect(screen.getByText(/reset/i)).to.exist)
     })
 
     it('should reset the last track when reset button is pressed', async () => {
@@ -91,9 +91,9 @@ describe('The Track Administration', () => {
         expect(screen.getByLabelText(/cover/i).value).to.eql('')
     })
 
-    it('should have a button labeled “amend”', () => {
+    it('should have a button labeled “amend”', async () => {
         render(<WithTrack><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
-        expect(screen.getByText(/amend/i)).to.exist
+        await waitFor(() => expect(screen.getByText(/amend/i)).to.exist)
     })
 
     it('should send all entered data to overlay service when amending', async () => {
@@ -113,11 +113,13 @@ describe('The Track Administration', () => {
         expect(capturedValues).to.deep.eql({number: 12, artist: 'Artist', title: 'Title', cover: 'Cover'})
     })
 
-    it('should use the values from the track context', () => {
-        render(<WithTrack track={{artist: 'Artist', title: 'Title', cover: 'Cover'}}><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
-        expect(screen.getByLabelText(/artist of the track/i).value).to.eql('Artist')
-        expect(screen.getByLabelText(/title of the track/i).value).to.eql('Title')
-        expect(screen.getByLabelText(/cover/i).value).to.eql('Cover')
+    it('should use the values from the track context', async () => {
+        render(<WithTrack track={{ artist: 'Artist', title: 'Title', cover: 'Cover' }}><WithOverlayService overlayService={overlayService}><TrackAdmin/></WithOverlayService></WithTrack>)
+        await waitFor(() => {
+            expect(screen.getByLabelText(/artist of the track/i).value).to.eql('Artist')
+            expect(screen.getByLabelText(/title of the track/i).value).to.eql('Title')
+            expect(screen.getByLabelText(/cover/i).value).to.eql('Cover')
+        })
     })
 
     it('should disable cleaning when editing the title', async () => {
