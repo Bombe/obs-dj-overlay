@@ -1,24 +1,19 @@
-import {Delete, DoneAll, Edit, Refresh} from "@material-ui/icons"
-import React, {useCallback, useContext, useEffect, useState} from 'react'
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Radio from "@material-ui/core/Radio"
-import RadioGroup from "@material-ui/core/RadioGroup"
-import Box from "@material-ui/core/Box"
-import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { Box, Button, FormControlLabel, Grid, Radio, RadioGroup } from '@mui/material'
+import { Delete, DoneAll, Edit, Healing, Refresh } from '@mui/icons-material'
 
-import {blur, onEnter, onValueEventRun} from "../../../utils/event"
-import useFocus from "../../../utils/focus"
-import {OverlayServiceContext} from "../../../contexts/overlayService"
-import {TrackContext} from '../../../contexts/track'
-import SelectOnFocusTextField from "../../selectOnFocus"
+import { blur, onEnter, onValueEventRun } from '../../../utils/event'
+import useFocus from '../../../utils/focus'
+import { OverlayServiceContext } from '../../../contexts/overlayService'
+import { TrackContext } from '../../../contexts/track'
+import SelectOnFocusTextField from '../../selectOnFocus'
 
-import styles from "./TrackAdmin.module.css"
+import styles from './TrackAdmin.module.css'
 
 const TrackAdmin = () => {
 
     const overlayService = useContext(OverlayServiceContext)
-    const { artist: trackArtist, title: trackTitle, cover: trackCover, setArtist: setTrackArtist, setTitle: setTrackTitle, setCover: setTrackCover } = useContext(TrackContext)
+    const { artist: trackArtist, title: trackTitle, cover: trackCover, setArtist: setTrackArtist, setTitle: setTrackTitle, setCover: setTrackCover, cleanArtist, cleanTitle } = useContext(TrackContext)
     const [trackNumber, setTrackNumber] = useState(0)
     const [direction, setDirection] = useState("+1")
     const [originalTrackNumber, setOriginalTrackNumber] = useState(0)
@@ -105,12 +100,22 @@ const TrackAdmin = () => {
                     </RadioGroup>
                 </Grid>
                 <Grid item xs={12}>
-                    <SelectOnFocusTextField id="track-artist-input" inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist} onChange={onValueEventRun(setTrackArtist)}
+                    <Box display="flex">
+                        <SelectOnFocusTextField id="track-artist-input" inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist} onChange={onValueEventRun(setTrackArtist)}
                                             onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true} error={trackArtist !== originalTrackArtist}/>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button color="greys" variant="contained" aria-label="Clean Artist" onClick={cleanArtist} style={{height: "100%"}}><Healing/></Button>
+                        </Box>
+                    </Box>
                 </Grid>
                 <Grid item xs={12}>
-                    <SelectOnFocusTextField id="track-title-input" inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setUncleanedTrackTitle)}
-                                            onKeyPress={onEnter(focusTrackCover, true)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
+                    <Box display="flex">
+                        <SelectOnFocusTextField id="track-title-input" inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setUncleanedTrackTitle)}
+                                                onKeyPress={onEnter(focusTrackCover, true)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button color="greys" variant="contained" aria-label="Clean Title" onClick={cleanTitle} style={{height: "100%"}}><Healing/></Button>
+                        </Box>
+                    </Box>
                 </Grid>
                 <Grid item xs={12}>
                     <SelectOnFocusTextField id="track-cover-input" inputRef={trackCoverField} label="The cover of the track" variant="filled" value={trackCover} onChange={onValueEventRun(setTrackCover)}
@@ -119,16 +124,16 @@ const TrackAdmin = () => {
                 <Grid item xs={12}>
                     <Box display="flex" alignItems="center">
                         <Box flexGrow={1}>
-                            <Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button>
+                            <Button type="submit" color="greys" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
-                            <Button type="reset" variant="contained" fullWidth={true} onClick={amendCurrentTrack} startIcon={<Edit/>}>Amend</Button>
+                            <Button type="reset" color="greys" variant="contained" fullWidth={true} onClick={amendCurrentTrack} startIcon={<Edit/>}>Amend</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
-                            <Button type="reset" variant="contained" fullWidth={true} onClick={restoreTrackInfo} startIcon={<Refresh/>}>Reload</Button>
+                            <Button type="reset" color="greys" variant="contained" fullWidth={true} onClick={restoreTrackInfo} startIcon={<Refresh/>}>Reload</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
-                            <Button type="reset" variant="contained" fullWidth={true} onClick={resetLastTrack} startIcon={<Delete/>} className={styles.ResetButton}>Reset</Button>
+                            <Button type="reset" color="greys" variant="contained" fullWidth={true} onClick={resetLastTrack} startIcon={<Delete/>} className={styles.ResetButton}>Reset</Button>
                         </Box>
                     </Box>
                 </Grid>

@@ -1,29 +1,8 @@
-.Toolbar {
-    min-height: auto !important;
-    padding-top: 0.75ex;
-    padding-bottom: 0.75ex;
-}
-
-.Traktor {
-    flex-grow: 1;
-}
-
-.Online {
-    color: darkgreen;
-}
-
-.Online:before {
-    content: '✔ ︎'
-}
-
-.Offline {
-    color: red;
-}
-
-.Offline:before {
-    content: '✘ '
-}
-
 .Version {
-    font-size: 80%;
+    flex-grow: 1;
+    text-align: right;
+}
+
+.VersionInformation {
+    padding-left: 1ex;
 }

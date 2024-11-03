@@ -1,15 +1,6 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react'
-import Grid from "@material-ui/core/Grid";
-import TableContainer from "@material-ui/core/TableContainer";
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import {TableBody, TableRow} from "@material-ui/core";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import TableCell from "@material-ui/core/TableCell";
-import TextField from "@material-ui/core/TextField";
-import {Delete, PlaylistAdd, Refresh, Reply, Search} from '@material-ui/icons'
+import { Box, Button, Grid, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material'
+import { Delete, PlaylistAdd, Refresh, Reply, Search } from '@mui/icons-material'
 import * as uuid from "uuid";
 
 import {compose, onEnter, onEscape, onValueEventRun} from '../../../utils/event'
@@ -115,7 +106,7 @@ const CrateAdmin = ({scrollToTrack}) => {
             <Grid item xs={12}>
                 <Box display="flex" alignItems='center'>
                     <Box flexGrow={1}><TextField id="search-string" label="Search" variant='filled' fullWidth={true} value={searchString} onChange={onValueEventRun(setSearchString)} onKeyUp={compose(onEscape(event => setSearchString("")), onEnter(handleSearchTerms, true))}/></Box>
-                    <Box paddingLeft="16px"><Button onClick={() => {}} variant="contained" startIcon={<Search/>}>Search</Button></Box>
+                    <Box paddingLeft="16px"><Button onClick={() => {}} color="greys" variant="contained" startIcon={<Search/>}>Search</Button></Box>
                 </Box>
             </Grid>
             <Grid item xs={12}>   <TableContainer className={styles.Table}>
@@ -144,9 +135,9 @@ const CrateAdmin = ({scrollToTrack}) => {
             <Grid item xs={12}>
                 <Box display="flex" alignItems='center'>
                     <Box flexGrow={1}><TextField id="import-string" label="Import" variant='filled' fullWidth={true} value={importString} onChange={onValueEventRun(setImportString)} onKeyUp={onEnter(importFromInputField, true)}/></Box>
-                    <Box paddingLeft="16px"><Button onClick={importFromInputField} variant="contained" startIcon={<PlaylistAdd/>}>Import</Button></Box>
-                    <Box paddingLeft="16px"><Button onClick={reloadCrate} variant="contained" startIcon={<Refresh/>}>Reload</Button></Box>
-                    <Box paddingLeft="16px"><Button onClick={clearCrate} variant="contained" startIcon={<Delete/>} className={styles.ResetButton}>Reset</Button></Box>
+                    <Box paddingLeft="16px"><Button onClick={importFromInputField} color="greys" variant="contained" startIcon={<PlaylistAdd/>}>Import</Button></Box>
+                    <Box paddingLeft="16px"><Button onClick={reloadCrate} color="greys" variant="contained" startIcon={<Refresh/>}>Reload</Button></Box>
+                    <Box paddingLeft="16px"><Button onClick={clearCrate} color="greys" variant="contained" startIcon={<Delete/>} className={styles.ResetButton}>Reset</Button></Box>
                 </Box>
             </Grid>
         </Grid>

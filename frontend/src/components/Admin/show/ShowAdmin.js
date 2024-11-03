@@ -1,8 +1,6 @@
-import Box from "@material-ui/core/Box"
-import {DoneAll, Undo} from "@material-ui/icons"
 import React, {useContext, useEffect, useState} from 'react'
-import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
+import { Box, Button, Grid } from '@mui/material'
+import { DoneAll, Undo } from '@mui/icons-material'
 
 import {blur, onEnter, onValueEventRun} from "../../../utils/event"
 import useFocus from "../../../utils/focus"
@@ -69,9 +67,9 @@ const ShowAdmin = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <Box display="flex" alignItems="center">
-                        <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
+                        <Box flexGrow={1}><Button type="submit" color="greys" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
                         <Box style={{paddingLeft: "16px"}}>
-                            <Button type="reset" variant="contained" fullWidth={true} onClick={restoreShowInfo} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>
+                            <Button type="reset" color="greys" variant="contained" fullWidth={true} onClick={restoreShowInfo} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>
                         </Box>
                     </Box>
                 </Grid>

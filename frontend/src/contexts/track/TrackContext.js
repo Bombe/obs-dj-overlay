@@ -18,6 +18,8 @@ const cleanTitle = title => {
     return removeFeaturing(trackParts.at(0)) + trackParts.slice(1).map(removeFeaturing).map(cleanMixName).filter(n => n !== undefined).filter(n => n !== '').map(s => ` (${s})`).join('')
 }
 
+const cleanQuotes = string => string.replaceAll('\'', '’').replaceAll('"', '”')
+
 const TrackContext = createContext(undefined)
 
 const WithTrack = props => {
@@ -34,15 +36,26 @@ const WithTrack = props => {
         }
     }, [setArtistState])
 
+    const cleanArtist = useCallback(() => {
+        const splitArtists = artistState.split(',').map(artist => artist.trim()).map(cleanQuotes)
+        splitArtists.sort((a, b) => a.localeCompare(b))
+        setArtistState(splitArtists.join(', '))
+    }, [artistState, setArtistState])
+
     const setTitle = useCallback((title, cleanTitleFlag = true) => {
         setTitleState(cleanTitleFlag ? cleanTitle(title) : title)
     }, [setTitleState])
+
+    const cleanTitleExternal = useCallback(() => {
+        const cleanedTitle = cleanQuotes(titleState)
+        setTitleState(cleanedTitle)
+    }, [titleState, setTitleState])
 
     const setCover = useCallback(cover => {
         setCoverState(cover)
     }, [setCoverState])
 
-    return <TrackContext.Provider value={props.track || {artist: artistState, title: titleState, cover: coverState, setArtist, setTitle, setCover}}>{props.children}</TrackContext.Provider>
+    return <TrackContext.Provider value={props.track || {artist: artistState, title: titleState, cover: coverState, setArtist, setTitle, setCover, cleanArtist, cleanTitle: cleanTitleExternal}}>{props.children}</TrackContext.Provider>
 }
 
 export {TrackContext, WithTrack}

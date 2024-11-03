@@ -1,17 +1,15 @@
-import {useContext, useEffect, useState} from 'react'
-import Box from "@material-ui/core/Box"
-import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
-import {Delete, DoneAll, Undo} from "@material-ui/icons"
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { Box, Button, Grid } from '@mui/material'
+import { Delete, DoneAll, Refresh } from '@mui/icons-material'
 
-import {OverlayServiceContext} from '../../../contexts/overlayService'
-import {onValueEventRun} from "../../../utils/event"
-import SelectOnFocusTextField from "../../selectOnFocus"
+import { OverlayServiceContext } from '../../../contexts/overlayService'
+import { onValueEventRun } from '../../../utils/event'
+import SelectOnFocusTextField from '../../selectOnFocus'
 
-import styles from "./MessageAdmin.module.css"
+import styles from './MessageAdmin.module.css'
 
 const textAreaEnterHandler = (action) => (event) => {
-    if (event.key === "Enter" && event.ctrlKey) {
+    if (event.key === 'Enter' && event.ctrlKey) {
         action(event)
         event.target.select()
     }
@@ -20,49 +18,47 @@ const textAreaEnterHandler = (action) => (event) => {
 const MessageAdmin = () => {
 
     const overlayService = useContext(OverlayServiceContext)
-    const [message, setMessage] = useState("")
-    const [originalMessage, setOriginalMessage] = useState("")
+    const [message, setMessage] = useState('')
 
     const sendMessage = (event) => {
         overlayService.setMessage(message)
-        setOriginalMessage(message)
         event.preventDefault()
     }
 
-    const clearMessage = () => {
-        setMessage("")
-    }
+    const reloadMessage = useCallback(() => {
+        overlayService.get()
+            .then(overlayInfo => {
+                setMessage(overlayInfo.message)
+            })
+    }, [overlayService, setMessage])
 
-    const restoreMessage = () => {
-        setMessage(originalMessage)
-    }
-
-    const messageIsClear = (message === "")
-    const modificationsPresent = (message !== originalMessage)
+    const resetMessage = useCallback(() => {
+        setMessage('')
+        overlayService.setMessage('')
+    }, [setMessage, overlayService])
 
     useEffect(() => {
         overlayService.get()
             .then(overlayInfo => {
                 setMessage(overlayInfo.message)
-                setOriginalMessage(overlayInfo.message)
             })
-    }, [overlayService, setMessage, setOriginalMessage])
+    }, [overlayService, setMessage])
 
     return (
         <form onSubmit={sendMessage} className={styles.Message}>
             <Grid container spacing={2} direction="column" alignItems="stretch">
                 <Grid item xs={12}>
                     <SelectOnFocusTextField id={'message'} label="A message to display" variant="filled" value={message} onChange={onValueEventRun(setMessage)} onKeyUp={textAreaEnterHandler(sendMessage)}
-                                            fullWidth={true} multiline={true} minRows={6} helperText="Press Ctrl-Enter to submit!" error={message !== originalMessage}/>
+                                            fullWidth={true} multiline={true} minRows={6} helperText="Press Ctrl-Enter to submit!"/>
                 </Grid>
                 <Grid item xs={12}>
                     <Box display="flex" alignItems="center">
-                        <Box flexGrow={1}><Button type="submit" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
-                        <Box style={{paddingLeft: "16px"}}>
-                            <Button variant="contained" fullWidth={true} onClick={clearMessage} disabled={messageIsClear} startIcon={<Delete/>} className={styles.ResetButton}>Clear</Button>
+                        <Box flexGrow={1}><Button type="submit" color="greys" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
+                        <Box style={{ paddingLeft: '16px' }}>
+                            <Button type="reset" color="greys" variant="contained" fullWidth={true} onClick={reloadMessage} startIcon={<Refresh/>}>Reload</Button>
                         </Box>
-                        <Box style={{paddingLeft: "16px"}}>
-                            <Button type="reset" variant="contained" fullWidth={true} onClick={restoreMessage} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>
+                        <Box style={{ paddingLeft: '16px' }}>
+                            <Button type="reset" color="greys" variant="contained" fullWidth={true} onClick={resetMessage} startIcon={<Delete/>} className={styles.ResetButton}>Reset</Button>
                         </Box>
                     </Box>
                 </Grid>
@@ -72,4 +68,4 @@ const MessageAdmin = () => {
 
 }
 
-export {MessageAdmin}
+export { MessageAdmin }

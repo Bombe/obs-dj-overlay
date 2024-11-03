@@ -1,5 +1,5 @@
 import React from 'react'
-import {act, render, screen} from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import {within} from '@testing-library/dom'
 import {expect} from 'chai'
 
@@ -42,8 +42,8 @@ describe('The Crate Admin', () => {
 
     it('should load the crate from the service', async () => {
         const crateService = prepareCrateService([createRecord('Artist', 'Title', 'Cover')])
-        await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        expect(screen.queryAllByTitle('record')).to.have.lengthOf(1)
+        render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await waitFor(() => expect(screen.queryAllByTitle('record')).to.have.lengthOf(1))
     })
 
     it('should generate IDs for the entries in the crate', async () => {
@@ -51,9 +51,11 @@ describe('The Crate Admin', () => {
             createRecord('C', 'F', ''), createRecord('B', 'E', ''), createRecord('F', 'A', ''),
             createRecord('C', 'E', ''), createRecord('B', 'X'), createRecord('A', 'F', '')
         ])
-        await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        const ids = new Set(getDisplayedRecords().map(extractDataId))
-        expect(ids).to.have.lengthOf(6)
+        render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await waitFor(() => {
+            const ids = new Set(getDisplayedRecords().map(extractDataId))
+            expect(ids).to.have.lengthOf(6)
+        })
     })
 
     it('should sort entries in the crate', async () => {
@@ -61,20 +63,22 @@ describe('The Crate Admin', () => {
             createRecord('C', 'F', ''), createRecord('B', 'E', ''), createRecord('F', 'A', ''),
             createRecord('C', 'E', ''), createRecord('B', 'X'), createRecord('A', 'F', '')
         ])
-        await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        expect(getDisplayedRecords().map(extractArtistAndTitle)).to.be.deep.eql([
-            {artist: 'A', title: 'F'}, {artist: 'B', title: 'E'}, {artist: 'B', title: 'X'}, {artist: 'C', title: 'E'}, {artist: 'C', title: 'F'}, {artist: 'F', title: 'A'}
-        ])
+        render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await waitFor(() => {
+            expect(getDisplayedRecords().map(extractArtistAndTitle)).to.be.deep.eql([
+                {artist: 'A', title: 'F'}, {artist: 'B', title: 'E'}, {artist: 'B', title: 'X'}, {artist: 'C', title: 'E'}, {artist: 'C', title: 'F'}, {artist: 'F', title: 'A'}
+            ])
+        })
     })
 
     it('should have a button labeled "search"', async () => {
-        await act(async () => render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        expect(screen.getByRole('button', {name: /search/i})).to.exist
+        render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await waitFor(() => expect(screen.getByRole('button', {name: /search/i})).to.exist)
     })
 
     it('should have an input field for the search', async () => {
-        await act(async () => render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        expect(screen.getByLabelText(/search/i)).to.exist
+        render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await waitFor(() => expect(screen.getByLabelText(/search/i)).to.exist)
     })
 
     it('should show only tracks that contain "a" in the title or the artist if an "a" is entered into the search field', async () => {
@@ -134,7 +138,7 @@ describe('The Crate Admin', () => {
         const setArtist = artist => calledSetters = {...calledSetters, artist}
         const setTitle = title => calledSetters = {...calledSetters, title}
         const setCover = cover => calledSetters = {...calledSetters, cover}
-        render(<WithTrack track={{setArtist, setTitle, setCover}}><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>)
+        render(<WithTrack track={{ setArtist, setTitle, setCover }}><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>)
         await user.type(screen.getByLabelText(/search/i), 'a{Enter}')
         expect(calledSetters).to.be.deep.eql({artist: 'ABC', title: 'def', cover: ''})
     })
@@ -147,7 +151,7 @@ describe('The Crate Admin', () => {
         const setArtist = artist => setterCalled = true
         const setTitle = title => setterCalled = true
         const setCover = cover => setterCalled = true
-        render(<WithTrack track={{setArtist, setTitle, setCover}}><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>)
+        render(<WithTrack track={{ setArtist, setTitle, setCover }}><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>)
         await user.type(screen.getByLabelText(/search/i), 'a{Enter}')
         expect(setterCalled).to.be.false
     })
@@ -224,18 +228,20 @@ describe('The Crate Admin', () => {
         render(<WithTrack><WithCrateService crateService={crateService}><WithSearchService searchService={searchService}><CrateAdmin scrollToTrack={doNothing}/></WithSearchService></WithCrateService></WithTrack>)
         await user.type(screen.getByLabelText(/search/i), 'xyz{Enter}')
         await user.type(screen.getByLabelText(/search/i), '{Enter}')
-        const shownRecords = getDisplayedRecords().map(extractArtistAndTitle)
-        expect(shownRecords).to.be.deep.eql([{artist: 'ABC', title: 'def'}, {artist: 'DEF', title: 'ghi'}, {artist: 'GHI', title: 'jkl'}])
+        await waitFor(() => {
+            const shownRecords = getDisplayedRecords().map(extractArtistAndTitle)
+            expect(shownRecords).to.be.deep.eql([{ artist: 'ABC', title: 'def' }, { artist: 'DEF', title: 'ghi' }, { artist: 'GHI', title: 'jkl' }])
+        })
     })
 
     it('should have a button labeled "import"', async () => {
-        await act(async () => render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        expect(screen.getByRole('button', {name: /import/i})).to.exist
+        render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await waitFor(() => expect(screen.getByRole('button', {name: /import/i})).to.exist)
     })
 
     it('should have an input field for the import', async () => {
-        await act(async () => render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        expect(screen.getByLabelText(/import/i)).to.exist
+        render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await waitFor(() => expect(screen.getByLabelText(/import/i)).to.exist)
     })
 
     it('should not import anything if input field does not contain anything', async () => {
@@ -293,8 +299,8 @@ describe('The Crate Admin', () => {
     })
 
     it('should have a button to reset the crates', async () => {
-        await act(async () => render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        expect(screen.getByRole('button', {name: /reset/i})).to.exist
+        render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await waitFor(() => expect(screen.getByRole('button', {name: /reset/i})).to.exist)
     })
 
     it('should tell the crate service to reset the crate when reset button is pressed', async () => {
@@ -311,8 +317,8 @@ describe('The Crate Admin', () => {
     })
 
     it('should have a reload button', async () => {
-        await act(async () => render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        expect(screen.getByRole('button', {name: /reload/i})).to.exist
+        render(<WithTrack><WithCrateService crateService={defaultCrateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await waitFor(() => expect(screen.getByRole('button', {name: /reload/i})).to.exist)
     })
 
     it('should reload the crate if the reload button is pressed', async () => {
@@ -330,11 +336,13 @@ describe('The Crate Admin', () => {
         const crateService = prepareCrateService([
             createRecord('C', 'F', ''), createRecord('B', 'E', ''), createRecord('F', 'A', '')
         ])
-        await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>))
-        const rows = getDisplayedRecords()
-        expect(within(rows.at(0)).getByRole('button', {title: /load/i})).to.exist
-        expect(within(rows.at(1)).getByRole('button', {title: /load/i})).to.exist
-        expect(within(rows.at(2)).getByRole('button', {title: /load/i})).to.exist
+        render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin/></WithCrateService></WithTrack>)
+        await waitFor(() => {
+            const rows = getDisplayedRecords()
+            expect(within(rows.at(0)).getByRole('button', {title: /load/i})).to.exist
+            expect(within(rows.at(1)).getByRole('button', {title: /load/i})).to.exist
+            expect(within(rows.at(2)).getByRole('button', {title: /load/i})).to.exist
+        })
     })
 
     it('should update the track context when a load button is clicked', async () => {
@@ -345,8 +353,12 @@ describe('The Crate Admin', () => {
         const crateService = prepareCrateService([
             createRecord('C', 'F', 'B'), createRecord('B', 'E', 'C'), createRecord('F', 'A', 'D')
         ])
-        await act(async () => render(<WithTrack track={{setArtist, setTitle, setCover}}><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>))
-        const rows = getDisplayedRecords()
+        render(<WithTrack track={{ setArtist, setTitle, setCover }}><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>)
+        const rows = await waitFor(() => {
+            const rows = getDisplayedRecords()
+            expect(rows).to.have.lengthOf(3)
+            return rows
+        })
         await user.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
         expect(calledSetters).to.deep.eql({artist: 'C', title: 'F', cover: 'B'})
     })
@@ -355,7 +367,7 @@ describe('The Crate Admin', () => {
         const crateService = prepareCrateService([
             createRecord('C', 'F', 'B'), createRecord('B', 'E', 'C'), createRecord('F', 'A', 'D')
         ])
-        await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>))
+        render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={doNothing}/></WithCrateService></WithTrack>)
         await user.type(screen.getByLabelText(/search/i), 'f')
         const rows = getDisplayedRecords()
         await user.click(within(rows.at(1)).getByRole('button', { title: /load/i }))
@@ -367,8 +379,12 @@ describe('The Crate Admin', () => {
         const crateService = prepareCrateService([
             createRecord('C', 'F', 'B'), createRecord('B', 'E', 'C'), createRecord('F', 'A', 'D')
         ])
-        await act(async () => render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={() => scrollToTrackCalled = true}/></WithCrateService></WithTrack>))
-        const rows = getDisplayedRecords()
+        render(<WithTrack><WithCrateService crateService={crateService}><CrateAdmin scrollToTrack={() => scrollToTrackCalled = true}/></WithCrateService></WithTrack>)
+        const rows = await waitFor(() => {
+            const rows = getDisplayedRecords()
+            expect(rows).to.have.lengthOf(3)
+            return rows
+        })
         await user.click(within(rows.at(1)).getByRole('button', {title: /load/i}))
         expect(scrollToTrackCalled).to.be.true
     })

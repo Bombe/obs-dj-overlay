@@ -1,4 +1,4 @@
-import {act, render, screen} from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import {expect} from 'chai'
 
 import {doNothing, user} from '../../../utils/tests'
@@ -13,36 +13,38 @@ describe('The Show Admin', () => {
     }
 
     it('should have an input field for the title', async () => {
-        await act(async () => render(<WithOverlayService overlayService={defaultOverlayService}><ShowAdmin/></WithOverlayService>))
-        expect(screen.getByLabelText(/\btitle/i)).to.exist
+        render(<WithOverlayService overlayService={defaultOverlayService}><ShowAdmin/></WithOverlayService>)
+        await waitFor(() => expect(screen.getByLabelText(/\btitle/i)).to.exist)
     })
 
     it('should have an input field for the subtitle', async () => {
-        await act(async () => render(<WithOverlayService overlayService={defaultOverlayService}><ShowAdmin/></WithOverlayService>))
-        expect(screen.getByLabelText(/subtitle/i)).to.exist
+        render(<WithOverlayService overlayService={defaultOverlayService}><ShowAdmin/></WithOverlayService>)
+        await waitFor(() => expect(screen.getByLabelText(/subtitle/i)).to.exist)
     })
 
     it('should have an input field for an announcement', async () => {
-        await act(async () => render(<WithOverlayService overlayService={defaultOverlayService}><ShowAdmin/></WithOverlayService>))
-        expect(screen.getByLabelText(/announcement/i)).to.exist
+        render(<WithOverlayService overlayService={defaultOverlayService}><ShowAdmin/></WithOverlayService>)
+        await waitFor(() => expect(screen.getByLabelText(/announcement/i)).to.exist)
     })
 
     it('should have an update button', async () => {
-        await act(async () => render(<WithOverlayService overlayService={defaultOverlayService}><ShowAdmin/></WithOverlayService>))
-        expect(screen.getByRole('button', {name: /update/i})).to.exist
+        render(<WithOverlayService overlayService={defaultOverlayService}><ShowAdmin/></WithOverlayService>)
+        await waitFor(() => expect(screen.getByRole('button', {name: /update/i})).to.exist)
     })
 
     it('should have a restore button', async () => {
-        await act(async () => render(<WithOverlayService overlayService={defaultOverlayService}><ShowAdmin/></WithOverlayService>))
-        expect(screen.getByRole('button', {name: /restore/i})).to.exist
+        render(<WithOverlayService overlayService={defaultOverlayService}><ShowAdmin/></WithOverlayService>)
+        await waitFor(() => expect(screen.getByRole('button', {name: /restore/i})).to.exist)
     })
 
     it('should show data from the overlay service', async () => {
         const overlayService = {...defaultOverlayService, get: () => Promise.resolve({show: {title: 'Title', subtitle: 'Subtitle', nextShow: 'Next Show'}})}
-        await act(async () => render(<WithOverlayService overlayService={overlayService}><ShowAdmin/></WithOverlayService>))
-        expect(screen.getByLabelText(/\btitle/i).value).to.eql('Title')
-        expect(screen.getByLabelText(/subtitle/i).value).to.eql('Subtitle')
-        expect(screen.getByLabelText(/announcement/i).value).to.eql('Next Show')
+        render(<WithOverlayService overlayService={overlayService}><ShowAdmin/></WithOverlayService>)
+        await waitFor(() => {
+            expect(screen.getByLabelText(/\btitle/i).value).to.eql('Title')
+            expect(screen.getByLabelText(/subtitle/i).value).to.eql('Subtitle')
+            expect(screen.getByLabelText(/announcement/i).value).to.eql('Next Show')
+        })
     })
 
     it('should send the data to the overlay service when the update button is pressed', async () => {
