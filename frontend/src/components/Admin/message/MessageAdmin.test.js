@@ -70,4 +70,12 @@ describe('The Message Section', () => {
         expect(screen.getByLabelText(/message/i).value).to.eql('Initial Message')
     })
 
+    it('should have a reset button that clears the message', async () => {
+        let currentMessage = "initial message"
+        const overlayService = { ...defaultOverlayService, get: () => Promise.resolve({ message: currentMessage }), setMessage: message => currentMessage = message }
+        render(<WithOverlayService overlayService={overlayService}><MessageAdmin/></WithOverlayService>)
+        await user.click(screen.getByRole('button', { name: /reset/i }))
+        expect(currentMessage).to.eql('')
+    })
+
 })

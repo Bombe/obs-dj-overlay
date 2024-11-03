@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { Box, Button, Grid } from '@mui/material'
 import { Delete, DoneAll, Undo } from '@mui/icons-material'
 
@@ -35,6 +35,12 @@ const MessageAdmin = () => {
         setMessage(originalMessage)
     }
 
+    const resetMessage = useCallback(() => {
+        setMessage('')
+        setOriginalMessage('')
+        overlayService.setMessage('')
+    }, [setMessage, setOriginalMessage, overlayService])
+
     const messageIsClear = (message === "")
     const modificationsPresent = (message !== originalMessage)
 
@@ -61,6 +67,9 @@ const MessageAdmin = () => {
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
                             <Button type="reset" color="greys" variant="contained" fullWidth={true} onClick={restoreMessage} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>
+                        </Box>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button type="reset" color="greys" variant="contained" fullWidth={true} onClick={resetMessage} startIcon={<Delete/>} className={styles.ResetButton}>Reset</Button>
                         </Box>
                     </Box>
                 </Grid>
