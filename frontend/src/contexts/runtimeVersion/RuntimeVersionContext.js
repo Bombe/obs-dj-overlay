@@ -14,7 +14,7 @@ const WithRuntimeVersion = (props) => {
             runtimeService.get()
                 .then(setRuntimeVersion)
         }
-    }, [props.runtimeVersion, runtimeService]);
+    }, [props.runtimeVersion, runtimeService, setRuntimeVersion]);
 
     return <RuntimeVersionContext.Provider value={runtimeVersion}>
         {props.children}
