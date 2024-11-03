@@ -1,8 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import WithSourcesService from '../../contexts/sourcesService'
-import WithSources from '../../contexts/sources'
 import AdminSection from './main'
 import {MessageAdmin} from './message/MessageAdmin'
 import {ShowAdmin} from './show/ShowAdmin'
@@ -31,16 +29,12 @@ const Admin = () => {
                         <Route path='embed/twitch' element={<TwitchAdmin/>}/>
                         <Route exact path='' element={
                             <WithHistoryService>
-                                <WithSourcesService>
-                                    <WithSources>
-                                        <AdminSection/>
-                                        <WithRuntimeService>
-                                            <WithRuntimeVersion>
-                                                <Status/>
-                                            </WithRuntimeVersion>
-                                        </WithRuntimeService>
-                                    </WithSources>
-                                </WithSourcesService>
+                                <AdminSection/>
+                                <WithRuntimeService>
+                                    <WithRuntimeVersion>
+                                        <Status/>
+                                    </WithRuntimeVersion>
+                                </WithRuntimeService>
                             </WithHistoryService>
                         }/>
                     </Routes>
