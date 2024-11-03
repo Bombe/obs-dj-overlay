@@ -11,7 +11,7 @@ const theme = createTheme(defaultTheme, {
     palette: {
         greys: defaultTheme.palette.augmentColor({
             color: {
-                main: '#e0e0e0'
+                main: '#f0f0f0'
             },
             name: 'greys'
         })
