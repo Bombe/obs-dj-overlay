@@ -1,37 +1,21 @@
-import React, {useContext, useEffect, useState} from "react"
+import React, { useContext } from 'react'
 import { AppBar, Toolbar } from '@mui/material'
 
-import {SourcesContext} from "../../../contexts/sources"
-import RuntimeService from "../../../services/runtime"
+import { RuntimeVersionContext } from '../../../contexts/runtimeVersion'
 
-import styles from "./Status.module.css"
+import styles from './Status.module.css'
 
 const Status = () => {
 
-    const sources = useContext(SourcesContext)
-    const [hidden, setHidden] = useState(!sources.loaded)
-    const [runtimeVersion, setRuntimeVersion] = useState()
-
-    const traktorConnected = sources.traktor && (sources.traktor.length !== 0)
-
-    useEffect(() => {
-        if (sources.loaded) {
-            setHidden(false)
-        }
-    }, [sources])
-
-    useEffect(() => {
-        RuntimeService.get()
-            .then(runtime => setRuntimeVersion(runtime.version))
-    }, [])
+    const runtimeVersion = useContext(RuntimeVersionContext)
 
     return (
         <>
-            <AppBar position="fixed" color="greys" style={{visibility: hidden ? "hidden" : "inherit"}} sx={{top: 'auto', bottom: 0}}>
-                <Toolbar variant="dense" className={styles.Toolbar}>
-                    <div className={[styles.Traktor, traktorConnected ? styles.Online : styles.Offline].join(" ")}>Traktor</div>
+            <AppBar position="fixed" color="greys" sx={{ top: 'auto', bottom: 0 }}>
+                <Toolbar variant="dense">
                     {runtimeVersion && <div className={styles.Version}>
-                        <a href="https://github.com/Bombe/obs-dj-overlay">obs-dj-overlay</a> <VersionInformation hash={runtimeVersion.hash} name={runtimeVersion.name}/>
+                        <a href="https://github.com/Bombe/obs-dj-overlay">obs-dj-overlay</a>
+                        <VersionInformation hash={runtimeVersion.hash} name={runtimeVersion.name}/>
                     </div>}
                 </Toolbar>
             </AppBar>
@@ -41,8 +25,6 @@ const Status = () => {
 
 }
 
-const VersionInformation = ({hash, name}) => {
-    return <span title={hash}>{name}</span>
-}
+const VersionInformation = ({ hash, name }) => <span title={hash} className={styles.VersionInformation}>{name}</span>
 
-export {Status as default}
+export { Status as default }
