@@ -14,6 +14,8 @@ import WithOverlayService from '../../contexts/overlayService'
 import WithCrateService from '../../contexts/crateService'
 import WithHistoryService from '../../contexts/historyService'
 import WithTrack from '../../contexts/track'
+import WithRuntimeVersion from '../../contexts/runtimeVersion'
+import WithRuntimeService from '../../contexts/runtimeService'
 
 const Admin = () => {
 
@@ -32,7 +34,11 @@ const Admin = () => {
                                 <WithSourcesService>
                                     <WithSources>
                                         <AdminSection/>
-                                        <Status/>
+                                        <WithRuntimeService>
+                                            <WithRuntimeVersion>
+                                                <Status/>
+                                            </WithRuntimeVersion>
+                                        </WithRuntimeService>
                                     </WithSources>
                                 </WithSourcesService>
                             </WithHistoryService>
