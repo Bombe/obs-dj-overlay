@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { Box, Button, Grid } from '@mui/material'
-import { Delete, DoneAll, Undo } from '@mui/icons-material'
+import { Delete, DoneAll, Refresh, Undo } from '@mui/icons-material'
 
 import {OverlayServiceContext} from '../../../contexts/overlayService'
 import {onValueEventRun} from "../../../utils/event"
@@ -35,6 +35,14 @@ const MessageAdmin = () => {
         setMessage(originalMessage)
     }
 
+    const reloadMessage = useCallback(() => {
+        overlayService.get()
+            .then(overlayInfo => {
+                setMessage(overlayInfo.message)
+                setOriginalMessage(overlayInfo.message)
+            })
+    }, [overlayService, setMessage, setOriginalMessage])
+
     const resetMessage = useCallback(() => {
         setMessage('')
         setOriginalMessage('')
@@ -67,6 +75,9 @@ const MessageAdmin = () => {
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
                             <Button type="reset" color="greys" variant="contained" fullWidth={true} onClick={restoreMessage} disabled={!modificationsPresent} startIcon={<Undo/>}>Restore</Button>
+                        </Box>
+                        <Box style={{paddingLeft: "16px"}}>
+                            <Button type="reset" color="greys" variant="contained" fullWidth={true} onClick={reloadMessage} startIcon={<Refresh/>}>Reload</Button>
                         </Box>
                         <Box style={{paddingLeft: "16px"}}>
                             <Button type="reset" color="greys" variant="contained" fullWidth={true} onClick={resetMessage} startIcon={<Delete/>} className={styles.ResetButton}>Reset</Button>

@@ -78,4 +78,14 @@ describe('The Message Section', () => {
         expect(currentMessage).to.eql('')
     })
 
+    it('should have a reload button that loads the message from the server', async () => {
+        let currentMessage = 'Initial Message'
+        const overlayService = { ...defaultOverlayService, get: () => Promise.resolve({ message: currentMessage }), setMessage: message => currentMessage = message }
+        render(<WithOverlayService overlayService={overlayService}><MessageAdmin/></WithOverlayService>)
+        await waitFor(() => expect(screen.getByLabelText(/message/i).value).to.be.eql('Initial Message'))
+        currentMessage = 'New Message'
+        await user.click(screen.getByRole('button', { name: /reload/i }))
+        expect(screen.getByLabelText(/message/i).value).to.be.eql('New Message')
+    })
+
 })
