@@ -1,13 +1,6 @@
 import React, {useEffect, useState} from "react"
-import Button from "@material-ui/core/Button"
-import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogTitle from "@material-ui/core/DialogTitle"
-import FormLabel from "@material-ui/core/FormLabel"
-import Grid from "@material-ui/core/Grid"
-import TextField from "@material-ui/core/TextField"
-import {Assignment} from "@material-ui/icons"
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormLabel, Grid, TextField } from '@mui/material'
+import { Assignment } from '@mui/icons-material'
 import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component"
 
 import playlist from "../../../utils/playlist"
@@ -61,10 +54,10 @@ const ExportDialog = ({open, setOpened, historyEntries}) => {
             </DialogContent>
             <DialogActions>
                 <CopyToClipboard text={htmlTablePlaylist}>
-                    <Button disabled={from === undefined || to === undefined} startIcon={<Assignment/>}>HTML Table</Button>
+                    <Button disabled={from === undefined || to === undefined} color="greys" startIcon={<Assignment/>}>HTML Table</Button>
                 </CopyToClipboard>
                 <CopyToClipboard text={mixcloudPlaylist}>
-                    <Button disabled={from === undefined || to === undefined} startIcon={<Assignment/>}>Mixcloud</Button>
+                    <Button disabled={from === undefined || to === undefined} color="greys" startIcon={<Assignment/>}>Mixcloud</Button>
                 </CopyToClipboard>
             </DialogActions>
         </Dialog>

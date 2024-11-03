@@ -1,14 +1,7 @@
-import {TableBody, TableRow} from "@material-ui/core"
-import TableContainer from "@material-ui/core/TableContainer"
-import moment from "moment"
 import React, {useContext, useEffect, useState} from 'react'
-import Box from "@material-ui/core/Box"
-import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
-import Table from "@material-ui/core/Table"
-import TableCell from "@material-ui/core/TableCell"
-import TableHead from "@material-ui/core/TableHead"
-import {Delete, Refresh, Save} from "@material-ui/icons"
+import moment from "moment"
+import { Box, Button, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Delete, Refresh, Save } from '@mui/icons-material'
 
 import {HistoryServiceContext} from '../../../contexts/historyService'
 import {ExportDialog} from "./"
@@ -66,10 +59,10 @@ const HistoryAdmin = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <Box display="flex">
-                        <Box flexGrow={1}><Button onClick={showExportDialog} disabled={historyEntries.length === 0} variant="contained" fullWidth={true} startIcon={<Save/>}>Export</Button></Box>
+                        <Box flexGrow={1}><Button onClick={showExportDialog} disabled={historyEntries.length === 0} color="greys" variant="contained" fullWidth={true} startIcon={<Save/>}>Export</Button></Box>
                         <ExportDialog open={exportDialogOpen} setOpened={setExportDialogOpen} historyEntries={historyEntries}/>
-                        <Box flexGrow={1} style={{paddingLeft: "16px"}}><Button onClick={loadHistoryEntries} variant="contained" fullWidth={true} startIcon={<Refresh/>}>Reload</Button></Box>
-                        <Box flexGrow={1} style={{paddingLeft: "16px"}}><Button onClick={resetHistory} variant="contained" fullWidth={true} startIcon={<Delete/>} className={styles.ResetButton}>Reset</Button></Box>
+                        <Box flexGrow={1} style={{paddingLeft: "16px"}}><Button onClick={loadHistoryEntries} color="greys" variant="contained" fullWidth={true} startIcon={<Refresh/>}>Reload</Button></Box>
+                        <Box flexGrow={1} style={{paddingLeft: "16px"}}><Button onClick={resetHistory} color="greys" variant="contained" fullWidth={true} startIcon={<Delete/>} className={styles.ResetButton}>Reset</Button></Box>
                     </Box>
                 </Grid>
             </Grid>

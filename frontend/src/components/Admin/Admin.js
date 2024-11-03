@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter as Router, Route, Switch, useRouteMatch} from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 import WithSourcesService from '../../contexts/sourcesService'
 import WithSources from '../../contexts/sources'
@@ -17,41 +17,27 @@ import WithTrack from '../../contexts/track'
 
 const Admin = () => {
 
-    const {path} = useRouteMatch()
-
     return (
         <WithOverlayService>
             <WithCrateService>
                 <WithTrack>
-                    <Router>
-                        <Switch>
-                            <Route path={`${path}/embed/show`}>
-                                <ShowAdmin/>
-                            </Route>
-                            <Route path={`${path}/embed/track`}>
-                                <TrackAdmin/>
-                            </Route>
-                            <Route path={`${path}/embed/crate`}>
-                                <CrateAdmin/>
-                            </Route>
-                            <Route path={`${path}/embed/message`}>
-                                <MessageAdmin/>
-                            </Route>
-                            <Route path={`${path}/embed/twitch`}>
-                                <TwitchAdmin/>
-                            </Route>
-                            <Route exact path={path}>
-                                <WithHistoryService>
-                                    <WithSourcesService>
-                                        <WithSources>
-                                            <AdminSection/>
-                                            <Status/>
-                                        </WithSources>
-                                    </WithSourcesService>
-                                </WithHistoryService>
-                            </Route>
-                        </Switch>
-                    </Router>
+                    <Routes>
+                        <Route path='embed/show' element={<ShowAdmin/>}/>
+                        <Route path='embed/track' element={<TrackAdmin/>}/>
+                        <Route path='embed/crate' element={<CrateAdmin/>}/>
+                        <Route path='embed/message' element={<MessageAdmin/>}/>
+                        <Route path='embed/twitch' element={<TwitchAdmin/>}/>
+                        <Route exact path='' element={
+                            <WithHistoryService>
+                                <WithSourcesService>
+                                    <WithSources>
+                                        <AdminSection/>
+                                        <Status/>
+                                    </WithSources>
+                                </WithSourcesService>
+                            </WithHistoryService>
+                        }/>
+                    </Routes>
                 </WithTrack>
             </WithCrateService>
         </WithOverlayService>

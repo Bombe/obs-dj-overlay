@@ -1,27 +1,13 @@
 import React, {useContext, useEffect, useState} from "react"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import {makeStyles} from "@material-ui/core/styles"
+import { AppBar, Toolbar } from '@mui/material'
 
 import {SourcesContext} from "../../../contexts/sources"
 import RuntimeService from "../../../services/runtime"
 
 import styles from "./Status.module.css"
 
-const createAppBarStyles = makeStyles({
-    colorPrimary: {
-        color: "inherit",
-        backgroundColor: "inherit"
-    },
-    positionFixed: {
-        top: "auto",
-        bottom: 0
-    }
-})
-
 const Status = () => {
 
-    const appBarStyle = createAppBarStyles()
     const sources = useContext(SourcesContext)
     const [hidden, setHidden] = useState(!sources.loaded)
     const [runtimeVersion, setRuntimeVersion] = useState()
@@ -41,7 +27,7 @@ const Status = () => {
 
     return (
         <>
-            <AppBar position="fixed" classes={appBarStyle} style={{visibility: hidden ? "hidden" : "inherit"}}>
+            <AppBar position="fixed" color="greys" style={{visibility: hidden ? "hidden" : "inherit"}} sx={{top: 'auto', bottom: 0}}>
                 <Toolbar variant="dense" className={styles.Toolbar}>
                     <div className={[styles.Traktor, traktorConnected ? styles.Online : styles.Offline].join(" ")}>Traktor</div>
                     {runtimeVersion && <div className={styles.Version}>

@@ -1,10 +1,6 @@
 import React, {useState} from "react"
-import Card from "@material-ui/core/Card"
-import CardContent from "@material-ui/core/CardContent"
-import CardHeader from "@material-ui/core/CardHeader"
-import Collapse from "@material-ui/core/Collapse"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import IconButton from "@material-ui/core/IconButton"
+import { Card, CardContent, CardHeader, Collapse, IconButton } from '@mui/material'
+import { ExpandMore } from '@mui/icons-material'
 
 import styles from "./Group.module.css"
 
@@ -20,7 +16,7 @@ const Group = (props) => {
         <Card className={styles.Group}>
             <CardHeader className={styles.GroupTitle} title={props.title} action={
                 <IconButton onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more" className={expanded ? styles.expandOpen : ""}>
-                    <ExpandMoreIcon/>
+                    <ExpandMore/>
                 </IconButton>
             }/>
             <CardContent className={styles.GroupContent}>

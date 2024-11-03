@@ -1,7 +1,5 @@
 import React, {useRef} from "react"
-import Box from "@material-ui/core/Box"
-import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
+import { Box, Grid, Typography } from '@mui/material'
 import Group from "../../Group"
 
 import MessageAdmin from "../message"
