@@ -34,7 +34,7 @@ const TwitchInfo = () => {
         const intervalHandler = setInterval(getUserInfo, 30000);
         getUserInfo();
         return () => clearInterval(intervalHandler);
-    }, [overlayInfo.twitchUserName]);
+    }, [overlayInfo, setViewers, setMaxViewers]);
 
     return (viewers != null) ? <div className="TwitchViewerCount">
         <div className="Icon"><TwitchGlitchPurple size="1em"/></div>
