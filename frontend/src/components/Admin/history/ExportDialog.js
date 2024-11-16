@@ -45,9 +45,9 @@ const ExportDialog = ({open, setOpened, historyEntries}) => {
         <Dialog open={open} onClose={closeDialog}>
             <DialogTitle>Select time to export</DialogTitle>
             <DialogContent>
-                <Grid container direction="column">
+                <Grid container direction="column" spacing={2}>
                     <Grid paddingTop={1}><TextField label="From" onChange={changeFrom} type="datetime-local" value={from} slotProps={{ htmlInput: { step: 1, role: 'textbox' }, inputLabel: { shrink: true } }}/></Grid>
-                    <Grid paddingTop={2}><TextField label="To" onChange={changeTo} type="datetime-local" value={to} slotProps={{ htmlInput: { step: 1, role: 'textbox' }, inputLabel: { shrink: true } }}/></Grid>
+                    <Grid><TextField label="To" onChange={changeTo} type="datetime-local" value={to} slotProps={{ htmlInput: { step: 1, role: 'textbox' }, inputLabel: { shrink: true } }}/></Grid>
                 </Grid>
             </DialogContent>
             <DialogActions className={styles.ExportDialog}>
