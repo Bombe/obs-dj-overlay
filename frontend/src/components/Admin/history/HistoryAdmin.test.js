@@ -39,10 +39,10 @@ describe('The History Admin', () => {
 
     it('should reset the entries when the reset button is pressed', async () => {
         let resetCalled = false
-        const testHistoryService = {...emptyHistoryService, reset: () => resetCalled = true}
+        const testHistoryService = {...emptyHistoryService, reset: () =>{ resetCalled = true; return Promise.resolve(); }}
         render(<WithHistoryService historyService={testHistoryService}><HistoryAdmin/></WithHistoryService>)
         await user.click(screen.getByRole('button', { name: /reset/i }))
-        expect(resetCalled).to.be.true
+        await waitFor(() => expect(resetCalled).to.be.true)
     })
 
     it('should use the provided history service', async () => {

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react"
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormLabel, Grid, TextField } from '@mui/material'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from '@mui/material'
 import { Assignment } from '@mui/icons-material'
 import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component"
 
@@ -17,17 +17,17 @@ const ExportDialog = ({open, setOpened, historyEntries}) => {
     const [htmlTablePlaylist, setHtmlTablePlaylist] = useState("")
     const [mixcloudPlaylist, setMixcloudPlaylist] = useState("")
 
-    const closeDialog = () => {
+    const closeDialog = useCallback(() => {
         setOpened(false)
-    }
+    }, [setOpened])
 
-    const changeFrom = ({target}) => {
+    const changeFrom = useCallback(({target}) => {
         setFrom(target.value)
-    }
+    }, [setFrom])
 
-    const changeTo = ({target}) => {
+    const changeTo = useCallback(({target}) => {
         setTo(target.value)
-    }
+    }, [setTo])
 
     useEffect(() => {
         setPlaylistEntries(playlist.collect(historyEntries, from, to))
@@ -45,19 +45,17 @@ const ExportDialog = ({open, setOpened, historyEntries}) => {
         <Dialog open={open} onClose={closeDialog} className={styles.ExportDialog}>
             <DialogTitle>Select time to export</DialogTitle>
             <DialogContent>
-                <Grid container spacing={2}>
-                    <Grid item xs={1}><FormLabel>From</FormLabel></Grid>
-                    <Grid item xs={11}><TextField onChange={changeFrom} type="datetime-local" value={from} inputProps={{step: 1}}/></Grid>
-                    <Grid item xs={1}><FormLabel>To</FormLabel></Grid>
-                    <Grid item xs={11}><TextField onChange={changeTo} type="datetime-local" value={to} inputProps={{step: 1}}/></Grid>
+                <Grid container direction="column">
+                    <Grid paddingTop={1}><TextField label="From" onChange={changeFrom} type="datetime-local" value={from} slotProps={{ htmlInput: { step: 1, role: 'textbox' }, inputLabel: { shrink: true } }}/></Grid>
+                    <Grid paddingTop={2}><TextField label="To" onChange={changeTo} type="datetime-local" value={to} slotProps={{ htmlInput: { step: 1, role: 'textbox' }, inputLabel: { shrink: true } }}/></Grid>
                 </Grid>
             </DialogContent>
             <DialogActions>
                 <CopyToClipboard text={htmlTablePlaylist}>
-                    <Button disabled={from === undefined || to === undefined} color="greys" startIcon={<Assignment/>}>HTML Table</Button>
+                    <Button disabled={from === "" || to === ""} color="greys" startIcon={<Assignment/>}>HTML Table</Button>
                 </CopyToClipboard>
                 <CopyToClipboard text={mixcloudPlaylist}>
-                    <Button disabled={from === undefined || to === undefined} color="greys" startIcon={<Assignment/>}>Mixcloud</Button>
+                    <Button disabled={from === "" || to === ""} color="greys" startIcon={<Assignment/>}>Mixcloud</Button>
                 </CopyToClipboard>
             </DialogActions>
         </Dialog>

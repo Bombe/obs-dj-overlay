@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import moment from "moment"
 import { Box, Button, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { Delete, Refresh, Save } from '@mui/icons-material'
@@ -15,22 +15,21 @@ const HistoryAdmin = () => {
     const [historyEntries, setHistoryEntries] = useState([])
     const [exportDialogOpen, setExportDialogOpen] = useState(false)
 
-    const loadHistoryEntries = () => {
+    const loadHistoryEntries = useCallback(() => {
         historyService.entries()
             .then(response => response.json())
             .then(setHistoryEntries)
-    }
+    }, [historyService, setHistoryEntries])
 
-    const showExportDialog = () => {
+    const showExportDialog = useCallback(() => {
         setExportDialogOpen(true)
-    }
+    }, [setExportDialogOpen])
 
-    const resetHistory = () => {
-        historyService.reset()
-        loadHistoryEntries()
-    }
+    const resetHistory = useCallback(async () => {
+        historyService.reset().then(loadHistoryEntries)
+    }, [historyService, loadHistoryEntries])
 
-    useEffect(loadHistoryEntries, [historyService])
+    useEffect(loadHistoryEntries, [loadHistoryEntries])
 
     return (
         <form className={styles.History}>
