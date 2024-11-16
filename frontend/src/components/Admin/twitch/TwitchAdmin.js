@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react"
-import { Box, Button, Grid } from '@mui/material'
+import { Box, Button, Grid2 as Grid } from '@mui/material'
 import { DoneAll, Undo } from '@mui/icons-material'
 
 import {blur, onEnter, onValueEventRun} from "../../../utils/event"
@@ -42,11 +42,11 @@ const TwitchAdmin = () => {
     return (
         <form onSubmit={sendTwitchData} className={styles.Twitch}>
             <Grid container spacing={2} direction="column" alignItems="stretch">
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <SelectOnFocusTextField label="Twitch user to show viewer count for" variant="filled" value={twitchUserName} onChange={onValueEventRun(setTwitchUserName)}
                                             onKeyPress={onEnter(blur, false)} fullWidth={true} error={twitchUserName !== originalTwitchUserName}/>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <Box display="flex" alignItems="center">
                         <Box flexGrow={1}><Button ref={submitButton} type="submit" color="greys" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
                         <Box style={{paddingLeft: "16px"}}>

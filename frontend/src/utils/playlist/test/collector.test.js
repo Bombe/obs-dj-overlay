@@ -31,6 +31,10 @@ describe("The Export Collector", () => {
         expect(collector.collect(historyEntries, "20200908T1000", "20200908T1200")).to.eql([entry2, entry3, entry4, entry5])
     })
 
+    it("should not include the second track if before is later than the second track and strict-first-track is set to true", () => {
+        expect(collector.collect(historyEntries, "20200908T1000", "20200908T1200", true)).to.eql([entry3, entry4, entry5])
+    })
+
     it("should not include the last track if to is earlier", () => {
         expect(collector.collect(historyEntries, "20200908T1000", "20200908T1100")).to.eql([entry2, entry3, entry4])
     })

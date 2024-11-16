@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react'
-import { Box, Button, Grid, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material'
+import { Box, Button, Grid2 as Grid, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material'
 import { Delete, PlaylistAdd, Refresh, Reply, Search } from '@mui/icons-material'
 import * as uuid from "uuid";
 
@@ -103,13 +103,14 @@ const CrateAdmin = ({scrollToTrack}) => {
 
     return (
         <Grid container spacing={2} direction="column" alignItems="stretch" className={styles.Crate}>
-            <Grid item xs={12}>
+            <Grid size='12'>
                 <Box display="flex" alignItems='center'>
                     <Box flexGrow={1}><TextField id="search-string" label="Search" variant='filled' fullWidth={true} value={searchString} onChange={onValueEventRun(setSearchString)} onKeyUp={compose(onEscape(event => setSearchString("")), onEnter(handleSearchTerms, true))}/></Box>
                     <Box paddingLeft="16px"><Button onClick={() => {}} color="greys" variant="contained" startIcon={<Search/>}>Search</Button></Box>
                 </Box>
             </Grid>
-            <Grid item xs={12}>   <TableContainer className={styles.Table}>
+            <Grid size='12'>
+                <TableContainer className={styles.Table}>
                     <Table size="small">
                         <TableHead>
                             <TableRow>
@@ -132,7 +133,7 @@ const CrateAdmin = ({scrollToTrack}) => {
                     </Table>
                 </TableContainer>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size='12'>
                 <Box display="flex" alignItems='center'>
                     <Box flexGrow={1}><TextField id="import-string" label="Import" variant='filled' fullWidth={true} value={importString} onChange={onValueEventRun(setImportString)} onKeyUp={onEnter(importFromInputField, true)}/></Box>
                     <Box paddingLeft="16px"><Button onClick={importFromInputField} color="greys" variant="contained" startIcon={<PlaylistAdd/>}>Import</Button></Box>
