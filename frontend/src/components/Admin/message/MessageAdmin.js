@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { Box, Button, Grid } from '@mui/material'
+import { Box, Button, Grid2 as Grid } from '@mui/material'
 import { Delete, DoneAll, Refresh } from '@mui/icons-material'
 
 import { OverlayServiceContext } from '../../../contexts/overlayService'
@@ -47,11 +47,11 @@ const MessageAdmin = () => {
     return (
         <form onSubmit={sendMessage} className={styles.Message}>
             <Grid container spacing={2} direction="column" alignItems="stretch">
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <SelectOnFocusTextField id={'message'} label="A message to display" variant="filled" value={message} onChange={onValueEventRun(setMessage)} onKeyUp={textAreaEnterHandler(sendMessage)}
                                             fullWidth={true} multiline={true} minRows={6} helperText="Press Ctrl-Enter to submit!"/>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <Box display="flex" alignItems="center">
                         <Box flexGrow={1}><Button type="submit" color="greys" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
                         <Box style={{ paddingLeft: '16px' }}>

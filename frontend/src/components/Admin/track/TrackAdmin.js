@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { Box, Button, FormControlLabel, Grid, Radio, RadioGroup } from '@mui/material'
+import { Box, Button, FormControlLabel, Grid2 as Grid, Radio, RadioGroup } from '@mui/material'
 import { Delete, DoneAll, Edit, Healing, Refresh } from '@mui/icons-material'
 
 import { blur, onEnter, onValueEventRun } from '../../../utils/event'
@@ -86,7 +86,7 @@ const TrackAdmin = () => {
     return (
         <form onSubmit={sendTrackInfo} className={styles.Track}>
             <Grid container spacing={2} direction="column" alignItems="stretch">
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <RadioGroup value={direction} onChange={flipDirection}>
                         <Box display="flex" alignItems="center">
                             <Box flexGrow={1}>
@@ -99,7 +99,7 @@ const TrackAdmin = () => {
                         </Box>
                     </RadioGroup>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <Box display="flex">
                         <SelectOnFocusTextField id="track-artist-input" inputRef={trackArtistField} label="The artist of the track" variant="filled" value={trackArtist} onChange={onValueEventRun(setTrackArtist)}
                                             onKeyPress={onEnter(focusTrackTitle, true)} fullWidth={true} error={trackArtist !== originalTrackArtist}/>
@@ -108,7 +108,7 @@ const TrackAdmin = () => {
                         </Box>
                     </Box>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <Box display="flex">
                         <SelectOnFocusTextField id="track-title-input" inputRef={trackTitleField} label="The title of the track" variant="filled" value={trackTitle} onChange={onValueEventRun(setUncleanedTrackTitle)}
                                                 onKeyPress={onEnter(focusTrackCover, true)} fullWidth={true} error={trackTitle !== originalTrackTitle}/>
@@ -117,11 +117,11 @@ const TrackAdmin = () => {
                         </Box>
                     </Box>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <SelectOnFocusTextField id="track-cover-input" inputRef={trackCoverField} label="The cover of the track" variant="filled" value={trackCover} onChange={onValueEventRun(setTrackCover)}
                                             onKeyPress={onEnter(blur, true)} fullWidth={true} error={trackCover !== originalTrackCover}/>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <Box display="flex" alignItems="center">
                         <Box flexGrow={1}>
                             <Button type="submit" color="greys" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button>

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { Box, Button, Grid } from '@mui/material'
+import { Box, Button, Grid2 as Grid } from '@mui/material'
 import { DoneAll, Undo } from '@mui/icons-material'
 
 import {blur, onEnter, onValueEventRun} from "../../../utils/event"
@@ -53,19 +53,19 @@ const ShowAdmin = () => {
     return (
         <form onSubmit={sendShowInfo} className={styles.Show}>
             <Grid container spacing={2} direction="column" alignItems="stretch">
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <SelectOnFocusTextField id={'show-title'} label="The title of the show" variant="filled" value={showTitle} onChange={onValueEventRun(setShowTitle)} onKeyPress={onEnter(focusShowSubtitle, true)}
                                             fullWidth={true} error={(originalShowTitle !== showTitle)}/>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <SelectOnFocusTextField id={'show-subtitle'} inputRef={showSubtitleField} label="The subtitle of the show" variant="filled" value={showSubtitle} onChange={onValueEventRun(setShowSubtitle)}
                                             onKeyPress={onEnter(focusNextShow, true)} fullWidth={true} error={(originalShowSubtitle !== showSubtitle)}/>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <SelectOnFocusTextField id={'show-announcement'} inputRef={nextShowField} label="Announcement for the next show" variant="filled" value={nextShow} onChange={onValueEventRun(setNextShow)}
                                             onKeyPress={onEnter(blur, false)} fullWidth={true} error={(originalNextShow !== nextShow)}/>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <Box display="flex" alignItems="center">
                         <Box flexGrow={1}><Button type="submit" color="greys" variant="contained" fullWidth={true} startIcon={<DoneAll/>}>Update</Button></Box>
                         <Box style={{paddingLeft: "16px"}}>

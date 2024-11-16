@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import moment from "moment"
-import { Box, Button, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, Button, Grid2 as Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { Delete, Refresh, Save } from '@mui/icons-material'
 
 import {HistoryServiceContext} from '../../../contexts/historyService'
@@ -34,7 +34,7 @@ const HistoryAdmin = () => {
     return (
         <form className={styles.History}>
             <Grid container spacing={2} direction="column" alignItems="stretch">
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <TableContainer className={styles.Table}>
                         <Table size="small">
                             <TableHead>
@@ -56,7 +56,7 @@ const HistoryAdmin = () => {
                         </Table>
                     </TableContainer>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size='12'>
                     <Box display="flex">
                         <Box flexGrow={1}><Button onClick={showExportDialog} disabled={historyEntries.length === 0} color="greys" variant="contained" fullWidth={true} startIcon={<Save/>}>Export</Button></Box>
                         <ExportDialog open={exportDialogOpen} setOpened={setExportDialogOpen} historyEntries={historyEntries}/>
