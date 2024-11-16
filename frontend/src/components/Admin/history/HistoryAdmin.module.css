@@ -7,7 +7,7 @@
 }
 
 .ExportDialog {
-    padding: 1em;
+    margin: 1em;
 }
 
 .ResetButton.ResetButton { /* increase the specificity to override MuiButton’s styling. */

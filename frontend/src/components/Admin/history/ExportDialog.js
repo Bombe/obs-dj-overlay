@@ -42,7 +42,7 @@ const ExportDialog = ({open, setOpened, historyEntries}) => {
     }, [playlistEntries, from])
 
     return (
-        <Dialog open={open} onClose={closeDialog} className={styles.ExportDialog}>
+        <Dialog open={open} onClose={closeDialog}>
             <DialogTitle>Select time to export</DialogTitle>
             <DialogContent>
                 <Grid container direction="column">
@@ -50,12 +50,12 @@ const ExportDialog = ({open, setOpened, historyEntries}) => {
                     <Grid paddingTop={2}><TextField label="To" onChange={changeTo} type="datetime-local" value={to} slotProps={{ htmlInput: { step: 1, role: 'textbox' }, inputLabel: { shrink: true } }}/></Grid>
                 </Grid>
             </DialogContent>
-            <DialogActions>
+            <DialogActions className={styles.ExportDialog}>
                 <CopyToClipboard text={htmlTablePlaylist}>
-                    <Button disabled={from === "" || to === ""} color="greys" startIcon={<Assignment/>}>HTML Table</Button>
+                    <Button disabled={from === "" || to === ""} variant="contained" color="greys" startIcon={<Assignment/>}>HTML Table</Button>
                 </CopyToClipboard>
                 <CopyToClipboard text={mixcloudPlaylist}>
-                    <Button disabled={from === "" || to === ""} color="greys" startIcon={<Assignment/>}>Mixcloud</Button>
+                    <Button disabled={from === "" || to === ""} variant="contained" color="greys" startIcon={<Assignment/>}>Mixcloud</Button>
                 </CopyToClipboard>
             </DialogActions>
         </Dialog>
