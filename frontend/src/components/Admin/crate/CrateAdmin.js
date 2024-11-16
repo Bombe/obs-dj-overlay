@@ -109,7 +109,8 @@ const CrateAdmin = ({scrollToTrack}) => {
                     <Box paddingLeft="16px"><Button onClick={() => {}} color="greys" variant="contained" startIcon={<Search/>}>Search</Button></Box>
                 </Box>
             </Grid>
-            <Grid item xs={12}>   <TableContainer className={styles.Table}>
+            <Grid item xs={12}>
+                <TableContainer className={styles.Table}>
                     <Table size="small">
                         <TableHead>
                             <TableRow>
