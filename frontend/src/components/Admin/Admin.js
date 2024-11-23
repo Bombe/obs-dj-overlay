@@ -14,6 +14,7 @@ import WithHistoryService from '../../contexts/historyService'
 import WithTrack from '../../contexts/track'
 import WithRuntimeVersion from '../../contexts/runtimeVersion'
 import WithRuntimeService from '../../contexts/runtimeService'
+import WithTwitchConfig from '../../contexts/twitchConfig'
 
 const Admin = () => {
 
@@ -32,7 +33,9 @@ const Admin = () => {
                                 <AdminSection/>
                                 <WithRuntimeService>
                                     <WithRuntimeVersion>
-                                        <Status/>
+                                        <WithTwitchConfig>
+                                            <Status/>
+                                        </WithTwitchConfig>
                                     </WithRuntimeVersion>
                                 </WithRuntimeService>
                             </WithHistoryService>

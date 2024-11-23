@@ -6,3 +6,11 @@
 .VersionInformation {
     padding-left: 1ex;
 }
+
+.Warning {
+    background-color: red;
+    color: yellow;
+    padding: 0.5ex 1ex;
+    border-radius: 1ex;
+    margin: -0.5ex -1ex;
+}
