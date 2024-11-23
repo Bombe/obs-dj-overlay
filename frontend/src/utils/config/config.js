@@ -1,13 +1,15 @@
 
 const defaultConfig = {
     twitch: {
-        channel: "", clientId: "", clientSecret: ""
-    }
+        channel: ""
+    },
+    isConfigured: false,
 };
 
 const readConfig = () => {
     try {
-        return require("../../config.json");
+        const storedConfig = require("../../config.json");
+        return {...storedConfig, isConfigured: !!storedConfig.twitch.clientId && !!storedConfig.twitch.clientSecret && !!storedConfig.twitch.authToken};
     } catch {
         return defaultConfig;
     }
