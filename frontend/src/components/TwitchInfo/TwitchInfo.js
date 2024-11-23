@@ -7,9 +7,6 @@ import {OverlayInfoContext} from "../../contexts/overlayInfo";
 import "./TwitchInfo.css";
 
 const hasTwitchConfig = (config && config.twitch && config.twitch.clientId && config.twitch.clientSecret);
-if (!hasTwitchConfig) {
-    console.log("Twitch configuration missing!")
-}
 const authProvider = new AppTokenAuthProvider(config.twitch.clientId, config.twitch.clientSecret)
 const apiClient = new ApiClient({authProvider})
 
